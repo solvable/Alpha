@@ -1,0 +1,73 @@
+{% extends "CRM/base.html" %}
+
+{% block addhead %}
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+{% endblock addhead %}
+
+{% block content %}
+<div class="container">
+    <div id='customer_info_div' class='customer_info col-sm-10'>
+        <h2>Customer Info:</h2>
+        <a href="{% url 'customer_update' object.pk%}" class="btn btn-primary" role="button">Edit</a>
+        <a href="{% url 'customer_delete' object.pk %}"
+           onclick="return confirm('Are you sure want to delete this Customer?');"
+           class="btn btn-danger" role="button">Delete</a></br>
+        <table class="metadata_table">
+            <tr>
+                <td>Customer Id:</td>
+                <td class="td-worktable">{{object.id}}</td>
+                <td>Source:</td>
+                <td class="td-worktable">{{object.source}}</td>
+            </tr>
+            <tr>
+                <td>Created:</td>
+                <td class="td-worktable">{{object.created}}</td>
+                <td>Modified:</td>
+                <td class="td-worktable">{{object.modified}}</br></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> Modified by:</td>
+                <td class="td-worktable">{{object.modified_by}}</td>
+            </tr>
+
+
+            <tr>
+                <td>Customer Name:</td>
+                <td class="td-worktable">{{object.fullName}}</td>
+                <td>Phone 1:</td>
+                <td class="td-worktable">{{object.phone1}}</td>
+            </tr>
+            <tr>
+                <td>Billing Address:</td>
+                <td class="td-worktable" rowspan="2">{{object.billStreet}}<br>{{object.billCity}},
+                    {{object.billState}},{{object.billZip}}
+                </td>
+                <td>Phone 2:</td>
+                <td class="td-worktable">{{object.phone2}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Email:</td>
+                <td class="td-worktable">{{object.email}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    {% block jobsite_content %}
+        <a href="{% url 'jobsite_create' pk=object.pk %}">Create a Jobsite</a>
+        <br>
+
+        {% for jobsite in object.jobsite_set.all %}
+            <p>
+            <a href = "{% url 'jobsite_detail' object.pk jobsite.slug %}">{{ jobsite.slug }}</a>
+            </p>
+        {% endfor %}
+
+    {% endblock jobsite_content %}
+{% endblock content %}
+
+

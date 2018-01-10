@@ -1,0 +1,8 @@
+{% extends 'CRM/customer_detail.html' %}
+{% block jobsite_content %}
+    <p>{{ object.jobStreet }}</p>
+    <p>{{ object.jobCity }}&nbsp{{ object.jobState }},{{ object.jobzip }}</p>
+    <p>{{ object.stories }}</p>
+    <p>{{ object.access }}</p>
+    <p>{{ object.notes }}</p>
+{% endblock jobsite_content %}
