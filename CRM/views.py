@@ -20,6 +20,8 @@ class CustomerDetailView(generic.DetailView):
     template_name = 'CRM/customer_detail.html'
 
 
+
+
 class CustomerCreateView(generic.CreateView):
     model = Customer
     template_name = 'CRM/customer_create.html'
@@ -40,6 +42,11 @@ class CustomerDeleteView(generic.DeleteView):
 class JobsiteDetailView(generic.DetailView):
     model = Jobsite
     template_name = 'CRM/jobsite_detail.html'
+    slug_url_kwarg = "slug"
+    #queryset = Jobsite.objects.get(slug=slug_url_kwarg)
+    customer="cust"
+
+
 
 class JobsiteCreateView(generic.CreateView):
     model = Jobsite

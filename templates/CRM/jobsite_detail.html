@@ -1,8 +1,68 @@
-{% extends 'CRM/customer_detail.html' %}
+{% extends 'CRM/base.html' %}
+
+{% block content %}
+            {% for customer in object.customer_set.all %}
+<div class="container">
+    <div id='customer_info_div' class='customer_info col-sm-10'>
+        <h2>Customer Info:</h2>
+        <a href="{% url 'customer_update' object.pk%}" class="btn btn-primary" role="button">Edit</a>
+        <a href="{% url 'customer_delete' object.pk %}"
+           onclick="return confirm('Are you sure want to delete this Customer?');"
+           class="btn btn-danger" role="button">Delete</a></br>
+        <table class="metadata_table">
+            <tr>
+                <td>Customer Id:</td>
+                <td class="td-worktable">{{object.id}}</td>
+                <td>Source:</td>
+                <td class="td-worktable">{{object.source}}</td>
+            </tr>
+            <tr>
+                <td>Created:</td>
+                <td class="td-worktable">{{object.created}}</td>
+                <td>Modified:</td>
+                <td class="td-worktable">{{object.modified}}</br></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> Modified by:</td>
+                <td class="td-worktable">{{object.modified_by}}</td>
+            </tr>
+
+
+            <tr>
+                <td>Customer Name:</td>
+                <td class="td-worktable">{{object.fullName}}</td>
+                <td>Phone 1:</td>
+                <td class="td-worktable">{{object.phone1}}</td>
+            </tr>
+            <tr>
+                <td>Billing Address:</td>
+                <td class="td-worktable" rowspan="2">{{object.billStreet}}<br>{{object.billCity}},
+                    {{object.billState}},{{object.billZip}}
+                </td>
+                <td>Phone 2:</td>
+                <td class="td-worktable">{{object.phone2}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Email:</td>
+                <td class="td-worktable">{{object.email}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+            {% endfor %}
+
+
 {% block jobsite_content %}
-    <p>{{ object.jobStreet }}</p>
-    <p>{{ object.jobCity }}&nbsp{{ object.jobState }},{{ object.jobzip }}</p>
-    <p>{{ object.stories }}</p>
-    <p>{{ object.access }}</p>
-    <p>{{ object.notes }}</p>
+
+            <p>{{ object.jobStreet }}</p>
+            <p>{{ object.jobCity }}&nbsp{{ object.jobState }},{{ object.jobzip }}</p>
+            <p>{{ object.stories }}</p>
+            <p>{{ object.access }}</p>
+            <p>{{ object.notes }}</p>
+
 {% endblock jobsite_content %}
+{% endblock content %}

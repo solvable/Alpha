@@ -63,7 +63,7 @@
 
         {% for jobsite in object.jobsite_set.all %}
             <p>
-            <a href = "{% url 'jobsite_detail' object.pk jobsite.slug %}">{{ jobsite.slug }}</a>
+            <a href = "{% url 'jobsite_detail' cust=object.pk slug=jobsite.slug %}">{{ jobsite.slug }}</a>
             </p>
         {% endfor %}
 

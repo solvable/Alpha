@@ -6,6 +6,9 @@ from django.db import models
 import geocoder
 from django.urls import reverse
 from .choices import *
+import os
+from .api import googlemaps as googlemapsAPI
+os.environ["GOOGLE_API_KEY"] = googlemapsAPI
 
 class Customer(models.Model):
 
