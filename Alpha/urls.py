@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include, url
+from django.conf import settings
 from CRM import views
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +29,13 @@ urlpatterns = [
     path('customer/create/', views.CustomerCreateView.as_view(), name='customer_create'),
     path('customer/update/<int:pk>', views.CustomerUpdateView.as_view(), name='customer_update'),
     path('customer/delete/<int:pk>', views.CustomerDeleteView.as_view(), name ='customer_delete'),
-    path('customer/detail/<int:pk>/jobsite_create/', views.JobsiteCreateView.as_view(), name='jobsite_create'),
-    path('customer/detail/<cust>/<slug>', views.JobsiteDetailView.as_view(), name='jobsite_detail'),
+    path('customer/<int:pk>/detail/jobsite_create/', views.JobsiteCreateView.as_view(), name='jobsite_create'),
+    path('customer/<cust>/detail/<slug>', views.JobsiteDetailView.as_view(), name='jobsite_detail'),
+    path('customer/<cust>/update/<slug>', views.JobsiteUpdateView.as_view(), name='jobsite_update'),
 
 ]
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

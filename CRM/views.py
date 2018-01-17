@@ -12,14 +12,14 @@ class IndexView(generic.ListView):
     model = Customer
     template_name = 'CRM/index.html'
 
-
+'''
+Customer Views
+'''
 
 
 class CustomerDetailView(generic.DetailView):
     model = Customer
     template_name = 'CRM/customer_detail.html'
-
-
 
 
 class CustomerCreateView(generic.CreateView):
@@ -38,14 +38,19 @@ class CustomerDeleteView(generic.DeleteView):
     #template_name = 'CRM/customer_delete.html'
     success_url = reverse_lazy('index')
 
+'''
+Jobsite Views
+'''
+
 
 class JobsiteDetailView(generic.DetailView):
     model = Jobsite
     template_name = 'CRM/jobsite_detail.html'
     slug_url_kwarg = "slug"
-    #queryset = Jobsite.objects.get(slug=slug_url_kwarg)
-    customer="cust"
 
+    customer_model = Customer
+    context_object_name = customer_model
+    
 
 
 class JobsiteCreateView(generic.CreateView):
@@ -55,13 +60,30 @@ class JobsiteCreateView(generic.CreateView):
 
 
     def get_success_url(self):
-
-        return reverse('customer_detail', kwargs={'pk': self.kwargs.get('pk')})
-
+        return reverse('jobsite_detail', kwargs={'cust': self.kwargs.get('customer_id'),
+                                                 'slug': self.kwargs.get("slug")})
 
     def get_initial(self):
-        customer = get_object_or_404(Customer, pk=self.kwargs.get('pk'))
+        customer = get_object_or_404(Customer, pk=self.kwargs.get('cust'))
         return{
             'customer_id': customer.id,
         }
+
+
+
+
+class JobsiteUpdateView(generic.UpdateView):
+    model = Jobsite
+    template_name= 'CRM/jobsite_create.html'
+    fields = ['customer_id','jobStreet', 'jobCity', 'jobState', 'jobZip', 'stories', 'access', 'notes']
+
+
+    def get_success_url(self):
+
+        return reverse('jobsite_detail', kwargs={'cust': self.kwargs.get('customer_id'),
+                                                 'slug': self.kwargs.get("slug")})
+
+
+
+
 

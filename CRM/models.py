@@ -106,10 +106,10 @@ class Jobsite(models.Model):
         return reverse("jobsite_detail", args=[str(self.id)])
 
     def get_absolute_url(self):
-        return reverse("jobsite_detail", kwargs={"id":self.id})
+        return reverse("jobsite_detail", kwargs={"slug":self.slug, "cust":self.customer_id.id})
 
     def edit_url(self):
-        return reverse("jobsite_detail", kwargs={"id":self.id})
+        return reverse("jobsite_detail", kwargs={"slug":self.slug})
 
 
 

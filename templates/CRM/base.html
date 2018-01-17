@@ -5,11 +5,13 @@
 
     </head>
     <body>
-              <a href ="{% url 'customer_create' %}">Create new Customer</a>
+        <a href ="{% url 'customer_create' %}">Create new Customer</a>
 
         {% block content %}
-
         {% endblock content %}
+
+        {% block jobsite_content %}
+        {% endblock jobsite_content %}
     </body>
 
 
