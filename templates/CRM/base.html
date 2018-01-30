@@ -2,10 +2,15 @@
 {% load static %}
 <html>
     <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+              <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
 
     </head>
     <body>
-        <a href ="{% url 'customer_create' %}">Create new Customer</a>
+        <a href ="{% url 'customer_create' %}" class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">person_add</i></a>
 
         {% block content %}
         {% endblock content %}
@@ -20,3 +25,10 @@
 
 
 </html>
+
+<footer>
+
+  <!-- Compiled and minified CSS -->
+
+  <!-- Compiled and minified JavaScript -->
+</footer>

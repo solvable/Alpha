@@ -121,7 +121,7 @@ class TicketCreateView(generic.CreateView):
             'customer_id': customer.id,
             'jobsite_id': jobsite.id
         }
-    
+
 class TicketUpdateView(generic.UpdateView):
     model = Ticket
     template_name = 'CRM/ticket_create.html'

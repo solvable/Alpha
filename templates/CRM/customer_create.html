@@ -1,8 +1,15 @@
 {% extends 'CRM/base.html' %}
 {{ block.super }}
 {% block content %}
+    <div class="row">
+        <div class="col s12 m4 push-m4 ">
+        <div class="card  darken-1">
+
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />
 </form>
+            </div>
+    </div>
+    </div>
 {% endblock content %}
