@@ -25,13 +25,22 @@ from CRM import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('customer/', views.IndexView.as_view(), name='index'),
-    path('customer/detail/<int:pk>', views.CustomerDetailView.as_view(), name='customer_detail'),
+
+
+    path('customer/<cust>/detail/<job>/ticket_create', views.TicketCreateView.as_view(), name='ticket_create'),
+    path('customer/<cust>/detail/<job>/detail/<ticket>', views.TicketDetailView.as_view(), name='ticket_detail'),
+    path('customer/<cust>/detail/<job>/update/<ticket>', views.TicketUpdateView.as_view(), name='ticket_update'),
+    path('customer/<cust>/detail/<job>/delete/<ticket>', views.TicketDeleteView.as_view(), name='ticket_delete'),
+
+    path('customer/<cust>/detail/jobsite_create/', views.JobsiteCreateView.as_view(), name='jobsite_create'),
+    path('customer/<cust>/detail/<job>', views.JobsiteDetailView.as_view(), name='jobsite_detail'),
+    path('customer/<cust>/update/<job>', views.JobsiteUpdateView.as_view(), name='jobsite_update'),
+    path('customer/<cust>/delete/<job>', views.JobsiteDeleteView.as_view(), name ='jobsite_delete'),
+
+    path('customer/detail/<cust>', views.CustomerDetailView.as_view(), name='customer_detail'),
     path('customer/create/', views.CustomerCreateView.as_view(), name='customer_create'),
-    path('customer/update/<int:pk>', views.CustomerUpdateView.as_view(), name='customer_update'),
-    path('customer/delete/<int:pk>', views.CustomerDeleteView.as_view(), name ='customer_delete'),
-    path('customer/<int:pk>/detail/jobsite_create/', views.JobsiteCreateView.as_view(), name='jobsite_create'),
-    path('customer/<cust>/detail/<slug>', views.JobsiteDetailView.as_view(), name='jobsite_detail'),
-    path('customer/<cust>/update/<slug>', views.JobsiteUpdateView.as_view(), name='jobsite_update'),
+    path('customer/update/<cust>', views.CustomerUpdateView.as_view(), name='customer_update'),
+    path('customer/delete/<cust>', views.CustomerDeleteView.as_view(), name='customer_delete'),
 
 ]
 if settings.DEBUG:

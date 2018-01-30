@@ -9,8 +9,8 @@
     <div class="container">
     <div id='customer_info_div' class='customer_info col-sm-10'>
         <h2>Customer Info:</h2>
-        <a href="{% url 'customer_update' object.pk %}" class="btn btn-primary" role="button">Edit</a>
-        <a href="{% url 'customer_delete' object.pk %}"
+        <a href="{% url 'customer_update' customer.pk %}" class="btn btn-primary" role="button">Edit</a>
+        <a href="{% url 'customer_delete' customer.pk %}"
            onclick="return confirm('Are you sure want to delete this Customer?');"
            class="btn btn-danger" role="button">Delete</a></br>
         <table class="metadata_table">
@@ -59,15 +59,17 @@
 
 
 {% block jobsite_content %}
-    <a href="{% url 'jobsite_create' pk=object.pk %}">Create a Jobsite</a>
+    <a href="{% url 'jobsite_create' cust=object.pk %}">Create a Jobsite</a>
     <br>
 
     {% for jobsite in object.jobsite_set.all %}
         <p>
-            <a href="{% url 'jobsite_detail' cust=object.pk slug=jobsite.slug %}">{{ jobsite.slug }}</a>
+            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}">{{ jobsite.slug }}</a>
         </p>
     {% endfor %}
 
 {% endblock jobsite_content %}
 
 
+{% block ticket_content %}
+{% endblock ticket_content %}

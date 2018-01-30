@@ -1,46 +1,57 @@
 {% extends 'CRM/customer_detail.html' %}
 
-
 {% block jobsite_content %}
+<hr>
 
-
-    <a href="{% url 'jobsite_update' cust=object.customer_id.id slug=object.slug %}" class="btn btn-primary"
-       role="button">Edit</a>
-    <!---<a href="{% url 'customer_delete' object.pk %}"
-           onclick="return confirm('Are you sure want to delete this Customer?');"
-           class="btn btn-danger" role="button">Delete</a></br>-->
+    <a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn btn-primary"
+       role="button">Edit Jobsite</a>
+    <a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}"
+           onclick="return confirm('Are you sure want to delete this Jobsite?');"
+           class="btn btn-danger" role="button">Delete Jobsite</a></br>
     <h3>Job Location</h3>
     <table>
         <tr>
 
             <td colspan="3">
-                {{ object.jobStreet }}
+                {{ jobsite.jobStreet }}
             </td>
 
         </tr>
         <tr>
             <td>
-                {{ object.jobCity }}
+                {{ jobsite.jobCity }}
             </td>
 
-            <td>{{ object.jobState }},</td>
+            <td>{{ jobsite.jobState }},</td>
 
-            <td>{{ object.jobZip }}</td>
+            <td>{{ jobsite.jobZip }}</td>
         </tr>
         <tr>
             <td></td>
         </tr>
         <tr>
             <td>Stories:</td>
-            <td>{{ object.stories }}</td>
+            <td>{{ jobsite.stories }}</td>
             <td>Access:</td>
-            <td>{{ object.access }}</td>
+            <td>{{ jobsite.access }}</td>
         </tr>
         <tr>
             <td>Property Notes:</td>
             <td>
-                {{ object.notes }}
+                {{ jobsite.notes }}
             </td>
         </tr>
     </table>
+    <br>
 {% endblock jobsite_content %}
+
+{% block ticket_content %}
+    <a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}">Create a Ticket</a>
+
+    {% for ticket in object.ticket_set.all %}
+        <p>
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}">{{ ticket.pk }}</a>
+        </p>
+    {% endfor %}
+
+{% endblock ticket_content %}

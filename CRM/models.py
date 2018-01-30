@@ -51,10 +51,10 @@ class Customer(models.Model):
         return str(self.fullName)
 
     def get_absolute_url(self):
-        return reverse("customer_detail", kwargs={"pk": self.pk})
+        return reverse("customer_detail", kwargs={"cust": self.pk})
 
     def edit_url(self):
-        return reverse("customer_edit", args={"pk":self.pk})
+        return reverse("customer_edit", args={"cust":self.pk})
 
     class Meta:
         ordering = ["-created", "-modified"]
@@ -62,7 +62,7 @@ class Customer(models.Model):
 
 class Jobsite(models.Model):
 
-    customer_id = models.ForeignKey('Customer', on_delete="PROTECT")
+    customer_id = models.ForeignKey('Customer', on_delete=models.CASCADE)
     slug = models.SlugField(max_length=50, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete="PROTECT")
     modified_by = models.CharField(max_length=50, default=1)
@@ -92,7 +92,7 @@ class Jobsite(models.Model):
         self.lat = lat
         self.lng = lng
         self.latlng = lat + "," + lng
-        self.slug = slugify(self.jobStreet)
+        self.slug=slugify(self.jobStreet)
         super(Jobsite, self).save(*args, **kwargs)
 
 
@@ -106,18 +106,18 @@ class Jobsite(models.Model):
         return reverse("jobsite_detail", args=[str(self.id)])
 
     def get_absolute_url(self):
-        return reverse("jobsite_detail", kwargs={"slug":self.slug, "cust":self.customer_id.id})
+        return reverse("jobsite_detail", kwargs={"job":self.id, "cust":self.customer_id.id})
 
     def edit_url(self):
-        return reverse("jobsite_detail", kwargs={"slug":self.slug})
+        return reverse("jobsite_detail", kwargs={"job":self.id})
 
 
 
 
 class Ticket(models.Model):
 
-    customer_id = models.ForeignKey('Customer', on_delete="PROTECT")
-    jobsite_id = models.ForeignKey('Jobsite', on_delete="PROTECT")
+    customer_id = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    jobsite_id = models.ForeignKey('Jobsite', on_delete=models.CASCADE)
     call_type = models.CharField(null=True, blank=True, choices=TITLES,max_length=10)
     problem = models.CharField(max_length=200, null=True)
     completed = models.BooleanField(default=False, blank=True)
@@ -142,6 +142,5 @@ class Ticket(models.Model):
     def __delete__(self, instance):
         return reverse("ticket_detail")
 
-
     def get_absolute_url(self):
-        return reverse("ticket_detail", kwargs={"id":id})
+        return reverse("ticket_detail", kwargs={"ticket": self.id, "cust": self.customer_id.id, "job": self.jobsite_id_id})
