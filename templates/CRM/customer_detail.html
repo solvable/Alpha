@@ -5,9 +5,8 @@
 {% endblock addhead %}
 
 {% block content %}
-
-    <div class="container">
-    <div id='customer_info_div' class='customer_info col-sm-10'>
+    <div class="row">
+    <div id='customer_info_div' class='card col s4 z-depth-5'>
         <h2>Customer Info:</h2>
         <a href="{% url 'customer_update' customer.pk %}" class="btn btn-primary" role="button">Edit</a>
         <a href="{% url 'customer_delete' customer.pk %}"
@@ -55,6 +54,7 @@
             </tr>
         </table>
     </div>
+
 {% endblock content %}
 
 

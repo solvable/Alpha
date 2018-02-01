@@ -1,14 +1,16 @@
 {% extends 'CRM/customer_detail.html' %}
 
 {% block jobsite_content %}
-<hr>
+
+<div class="row">
+    <div class="card col s4 z-depth-5">
+            <h3>Job Location:</h3>
 
     <a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn btn-primary"
        role="button">Edit Jobsite</a>
     <a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}"
            onclick="return confirm('Are you sure want to delete this Jobsite?');"
            class="btn btn-danger" role="button">Delete Jobsite</a></br>
-    <h3>Job Location</h3>
     <table>
         <tr>
 
@@ -43,6 +45,7 @@
         </tr>
     </table>
     <br>
+    </div>
 {% endblock jobsite_content %}
 
 {% block ticket_content %}
