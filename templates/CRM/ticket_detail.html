@@ -3,7 +3,7 @@
 {% block ticket_content %}
 
     <div class="row">
-    <div class="card col s8 z-depth-5">
+    <div class="col s4">
     <h3>Ticket Information:</h3>
 
     <a href="{% url 'ticket_update' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.id %}"
