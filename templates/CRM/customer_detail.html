@@ -59,10 +59,9 @@
 
 
 {% block jobsite_content %}
-    <h2>Jobsites:</h2>
-    <a href="{% url 'jobsite_create' cust=object.pk %}" class="btn-large waves-effect waves-light green">Create a Jobsite</a>
-    <br>
-
+    <h2>Jobsites:<a href="{% url 'jobsite_create' cust=object.pk %}" class="btn-large waves-effect waves-light green">Create a Jobsite</a>
+    </h2>
+    <h4>Existing  Jobsites:</h4>
     {% for jobsite in object.jobsite_set.all %}
         <p>
             <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}" class="btn blue">{{ jobsite.slug }}</a>

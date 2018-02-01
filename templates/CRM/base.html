@@ -10,9 +10,10 @@
 
     </head>
     <body>
-        <a href ="{% url 'customer_create' %}" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">person_add</i></a>
 
         {% block content %}
+        <a href ="{% url 'customer_create' %}" class="btn waves-effect waves-light blue"><i class="material-icons">person_add</i> Add Customer</a>
+
         {% endblock content %}
 
         {% block jobsite_content %}

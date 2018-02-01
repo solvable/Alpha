@@ -7,11 +7,11 @@
     <h3>Ticket Information:</h3>
 
     <a href="{% url 'ticket_update' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.id %}"
-       class="btn btn-primary"
+       class="btn green"
        role="button">Edit Ticket</a>
     <a href="{% url 'ticket_delete' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.pk %}"
        onclick="return confirm('Are you sure want to delete this Jobsite?');"
-       class="btn btn-danger" role="button">Delete Ticket</a></br>
+       class="btn red" role="button">Delete Ticket</a></br>
 
     <table>
         <tr>
