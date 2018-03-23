@@ -6,8 +6,10 @@
 
 {% block content %}
     <div class="row">
-    <div id='customer_info_div' class='col s4'>
-        <h2>Customer Info:</h2>
+    <div id='customer_info_div' class='col s3'>
+            <div class="card-panel">
+
+        <h4>Customer Info:</h4>
         <a href="{% url 'customer_update' customer.pk %}" class="btn green" role="button">Edit</a>
         <a href="{% url 'customer_delete' customer.pk %}"
            onclick="return confirm('Are you sure want to delete this Customer?');"
@@ -54,20 +56,25 @@
             </tr>
         </table>
     </div>
-
+</div>
 {% endblock content %}
 
 
 {% block jobsite_content %}
-    <h2>Jobsites:<a href="{% url 'jobsite_create' cust=object.pk %}" class="btn-large waves-effect waves-light green">Create a Jobsite</a>
+    <div class="row">
+    <div class="col s2">
+    <div class="card-panel">
+    <h2>Jobsites:<a href="{% url 'jobsite_create' cust=object.pk %}" class="btn waves-effect waves-light blue">Create a Jobsite</a>
     </h2>
     <h4>Existing  Jobsites:</h4>
     {% for jobsite in object.jobsite_set.all %}
         <p>
-            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}" class="btn blue">{{ jobsite.slug }}</a>
+            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}" class="btn blue darken-4">{{ jobsite.slug }}</a>
         </p>
     {% endfor %}
-
+</div>
+    </div>
+    </div>
 {% endblock jobsite_content %}
 
 

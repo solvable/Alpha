@@ -2,6 +2,8 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
 
+
+
 # Create your views here.
 
 

@@ -3,7 +3,7 @@
 {% block jobsite_content %}
 
 <div class="row">
-    <div class="col s4">
+    <div class="col s2">
             <h3>Job Location:</h3>
 
     <a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn green"
@@ -49,6 +49,9 @@
 {% endblock jobsite_content %}
 
 {% block ticket_content %}
+    <div class="row">
+    <div class="col s2">
+
     <h2>Tickets:<a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn-large btn waves-effect waves-light green pulse">Create a Ticket</a>
 </h2>
     <h4>Existing Tickets</h4>
@@ -57,5 +60,6 @@
             <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn orange">{{ ticket.problem }} {{ ticket.created }}</a>
         </p>
     {% endfor %}
-
+</div>
+    </div>
 {% endblock ticket_content %}
