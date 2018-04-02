@@ -41,7 +41,7 @@ urlpatterns = [
     path('customer/create/', views.CustomerCreateView.as_view(), name='customer_create'),
     path('customer/update/<cust>', views.CustomerUpdateView.as_view(), name='customer_update'),
     path('customer/delete/<cust>', views.CustomerDeleteView.as_view(), name='customer_delete'),
-
+    path('generate-pdf/<cust>/<job>/<ticket>', views.write_pdf_view, name='generate-pdf')
 ]
 if settings.DEBUG:
     import debug_toolbar

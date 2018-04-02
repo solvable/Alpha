@@ -2,6 +2,7 @@
 
 {% block ticket_content %}
 
+
     <div class="row">
     <div class="col s4">
     <h3>Ticket Information:</h3>
@@ -38,5 +39,6 @@
 
     </table>
 </div>
+    <a href ="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn pink">Export PDF</a>
 </div>
 {% endblock ticket_content %}
