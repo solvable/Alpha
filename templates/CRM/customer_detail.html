@@ -9,11 +9,11 @@
     <div id='customer_info_div' class='col s3'>
             <div class="card-panel">
 
-        <h4>Customer Info:</h4>
-        <a href="{% url 'customer_update' customer.pk %}" class="btn green" role="button">Edit</a>
+        <h2>Customer Info:</h2>
+        <a href="{% url 'customer_update' customer.pk %}" class="btn-green" role="button">Edit</a>
         <a href="{% url 'customer_delete' customer.pk %}"
            onclick="return confirm('Are you sure want to delete this Customer?');"
-           class="btn red" role="button">Delete</a></br>
+           class="btn-red" role="button">Delete</a></br>
         <table class="metadata_table">
             <tr>
                 <td>Customer Id:</td>

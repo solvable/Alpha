@@ -3,7 +3,8 @@
 {% block content %}
     {% for object in customer_list %}
         <p>
-             <a href="{% url 'customer_detail' object.pk %}">{{ object.fullName }}</a>
+
+             <a href="{% url 'customer_detail' object.pk %}" class="btn-red">{{ object.fullName }}</a>
         </p>
     {% endfor %}
 {% endblock content %}

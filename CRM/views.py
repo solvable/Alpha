@@ -63,7 +63,7 @@ def write_pdf_view(request, cust, job, ticket):
 
     p.setFont("Times-Roman", 12)
     p.drawString(405, height-64, ticket.call_type)
-    p.drawString(405, height-78, ticket.created)
+    p.drawString(405, height-78, str(ticket.created))
     p.drawString(405, height-92, ticket.problem)
     p.drawString(405, height-106, ticket.notes)
 

@@ -3,15 +3,16 @@
 <html>
     <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-              <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
 
 
     </head>
     <body>
-        <a href ="{% url 'customer_create' %}" class="btn waves-effect waves-light blue"><i class="material-icons">person_add</i> Add Customer</a>
+    <div class="top-menu">
+         <a href="{% url 'index' %}" class="btn-blue">Home</a>
+        <a href ="{% url 'customer_create' %}" class="btn-green"> Add Customer</a>
 
+    </div>
         {% block content %}
 
         {% endblock content %}
@@ -29,7 +30,5 @@
 
 <footer>
 
-  <!-- Compiled and minified CSS -->
 
-  <!-- Compiled and minified JavaScript -->
 </footer>

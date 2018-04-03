@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include, url
 from django.conf import settings
 from CRM import views
+from django.conf.urls.static import static
 
 
 
@@ -42,9 +43,10 @@ urlpatterns = [
     path('customer/update/<cust>', views.CustomerUpdateView.as_view(), name='customer_update'),
     path('customer/delete/<cust>', views.CustomerDeleteView.as_view(), name='customer_delete'),
     path('generate-pdf/<cust>/<job>/<ticket>', views.write_pdf_view, name='generate-pdf')
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
