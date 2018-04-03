@@ -4,7 +4,7 @@
 
 
 .btn-green {
-    background-color: green;
+    background-color: #659B66;
     color: white;
     border: 1px solid black;
     padding:10px;
@@ -14,7 +14,7 @@
 }
 
 .btn-red {
-    background-color: red;
+    background-color: #DD4A30;
     color: white;
     border: 1px solid black;
     padding:10px;
@@ -25,8 +25,29 @@
 
 
 .btn-blue {
-    background-color: blue;
+    background-color: #23628C;
     color: white;
+    border: 1px solid black;
+    padding:10px;
+    display:inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+
+.btn-orange {
+    background-color: #EF8A1F;
+    color: white;
+    border: 1px solid black;
+    padding:10px;
+    display:inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+.btn-yellow {
+    background-color: #E1ED63;
+    color: black;
     border: 1px solid black;
     padding:10px;
     display:inline-block;

@@ -6,11 +6,11 @@
     <div class="col s2">
             <h3>Job Location:</h3>
 
-    <a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn green"
+    <a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn-orange"
        role="button">Edit Jobsite</a>
     <a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}"
            onclick="return confirm('Are you sure want to delete this Jobsite?');"
-           class="btn red" role="button">Delete Jobsite</a></br>
+           class="btn-red" role="button">Delete Jobsite</a></br>
     <table>
         <tr>
 
@@ -52,12 +52,13 @@
     <div class="row">
     <div class="col s2">
 
-    <h2>Tickets:<a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn-large btn waves-effect waves-light green pulse">Create a Ticket</a>
-</h2>
+    <h2>Tickets:</h2>
+        <a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn-green">Create a Ticket</a>
+
     <h4>Existing Tickets</h4>
     {% for ticket in object.ticket_set.all %}
         <p>
-            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn orange">{{ ticket.problem }} {{ ticket.created }}</a>
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn-yellow">{{ ticket.created }}{{ ticket.problem }} </a>
         </p>
     {% endfor %}
 </div>
