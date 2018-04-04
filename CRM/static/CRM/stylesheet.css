@@ -1,84 +1,109 @@
-@media print{
+@media print {
 
-header, nav, footer, .top-menu, .btn{
-display: none;
-}
-    .column{
-    float: left;
-    width:33%;
+    header, nav, footer, .top-menu, .btn {
+        display: none;
+    }
 
-}
-    .title{
-        colspan: 3;
+    .column {
+        float: left;
+        width: 33%;
+
+    }
+
+    .title {
+        column-span: all;
+    }
+
+    th {
+        white-space: nowrap;
     }
 
 }
 
-@media screen{
+@media screen {
 
-.top-menu {
-    margin-top: 25px;
-}
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-.column{
-    float: left;
-    width:25%;
+    .top-menu {
+        margin-top: 25px;
+    }
 
-}
-.btn {
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 
-    color: white;
-    border: 1px solid black;
-    padding:10px;
-    display:inline-block;
-    text-align: center;
-}
+    .column {
+        float: left;
+        width: 25%;
 
-.grey{
-    background-color:grey;
-}
-.green{
-    background-color: #659B66;
-}
-.red{
-    background-color: #DD4A30;
-}
-.orange{
-    background-color: #FF6A2B;
-}
-.yellow{
-    background-color: #E1ED63;
-    color:black;
-}
-.blue{
-    background-color: #23628C;
-}
-.pink{
-    background-color: deeppink;
-}
+    }
 
+    .btn {
 
-.content{
+        color: white;
+        border: 1px solid black;
+        padding: 10px;
+        display: inline-block;
+        text-align: center;
 
-}
+    }
 
-.jobsite-content{
+    .grey {
+        background-color: grey;
+    }
 
-}
+    .green {
+        background-color: #659B66;
+    }
 
-.ticket-content{
+    .red {
+        background-color: #DD4A30;
+    }
 
-}
+    .orange {
+        background-color: #FF6A2B;
+    }
 
-.table {
+    .yellow {
+        background-color: #E1ED63;
+        color: black;
+    }
 
-}
+    .blue {
+        background-color: #23628C;
+    }
 
-th, td {
-    border-bottom: 1px solid #ddd;
-}
+    .pink {
+        background-color: deeppink;
+    }
+
+    .content {
+
+    }
+
+    .jobsite-content {
+
+    }
+
+    .ticket-content {
+
+    }
+
+    table {
+        border:1px solid #ddd;
+        border-collapse: collapse;
+
+    }
+
+    th, td {
+        border-bottom: 1px solid #ddd;
+    }
+
+    /*.linkbox{*/
+        /*float:right;*/
+        /*width:20%;*/
+        /*position:fixed;*/
+
+    /*}*/
+
 }

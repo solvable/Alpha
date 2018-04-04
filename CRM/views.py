@@ -19,9 +19,11 @@ def write_pdf_view(request, cust, job, ticket):
     jobsite = get_object_or_404(Jobsite, id=job)
     ticket = get_object_or_404(Ticket, id=ticket)
 
+    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet +"-workorder#"+ str(ticket.id)
+
     #Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachement; filename="somefilename.pdf"'
+    response['Content-Disposition'] = 'attachement; filename='+filename+".pdf"
 
     # Create the PDF object, using the response object as its "file"
     p = canvas.Canvas(response, pagesize=letter)

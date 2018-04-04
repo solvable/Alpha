@@ -39,7 +39,11 @@
             <td>Complete:</td>
             <td>{{ object.completed }}</td>
         </tr>
-
+       <tr>
+ <td>
+    <a href ="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn pink">Export PDF</a>
+</td>
+</tr>
     </table>
 
 {% endblock ticket_content %}
