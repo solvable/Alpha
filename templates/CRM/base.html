@@ -8,21 +8,26 @@
 
     </head>
     <body>
-    <div class="top-menu">
-         <a href="{% url 'index' %}" class="btn-blue">Home</a>
-        <a href ="{% url 'customer_create' %}" class="btn-green"> Add Customer</a>
 
-    </div>
-        {% block content %}
+            <div class="top-menu">
+                <a href="{% url 'index' %}" class="btn blue">Home</a>
+                <a href ="{% url 'customer_create' %}" class="btn green"> Add Customer</a>
+            </div>
+        <div class="row">
+                {% block content %}
+                {% endblock content %}
 
-        {% endblock content %}
 
-        {% block jobsite_content %}
-        {% endblock jobsite_content %}
 
-        {% block ticket_content %}
-        {% endblock ticket_content %}
+                {% block jobsite_content %}
+                {% endblock jobsite_content %}
 
+
+
+                {% block ticket_content %}
+                {% endblock ticket_content %}
+
+        </div>
     </body>
 
 

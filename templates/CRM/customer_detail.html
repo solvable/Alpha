@@ -5,73 +5,70 @@
 {% endblock addhead %}
 
 {% block content %}
-    <div class="row">
-    <div id='customer_info_div' class='col s3'>
-            <div class="card-panel">
-
-        <h2>Customer Info:</h2>
-        <a href="{% url 'customer_update' customer.pk %}" class="btn-orange" role="button">Edit</a>
-        <a href="{% url 'customer_delete' customer.pk %}"
-           onclick="return confirm('Are you sure want to delete this Customer?');"
-           class="btn-red" role="button">Delete</a></br>
-        <table class="metadata_table">
+    <div class="column">
+        <table>
             <tr>
-                <td>Customer Id:</td>
-                <td class="td-worktable">{{ customer.id }}</td>
+                <th class="title"><h3>Customer Info:</h3></th>
+                <th><a href="{% url 'customer_update' customer.pk %}" class="btn orange" role="button">Edit</a>
+                <a href="{% url 'customer_delete' customer.pk %}"
+                       onclick="return confirm('Are you sure want to delete this Customer?');" class="btn red"
+                       role="button">Delete</a></th>
+            </tr>
+            <tr>
                 <td>Source:</td>
                 <td class="td-worktable">{{ customer.source }}</td>
             </tr>
-            <tr>
-                <td>Created:</td>
-                <td class="td-worktable">{{ customer.created }}</td>
-                <td>Modified:</td>
-                <td class="td-worktable">{{ customer.modified }}</br></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td> Modified by:</td>
-                <td class="td-worktable">{{ customer.modified_by }}</td>
-            </tr>
-
 
             <tr>
                 <td>Customer Name:</td>
                 <td class="td-worktable">{{ customer.fullName }}</td>
-                <td>Phone 1:</td>
-                <td class="td-worktable">{{ customer.phone1 }}</td>
             </tr>
             <tr>
                 <td>Billing Address:</td>
                 <td class="td-worktable" rowspan="2">{{ customer.billStreet }}<br>{{ customer.billCity }},
                     {{ customer.billState }},{{ customer.billZip }}
                 </td>
+
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Phone 1:</td>
+                <td class="td-worktable">{{ customer.phone1 }}</td>
+
+            </tr>
+            <tr>
                 <td>Phone 2:</td>
                 <td class="td-worktable">{{ customer.phone2 }}</td>
             </tr>
             <tr>
-                <td></td>
+
                 <td>Email:</td>
                 <td class="td-worktable">{{ customer.email }}</td>
             </tr>
         </table>
     </div>
-</div>
 {% endblock content %}
 
 
 {% block jobsite_content %}
+<table>
+<tr>
+    <th class="title"><h2>Jobsites:</h2></th>
+    <th><a href="{% url 'jobsite_create' cust=object.pk %}" class="btn green">New Jobsite</a></th>
+</tr>
+<tr>
 
-    <h2>Jobsites:</h2>
-    <a href="{% url 'jobsite_create' cust=object.pk %}" class="btn-green">New Jobsite</a>
-
-    <h4>Existing  Jobsites:</h4>
     {% for jobsite in object.jobsite_set.all %}
-        <p>
-            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}" class="btn-yellow">{{ jobsite.slug }}</a>
+    <th> <p>
+            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}" class="btn yellow">{{ jobsite.slug }}</a>
         </p>
+        </th>
     {% endfor %}
 
+</tr>
+</table>
 {% endblock jobsite_content %}
 
 

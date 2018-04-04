@@ -1,32 +1,19 @@
 {% extends 'CRM/customer_detail.html' %}
 
 {% block jobsite_content %}
-
-<div class="row">
-    <div class="col s2">
-            <h3>Job Location:</h3>
-
-    <a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn-orange"
-       role="button">Edit Jobsite</a>
-    <a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}"
-           onclick="return confirm('Are you sure want to delete this Jobsite?');"
-           class="btn-red" role="button">Delete Jobsite</a></br>
+<div class="column">
     <table>
         <tr>
+            <th class="title"><h3>Job Location:</h3></th>
 
-            <td colspan="3">
-                {{ jobsite.jobStreet }}
-            </td>
-
+            <th><a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" class="btn orange" role="button">Edit</a>
+            <a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}" onclick="return confirm('Are you sure want to delete this Jobsite?');" class="btn red" role="button">Delete</a></th>
         </tr>
         <tr>
+            <td>Jobsite Address:</td>
             <td>
-                {{ jobsite.jobCity }}
-            </td>
-
-            <td>{{ jobsite.jobState }},</td>
-
-            <td>{{ jobsite.jobZip }}</td>
+                {{ jobsite.jobStreet }} <br>
+                {{ jobsite.jobCity }}&nbsp;{{ jobsite.jobState }},&nbsp;{{ jobsite.jobZip }}
         </tr>
         <tr>
             <td></td>
@@ -34,6 +21,8 @@
         <tr>
             <td>Stories:</td>
             <td>{{ jobsite.stories }}</td>
+        </tr>
+        <tr>
             <td>Access:</td>
             <td>{{ jobsite.access }}</td>
         </tr>
@@ -44,23 +33,49 @@
             </td>
         </tr>
     </table>
-    <br>
-    </div>
+</div>
 {% endblock jobsite_content %}
 
 {% block ticket_content %}
-    <div class="row">
-    <div class="col s2">
 
-    <h2>Tickets:</h2>
-        <a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn-green">Create a Ticket</a>
-
-    <h4>Existing Tickets</h4>
+    <div class="column">
+    <table>
+    <tr>
+        <th class="title">
+        <h3>Tickets:</h3></th>
+        <th>
+        <a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn green">Create a Ticket</a></th>
+    </tr>
+     <tr>
+            <td>Open Tickets:</td>
+        </tr>
+    <tr>
     {% for ticket in object.ticket_set.all %}
-        <p>
-            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn-yellow">{{ ticket.created }}{{ ticket.problem }} </a>
+        {% if not ticket.completed %}
+        <td><p>
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn yellow">{{ ticket.created }}<br>{{ ticket.problem }}</a>
         </p>
+        </td>
+        {%  endif %}
     {% endfor %}
-</div>
+    </tr>
+        <tr>
+            <td>Closed Tickets:</td>
+        </tr>
+
+        <tr>
+    {% for ticket in object.ticket_set.all %}
+        {% if ticket.completed %}
+        <td><p>
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn grey">{{ ticket.created }}<br>{{ ticket.problem }}</a>
+        </p>
+        </td>
+        {% endif %}
+    {% endfor %}
+    </tr>
+
+
+
+</table>
     </div>
 {% endblock ticket_content %}
