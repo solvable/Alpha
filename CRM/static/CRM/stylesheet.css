@@ -21,6 +21,15 @@
 }
 
 @media screen {
+
+    .page-container{
+        margin-left:50px;
+        margin-right:50px;
+        background-color: lightslategray;
+
+
+    }
+
    .top-menu {
         /*margin-top: 25px;*/
         display: flex;
@@ -32,14 +41,10 @@
     .content-container{
         display: flex;
         justify-content: left;
-        margin-left:15%;
         align-items: flex-start;
     }
 
-    .jobsite-content{
-        body > div.content-container > table:nth-child(3) > tbody > tr:nth-child(2) > th > p > a
 
-    }
 
     .job-item{
         width:100%;
@@ -72,8 +77,19 @@
 
     }
 
+    .edit-btn{
+        width:50%;
+        /*display: inline-block;*/
+    }
+    .delete-btn{
 
+        width:50%;
+        /*display: inline-block;*/
 
+    }
+    .pdf-btn{
+        width:100%;
+    }
 
     .grey {
         background-color: grey;
@@ -100,20 +116,37 @@
         background-color: #23628C;
     }
 
-    .pink {
-        background-color: deeppink;
+    .navy {
+        background-color: navy;
+        color:white;
     }
 
     table {
-
-
-
+        margin:2em;
     }
 
     th, td {
-        border-bottom: 1px solid #ddd;
+        /*border-bottom: 1px solid #ddd;*/
+        white-space: nowrap;
+    }
+    th{
+        text-align: left;
     }
 
+    .service{
+        background-color: #990202;
+        color:white;
+    }
+
+    .lead{
+        background-color: #029902;
+        color:white;
+    }
+
+    .inspection{
+        background-color: midnightblue;
+        color:white;
+    }
     /*.linkbox{*/
         /*float:right;*/
         /*width:20%;*/

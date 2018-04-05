@@ -3,7 +3,7 @@
 {% block ticket_content %}
 
 
-    <div class="row">
+
         <table>
             <tr>
                 <th class="title">
@@ -11,11 +11,10 @@
                 </th>
                 <th>
                     <a href="{% url 'ticket_update' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.id %}"
-                       class="btn orange"
-                       role="button">Edit</a>
+                       role="button"><div class="btn orange edit-btn">Edit</div></a>
                     <a href="{% url 'ticket_delete' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.pk %}"
                        onclick="return confirm('Are you sure want to delete this Jobsite?');"
-                       class="btn red" role="button">Delete</a></th>
+                       role="button"><div  class="btn red delete-btn">Delete</div></a></th>
             </tr>
 
             <tr>
@@ -24,7 +23,14 @@
             </tr>
             <tr>
                 <td>Call Type:</td>
-                <td>{{ object.call_type }}</td>
+
+                {% if object.call_type == "Service" %}
+                <td class="service">{{ object.call_type }}</td>
+                 {% elif object.call_type == "Estimate" %}
+                    <td class="lead">{{ object.call_type }}</td>
+                           {% elif object.call_type == "Inspection" %}
+                    <td class="inspection">{{ object.call_type }}</td>
+                {% endif %}
             </tr>
             <tr>
                 <td>Problem:</td>
@@ -41,8 +47,7 @@
             </tr>
             <tr>
                 <td>
-                    <a href="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"
-                       class="btn pink">Export PDF</a>
+                    <a href="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Export PDF</div></a>
                 </td>
             </tr>
         </table>

@@ -8,10 +8,10 @@
         <table>
             <tr>
                 <th class="title"><h3>Customer Info:</h3></th>
-                <th><a href="{% url 'customer_update' customer.pk %}" class="btn orange" role="button">Edit</a>
+                <th><a href="{% url 'customer_update' customer.pk %}"  role="button"><div class="btn orange edit-btn">Edit</div></a>
                 <a href="{% url 'customer_delete' customer.pk %}"
-                       onclick="return confirm('Are you sure want to delete this Customer?');" class="btn red"
-                       role="button">Delete</a></th>
+                       onclick="return confirm('Are you sure want to delete this Customer?');"
+                       role="button"><div class="btn red delete-btn">Delete</div></a></th>
             </tr>
             <tr>
                 <td>Source:</td>
@@ -20,7 +20,7 @@
 
             <tr>
                 <td>Customer Name:</td>
-                <td class="td-worktable">{{ customer.fullName }}</td>
+                <td class="td-worktable"><a href="{% url 'customer_detail' customer.pk %}"><div class="btn yellow">{{ customer.fullName }}</div></a></td>
             </tr>
             <tr>
                 <td>Billing Address:</td>
@@ -55,7 +55,7 @@
 <table>
 <tr>
     <th class="title"><h2>Jobsites:</h2></th>
-    <th><a href="{% url 'jobsite_create' cust=object.pk %}" class="btn green">New Jobsite</a></th>
+    <th><a href="{% url 'jobsite_create' cust=object.pk %}" ><div class="btn green">New Jobsite</div></a></th>
 </tr>
 <tr>
    <div class="jobsite-content">
