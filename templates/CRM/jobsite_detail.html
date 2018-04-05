@@ -1,7 +1,6 @@
 {% extends 'CRM/customer_detail.html' %}
 
 {% block jobsite_content %}
-<div class="column">
     <table>
         <tr>
             <th class="title"><h3>Job Location:</h3></th>
@@ -33,12 +32,10 @@
             </td>
         </tr>
     </table>
-</div>
 {% endblock jobsite_content %}
 
 {% block ticket_content %}
 
-    <div class="column">
     <table>
     <tr>
         <th class="title">
@@ -52,9 +49,9 @@
     <tr>
     {% for ticket in object.ticket_set.all %}
         {% if not ticket.completed %}
-        <td><p>
-            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn yellow">{{ ticket.created }}<br>{{ ticket.problem }}</a>
-        </p>
+        <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+
         </td>
         {%  endif %}
     {% endfor %}
@@ -66,9 +63,8 @@
         <tr>
     {% for ticket in object.ticket_set.all %}
         {% if ticket.completed %}
-        <td><p>
-            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn grey">{{ ticket.created }}<br>{{ ticket.problem }}</a>
-        </p>
+        <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn grey">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
         </td>
         {% endif %}
     {% endfor %}
@@ -77,5 +73,5 @@
 
 
 </table>
-    </div>
+
 {% endblock ticket_content %}

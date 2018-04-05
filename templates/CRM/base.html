@@ -13,7 +13,9 @@
                 <a href="{% url 'index' %}" class="btn blue">Home</a>
                 <a href ="{% url 'customer_create' %}" class="btn green"> Add Customer</a>
             </div>
-        <div class="row">
+
+            <div class="content-container">
+
                 {% block content %}
                 {% endblock content %}
 
@@ -32,6 +34,7 @@
 {#                      <a href="http://euramax-intl.dcatalog.com/r/Berger-BP-Catalog-2015/#page=1">Berger Brothers Catalog</a>#}
 {#                    </div>#}
 {#                {% endblock misc-links %}#}
+
 
 
         </div>

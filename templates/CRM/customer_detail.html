@@ -5,7 +5,6 @@
 {% endblock addhead %}
 
 {% block content %}
-    <div class="column">
         <table>
             <tr>
                 <th class="title"><h3>Customer Info:</h3></th>
@@ -48,24 +47,28 @@
                 <td class="td-worktable">{{ customer.email }}</td>
             </tr>
         </table>
-    </div>
 {% endblock content %}
 
 
 {% block jobsite_content %}
+
 <table>
 <tr>
     <th class="title"><h2>Jobsites:</h2></th>
     <th><a href="{% url 'jobsite_create' cust=object.pk %}" class="btn green">New Jobsite</a></th>
 </tr>
 <tr>
-
+   <div class="jobsite-content">
     {% for jobsite in object.jobsite_set.all %}
-    <th> <p>
-            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}" class="btn yellow">{{ jobsite.slug }}</a>
-        </p>
-        </th>
+    <tr>
+        <td colspan="2">
+
+            <a href="{% url 'jobsite_detail' cust=object.pk job=jobsite.pk %}"> <div class="job-item btn yellow">{{ jobsite.slug }}</div></a>
+
+        </td>
+    </tr>
     {% endfor %}
+    </div>
 
 </tr>
 </table>

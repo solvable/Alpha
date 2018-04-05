@@ -21,9 +21,36 @@
 }
 
 @media screen {
+   .top-menu {
+        /*margin-top: 25px;*/
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1em;
+    }
 
-    .top-menu {
-        margin-top: 25px;
+
+    .content-container{
+        display: flex;
+        justify-content: left;
+        margin-left:15%;
+        align-items: flex-start;
+    }
+
+    .jobsite-content{
+        body > div.content-container > table:nth-child(3) > tbody > tr:nth-child(2) > th > p > a
+
+    }
+
+    .job-item{
+        width:100%;
+
+    }
+
+    .ticket-content {
+
+    }
+    .ticket-item{
+        width:100%;
     }
 
     .row:after {
@@ -32,11 +59,8 @@
         clear: both;
     }
 
-    .column {
-        float: left;
-        width: 25%;
 
-    }
+
 
     .btn {
 
@@ -47,6 +71,9 @@
         text-align: center;
 
     }
+
+
+
 
     .grey {
         background-color: grey;
@@ -77,21 +104,9 @@
         background-color: deeppink;
     }
 
-    .content {
-
-    }
-
-    .jobsite-content {
-
-    }
-
-    .ticket-content {
-
-    }
-
     table {
-        border:1px solid #ddd;
-        border-collapse: collapse;
+
+
 
     }
 

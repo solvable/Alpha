@@ -7,7 +7,7 @@ from reportlab.lib.pagesizes import letter
 
 from django.http import HttpResponse
 from .models import Customer, Jobsite, Ticket
-
+from django.conf import settings
 
 
 def write_pdf_view(request, cust, job, ticket):
@@ -34,40 +34,55 @@ def write_pdf_view(request, cust, job, ticket):
     bill_add2 = customer.billCity + " " + customer.billState +","+customer.billZip
     job_add2  = jobsite.jobCity + " " +jobsite.jobState + ","+jobsite.jobZip
 
-
+    created = str(ticket.created)
+    created = created[:10]
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
     p.setFont("Times-Bold", 12)
-    p.drawString(45, height -50, "Customer Info")
+    p.drawString(50, height -51, "Customer Info:")
+    p.setFont("Times-Bold", 20)
+    p.drawString(225,height-25, "WORKORDER")
+    p.line(25,height-27, width-25, height-27)
 
     p.setFont("Times-Roman", 12)
-    p.drawString(50, height-64, customer.fullName)
-    p.drawString(50, height-78, customer.billStreet)
-    p.drawString(50, height-92, bill_add2)
-    p.drawString(50, height-110, 'Phone 1: ' + customer.phone1)
-    p.drawString(50, height-124, 'Phone 2: ' + customer.phone2)
-    p.drawString(50, height-138, 'Email: ' + customer.email)
-    p.drawString(50, height-152, 'Source: ' + customer.source)
 
+
+    p.drawString(50, height-65, customer.fullName)
+    p.drawString(50, height-79, customer.billStreet)
+    p.drawString(50, height-93, bill_add2)
+    p.drawString(50, height-107, customer.phone1)
+    p.drawString(50, height-121, customer.phone2)
+    p.drawString(50, height-135, customer.email)
+    p.drawString(50, height-149, 'Source: ' + customer.source)
 
     p.setFont("Times-Bold", 12)
-    p.drawString(220, height-50, "Jobsite Info")
+    p.drawString(225, height-51, "Jobsite Info:")
 
     p.setFont("Times-Roman", 12)
-    p.drawString(225, height-64, jobsite.jobStreet)
-    p.drawString(225, height-78, job_add2)
-    p.drawString(225, height-92, "Stories: " + str(jobsite.stories))
-    p.drawString(225, height-106, "Access: " + jobsite.access)
+    p.drawString(225, height-65, jobsite.jobStreet)
+    p.drawString(225, height-79, job_add2)
+    p.drawString(225, height-93, "Stories: " + str(jobsite.stories))
+    p.drawString(225, height-107, "Access: " + jobsite.access)
 
     p.setFont("Times-Bold", 12)
-    p.drawString(400, height-50, "Workorder Info")
+    p.drawString(50, height-172, "Workorder Info:")
 
     p.setFont("Times-Roman", 12)
-    p.drawString(405, height-64, ticket.call_type)
-    p.drawString(405, height-78, str(ticket.created))
-    p.drawString(405, height-92, ticket.problem)
-    p.drawString(405, height-106, ticket.notes)
+
+    #make neon yellow box
+    p.setFillColorRGB(204,255,0, alpha=None)
+    p.rect(398, height-69, 100, 16, stroke=1, fill=1)
+
+    # set color back to black for text
+    p.setFillColorRGB(0,0,0, alpha=None)
+
+    p.drawString(400, height-65, "Call type: " + ticket.call_type)
+    p.drawString(400, height-51, "Date created: " + created)
+    p.drawString(50, height-186, "Problem: " + ticket.problem)
+    p.drawString(50, height-200, "Notes: " + ticket.notes)
+
+    p.line(25,height-227, width-25, height-227)
 
 
 

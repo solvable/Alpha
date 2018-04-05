@@ -4,46 +4,47 @@
 
 
     <div class="row">
-    <table>
-        <tr>
-            <th class="title">
-    <h3>Ticket Information:</h3>
-</th>
-            <th>
-    <a href="{% url 'ticket_update' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.id %}"
-       class="btn orange"
-       role="button">Edit</a>
-    <a href="{% url 'ticket_delete' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.pk %}"
-       onclick="return confirm('Are you sure want to delete this Jobsite?');"
-       class="btn red" role="button">Delete</a></th>
-</tr>
+        <table>
+            <tr>
+                <th class="title">
+                    <h3>Ticket Information:</h3>
+                </th>
+                <th>
+                    <a href="{% url 'ticket_update' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.id %}"
+                       class="btn orange"
+                       role="button">Edit</a>
+                    <a href="{% url 'ticket_delete' cust=ticket.customer_id.id job=ticket.jobsite_id_id ticket=ticket.pk %}"
+                       onclick="return confirm('Are you sure want to delete this Jobsite?');"
+                       class="btn red" role="button">Delete</a></th>
+            </tr>
 
-        <tr>
-            <td>Modified:</td>
-            <td>{{ object.modified }}</td>
-        </tr>
-        <tr>
-            <td>Call Type:</td>
-            <td>{{ object.call_type }}</td>
-        </tr>
-        <tr>
-            <td>Problem:</td>
-            <td>{{ object.problem }}</td>
-        </tr>
-        <tr>
-            <td>Notes:</td>
-            <td>{{ object.notes }}</td>
-        </tr>
+            <tr>
+                <td>Modified:</td>
+                <td>{{ object.modified }}</td>
+            </tr>
+            <tr>
+                <td>Call Type:</td>
+                <td>{{ object.call_type }}</td>
+            </tr>
+            <tr>
+                <td>Problem:</td>
+                <td>{{ object.problem }}</td>
+            </tr>
+            <tr>
+                <td>Notes:</td>
+                <td>{{ object.notes }}</td>
+            </tr>
 
-        <tr>
-            <td>Complete:</td>
-            <td>{{ object.completed }}</td>
-        </tr>
-       <tr>
- <td>
-    <a href ="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}" class="btn pink">Export PDF</a>
-</td>
-</tr>
-    </table>
+            <tr>
+                <td>Complete:</td>
+                <td>{{ object.completed }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"
+                       class="btn pink">Export PDF</a>
+                </td>
+            </tr>
+        </table>
 
 {% endblock ticket_content %}
