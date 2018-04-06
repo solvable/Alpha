@@ -21,13 +21,21 @@
 }
 
 @media screen {
+    body{
+        background-color: dimgray;
+    }
+    .index-container{
+        display:flex;
+        flex-wrap: nowrap;
 
-    .page-container{
+        }
+
+    .content-container{
+        display: flex;
         margin-left:50px;
         margin-right:50px;
-        background-color: lightslategray;
-
-
+        background-color: white;
+        height:100%;
     }
 
    .top-menu {
@@ -74,16 +82,18 @@
         padding: 10px;
         display: inline-block;
         text-align: center;
+        box-shadow: 3px 3px 2px grey;
 
     }
 
+
     .edit-btn{
-        width:50%;
+        width:90%;
         /*display: inline-block;*/
     }
     .delete-btn{
 
-        width:50%;
+        width:90%;
         /*display: inline-block;*/
 
     }
@@ -108,7 +118,7 @@
     }
 
     .yellow {
-        background-color: #E1ED63;
+        background-color: #F5D76E;
         color: black;
     }
 
@@ -123,11 +133,13 @@
 
     table {
         margin:2em;
+        table-layout: fixed;
+        width:400px;
     }
 
     th, td {
         /*border-bottom: 1px solid #ddd;*/
-        white-space: nowrap;
+
     }
     th{
         text-align: left;
@@ -147,6 +159,23 @@
         background-color: midnightblue;
         color:white;
     }
+
+    .open_tickets{
+        /*display: flex;*/
+        flex:10;
+        order:1;
+        /*flex-direction:column;*/
+    }
+
+    .latest_customers{
+        /*display: flex;*/
+        flex:1;
+        order:2;
+        /*flex-direction: column;*/
+
+    }
+
+
     /*.linkbox{*/
         /*float:right;*/
         /*width:20%;*/

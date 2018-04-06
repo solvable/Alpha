@@ -1,9 +1,27 @@
 {% extends 'CRM/base.html' %}
 
 {% block content %}
-    {% for object in customer_list %}
-        <p>
-             <a href="{% url 'customer_detail' object.pk %}" class="btn yellow">{{ object.fullName }}</a>
-        </p>
+    <div class="index-container">
+    <div class="latest_customers">
+    Latest Customers:<br>
+    {% for ticket in latest_tickets %}
+             <a href="{% url 'customer_detail' cust=ticket.customer_id.pk %}"><div class="btn yellow">{{ ticket.customer_id.fullName }}</div></a>
     {% endfor %}
+    </div>
+
+
+    <div class="open_tickets">
+    Open Tickets:<br>
+    {% for ticket in open_tickets %}
+             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}"><div class="btn yellow">
+                 {{ ticket.created }}<br>
+                 Ticket No: {{ ticket.id }}<br>
+                 {{ ticket.customer_id.fullName }}<br>
+                 {{ ticket.jobsite_id.jobStreet }}<br>
+
+             </div></a>
+    {% endfor %}
+
+    </div>
+</div>
 {% endblock content %}

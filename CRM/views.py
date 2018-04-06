@@ -99,8 +99,18 @@ def write_pdf_view(request, cust, job, ticket):
 
 
 class IndexView(generic.ListView):
-    model = Customer
+    model = Ticket
     template_name = 'CRM/index.html'
+
+    latest_tickets = Ticket.objects.order_by('-created')[:10]
+    open_tickets = Ticket.objects.filter(completed=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_tickets'] = IndexView.latest_tickets
+        context['open_tickets'] = IndexView.open_tickets
+        return context
+
 
 
 '''

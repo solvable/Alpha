@@ -3,10 +3,11 @@
 {% block jobsite_content %}
     <table>
         <tr>
-            <th class="title"><h3>Job Location:</h3></th>
-
-            <th><a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" role="button"><div class="btn orange edit-btn">Edit</div></a>
-            <a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}" onclick="return confirm('Are you sure want to delete this Jobsite?');" role="button"><div class="btn red delete-btn" >Delete</div></a></th>
+            <th class="title" colspan="2"><h1>Jobsite Information:</h1></th>
+        </tr>
+        <tr>
+            <td><a href="{% url 'jobsite_update' cust=jobsite.customer_id.id job=jobsite.pk %}" role="button"><div class="btn orange edit-btn">Edit</div></a></td>
+            <td><a href="{% url 'jobsite_delete' cust=object.customer_id.id job=object.pk %}" onclick="return confirm('Are you sure want to delete this Jobsite?');" role="button"><div class="btn red delete-btn" >Delete</div></a></td>
         </tr>
         <tr>
             <td>Jobsite Address:</td>
@@ -41,7 +42,7 @@
     <table>
     <tr>
         <th class="title">
-        <h3>Tickets:</h3></th>
+        <h1>Tickets:</h1></th>
         <th>
         <a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn green">Create a Ticket</a></th>
     </tr>
@@ -51,7 +52,7 @@
     <tr>
     {% for ticket in object.ticket_set.all %}
         {% if not ticket.completed %}
-        <td colspan="2">
+        <td colspan="1">
             <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
 
         </td>
@@ -65,7 +66,7 @@
         <tr>
     {% for ticket in object.ticket_set.all %}
         {% if ticket.completed %}
-        <td colspan="2">
+        <td colspan="1">
             <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn grey">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
         </td>
         {% endif %}

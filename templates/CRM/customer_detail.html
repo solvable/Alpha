@@ -6,12 +6,15 @@
 
 {% block content %}
         <table>
+        <tr>
+                 <th class="title" colspan="2"><h1>Customer Information:</h1></th>
+        </tr>
             <tr>
-                <th class="title"><h3>Customer Info:</h3></th>
-                <th><a href="{% url 'customer_update' customer.pk %}"  role="button"><div class="btn orange edit-btn">Edit</div></a>
-                <a href="{% url 'customer_delete' customer.pk %}"
+
+                <td><a href="{% url 'customer_update' customer.pk %}"  role="button"><div class="btn orange edit-btn">Edit</div></a></td>
+                <td><a href="{% url 'customer_delete' customer.pk %}"
                        onclick="return confirm('Are you sure want to delete this Customer?');"
-                       role="button"><div class="btn red delete-btn">Delete</div></a></th>
+                       role="button"><div class="btn red delete-btn">Delete</div></a></td>
             </tr>
             <tr>
                 <td>Source:</td>
