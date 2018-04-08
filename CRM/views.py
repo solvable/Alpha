@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from .models import Customer, Jobsite, Ticket
 from django.conf import settings
 from docx import Document
+from docx.shared import Inches
+import datetime
 from io import StringIO
 import os
 
@@ -29,6 +31,8 @@ def write_docx_view(request, cust, job, ticket):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
     filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet +"-workorder#"+ str(ticket.id)
+    doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
+
 
     #Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
@@ -36,21 +40,36 @@ def write_docx_view(request, cust, job, ticket):
 
 
     # Create the docx object
-    document  = Document()
+    document  = Document(doc)
 
     # Set the filename variable
     docx_title="%s.docx" % (filename,)
 
     # Add content to docx file
-    >> > style = document.styles.add_style('Indent', WD_STYLE_TYPE.PARAGRAPH)
-    >> > paragraph_format = style.paragraph_format
-    >> > paragraph_format.left_indent = Inches(0.25)
-    >> > paragraph_format.first_line_indent = Inches(-0.25)
-    >> > paragraph_format.space_before = Pt(12)
-    >> > paragraph_format.widow_control = True
 
-    document.add_picture(headerimage)
-    document.add_heading(docx_title, 0)
+    #setup variables for docx table
+    today = datetime.date.today()
+    bill1 = customer.billStreet
+    bill2 = '%s, %s, %s' % (customer.billCity, customer.billState, customer.billZip)
+    phone = customer.phone1
+    email = customer.email
+
+    table = document.add_table(rows=3, cols=2)
+    # fill in row 1
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = '%s' % (customer.fullName,)
+    hdr_cells[1].text = '%s' % (today,)
+
+    # fill in row 2
+    hdr_cells2 = table.rows[1].cells
+    hdr_cells2[0].text = '%s' % (bill1,)
+    hdr_cells2[1].test = '%s' % (phone,)
+
+
+    # fill in row 3
+    hdr_cells3 = table.rows[2].cells
+    hdr_cells3[0].text = '%s' % (bill2,)
+    hdr_cells3[1].test = '%s' % (email,)
 
 
     # save docx
