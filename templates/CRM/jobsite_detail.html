@@ -49,28 +49,75 @@
      <tr>
             <td><h4>Open Tickets:</h4></td>
         </tr>
-    <tr>
+
     {% for ticket in object.ticket_set.all %}
-        {% if not ticket.completed %}
-        <td colspan="1">
-            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+        {% if not ticket.completed and ticket.call_type == "Estimate"%}
+            <tr>
+        <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow lead">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
 
         </td>
+        </tr>
+        {% elif not ticket.completed and ticket.call_type == "Service" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow service">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+
+        </td>
+        </tr>
+
+        {% elif not ticket.completed  and ticket.call_type == "Inspection" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow inspection">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+
+        </td>
+            </tr>
         {%  endif %}
+
+
+
+
+
     {% endfor %}
     </tr>
         <tr>
             <td><h4>Closed Tickets:</h4></td>
         </tr>
 
+
+
+        {% for ticket in object.ticket_set.all %}
+        {% if ticket.completed and ticket.call_type == "Estimate"%}
         <tr>
-    {% for ticket in object.ticket_set.all %}
-        {% if ticket.completed %}
-        <td colspan="1">
-            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn grey">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+        <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow lead-completed">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+
         </td>
-        {% endif %}
+        </tr>
+        {% elif ticket.completed and ticket.call_type == "Service" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow service-completed">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+
+        </td>
+        </tr>
+
+        {% elif ticket.completed  and ticket.call_type == "Inspection" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk%}"><div class="ticket-item btn yellow inspection-completed">{{ ticket.created }}<br>{{ ticket.problem }}</div></a>
+
+        </td>
+            </tr>
+        {%  endif %}
+
+
+
+
+
     {% endfor %}
+
     </tr>
 
 

@@ -249,6 +249,9 @@ class JobsiteDetailView(generic.DetailView):
     template_name = 'CRM/jobsite_detail.html'
     pk_url_kwarg = "job"
 
+
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['customer'] = get_object_or_404(Customer, id=self.kwargs['cust'])
