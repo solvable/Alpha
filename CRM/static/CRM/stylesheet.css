@@ -25,9 +25,7 @@
         background-color: dimgray;
     }
     .index-container{
-        display:flex;
-        flex-wrap: nowrap;
-
+        display: flex;
         }
 
     .content-container{
@@ -180,26 +178,46 @@
 
 
     .open_tickets{
-        /*display: flex;*/
-        flex:10;
-        order:1;
-        /*flex-direction:column;*/
+        flex-wrap: wrap;
+        margin:10px;
     }
 
     .latest_customers{
-        /*display: flex;*/
-        flex:1;
-        order:2;
-        /*flex-direction: column;*/
+        flex-wrap: wrap;
+        width: 10%;
+        order: 2;
+        margin:10px;
 
+    }
+    .open_tickets .btn {
+        width:15%;
+        height:auto;
+        order:1;
+    }
+
+    .linkbox{
+        display:inline-block;
+        
+        order:3;
+        background-color:lightgray;
+    }
+    .linkbox a{
+        margin-left:10px;
+        margin-right:10px;
+        color:red;
+    }
+
+    .box{
+        display: inline-block;
+        width:25px;
+        height:25px;
+    }
+    .legend{
+        background-color: white;
+        margin-left:60%;
+        padding:5px;
     }
 
 
-    /*.linkbox{*/
-        /*float:right;*/
-        /*width:20%;*/
-        /*position:fixed;*/
-
-    /*}*/
 
 }

@@ -4,6 +4,8 @@
     <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
+<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
 
 
     </head>
@@ -12,6 +14,20 @@
             <div class="top-menu">
                 <a href="{% url 'index' %}" ><div class="btn blue">Home</div></a>
                 <a href ="{% url 'customer_create' %}"> <div  class="btn green">Add Customer</div></a>
+                <div class="legend">
+                <div class="lead box"></div>Estimate
+                <div class="service box"></div>Service
+                <div class="inspection box "></div>Inspection
+
+                                        <div class="linkbox">
+        <a href="http://www.gmail.com"><i class="fa fa-envelope fa-3x" style="color:red;" aria-hidden="true"></i></a>
+        <a href="http://www.authorize.net"><i class="fa fa-credit-card fa-3x" style="color:midnightblue;" aria-hidden="true"></i></a>
+
+    </div>
+                    </div>
+
+
+
             </div>
 
             <div class="content-container">
