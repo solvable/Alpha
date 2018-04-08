@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from .models import Customer, Jobsite, Ticket
 from django.conf import settings
 from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+
 from docx.shared import Inches
 import datetime
 from io import StringIO
@@ -51,25 +53,56 @@ def write_docx_view(request, cust, job, ticket):
     today = datetime.date.today()
     bill1 = customer.billStreet
     bill2 = '%s, %s, %s' % (customer.billCity, customer.billState, customer.billZip)
-    phone = customer.phone1
+    phone = customer.fullName
     email = customer.email
 
+    # Create table
     table = document.add_table(rows=3, cols=2)
+
     # fill in row 1
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = '%s' % (customer.fullName,)
-    hdr_cells[1].text = '%s' % (today,)
+    row1 = table.rows[0].cells
+    row1[0].text = '%s' % (customer.fullName,)
+    row1[1].text = '%s' % (today,)
+    row1[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
     # fill in row 2
-    hdr_cells2 = table.rows[1].cells
-    hdr_cells2[0].text = '%s' % (bill1,)
-    hdr_cells2[1].test = '%s' % (phone,)
-
+    row2 = table.rows[1].cells
+    row2[0].text = bill1
+    row2[1].text = customer.phone1
+    row2[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
     # fill in row 3
-    hdr_cells3 = table.rows[2].cells
-    hdr_cells3[0].text = '%s' % (bill2,)
-    hdr_cells3[1].test = '%s' % (email,)
+    row3 = table.rows[2].cells
+    row3[0].text = bill2
+    row3[1].text = customer.email
+    row3[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    # add Job location
+    p = document.add_paragraph()
+    p =document.add_paragraph()
+    p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,)).bold = True
+
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+
+    p.add_run('TOTAL PRICE: $').bold = True
+    p = document.add_paragraph()
+
+
+
+    p = document.add_paragraph()
+    p.paragraph_format.left_indent = Inches(4.5)
+    p.add_run('THANK YOU').bold = True
+    # p = document.add_paragraph()
+    # p.paragraph_format.left_indent = Inches(0.5)
+    # p.add_run('USERNAME').bold = True // add in username from logged in user
+    p = document.add_paragraph()
+    p.paragraph_format.left_indent = Inches(4.5)
+    p.add_run('REITER ROOFING').bold = True
 
 
     # save docx
