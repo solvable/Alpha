@@ -1,20 +1,18 @@
-from django.views import generic
-from django.urls import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404
+import datetime
+import os
 from io import BytesIO
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
 
 from django.http import HttpResponse
-from .models import Customer, Jobsite, Ticket
-from django.conf import settings
+from django.shortcuts import get_object_or_404
+from django.urls import reverse, reverse_lazy
+from django.views import generic
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-
 from docx.shared import Inches
-import datetime
-from io import StringIO
-import os
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
+from .models import Customer, Jobsite, Ticket
 
 
 def write_docx_view(request, cust, job, ticket):
@@ -32,24 +30,22 @@ def write_docx_view(request, cust, job, ticket):
     # Set Some Variables for filename and path
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
-    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet +"-workorder#"+ str(ticket.id)
+    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
     doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
 
-
-    #Create HttpResponse object with appropriate PDF headers
+    # Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    response['Content-Disposition'] = 'attachement; filename='+filename+".docx"
-
+    response['Content-Disposition'] = 'attachement; filename=' + filename + ".docx"
 
     # Create the docx object
-    document  = Document(doc)
+    document = Document(doc)
 
     # Set the filename variable
-    docx_title="%s.docx" % (filename,)
+    docx_title = "%s.docx" % (filename,)
 
     # Add content to docx file
 
-    #setup variables for docx table
+    # setup variables for docx table
     today = datetime.date.today()
     bill1 = customer.billStreet
     bill2 = '%s, %s, %s' % (customer.billCity, customer.billState, customer.billZip)
@@ -78,7 +74,7 @@ def write_docx_view(request, cust, job, ticket):
     row3[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     # add Job location
     p = document.add_paragraph()
-    p =document.add_paragraph()
+    p = document.add_paragraph()
     p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,)).bold = True
 
     p = document.add_paragraph()
@@ -92,8 +88,6 @@ def write_docx_view(request, cust, job, ticket):
     p.add_run('TOTAL PRICE: $').bold = True
     p = document.add_paragraph()
 
-
-
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(4.5)
     p.add_run('THANK YOU').bold = True
@@ -103,7 +97,6 @@ def write_docx_view(request, cust, job, ticket):
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(4.5)
     p.add_run('REITER ROOFING').bold = True
-
 
     # save docx
     document.save(response)
@@ -115,11 +108,7 @@ def write_docx_view(request, cust, job, ticket):
     return response
 
 
-
-
-
 def write_pdf_view(request, cust, job, ticket):
-
     current_path = request.get_full_path()
     print(current_path)
 
@@ -127,11 +116,11 @@ def write_pdf_view(request, cust, job, ticket):
     jobsite = get_object_or_404(Jobsite, id=job)
     ticket = get_object_or_404(Ticket, id=ticket)
 
-    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet +"-workorder#"+ str(ticket.id)
+    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
 
-    #Create HttpResponse object with appropriate PDF headers
+    # Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachement; filename='+filename+".pdf"
+    response['Content-Disposition'] = 'attachement; filename=' + filename + ".pdf"
 
     # Create the PDF object, using the response object as its "file"
     p = canvas.Canvas(response, pagesize=letter)
@@ -140,8 +129,8 @@ def write_pdf_view(request, cust, job, ticket):
     # Setup buffer
     buffer = BytesIO()
 
-    bill_add2 = customer.billCity + " " + customer.billState +","+customer.billZip
-    job_add2  = jobsite.jobCity + " " +jobsite.jobState + ","+jobsite.jobZip
+    bill_add2 = customer.billCity + " " + customer.billState + "," + customer.billZip
+    job_add2 = jobsite.jobCity + " " + jobsite.jobState + "," + jobsite.jobZip
 
     created = str(ticket.created)
     created = created[:10]
@@ -149,52 +138,48 @@ def write_pdf_view(request, cust, job, ticket):
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
     p.setFont("Times-Bold", 12)
-    p.drawString(50, height -51, "Customer Info:")
+    p.drawString(50, height - 51, "Customer Info:")
     p.setFont("Times-Bold", 20)
-    p.drawString(225,height-25, "WORK ORDER")
-    p.line(25,height-27, width-25, height-27)
+    p.drawString(225, height - 25, "WORK ORDER")
+    p.line(25, height - 27, width - 25, height - 27)
 
     p.setFont("Times-Roman", 12)
 
-
-    p.drawString(50, height-65, customer.fullName)
-    p.drawString(50, height-79, customer.billStreet)
-    p.drawString(50, height-93, bill_add2)
-    p.drawString(50, height-107, customer.phone1)
-    p.drawString(50, height-121, customer.phone2)
-    p.drawString(50, height-135, customer.email)
-    p.drawString(50, height-149, 'Source: ' + customer.source)
+    p.drawString(50, height - 65, customer.fullName)
+    p.drawString(50, height - 79, customer.billStreet)
+    p.drawString(50, height - 93, bill_add2)
+    p.drawString(50, height - 107, customer.phone1)
+    p.drawString(50, height - 121, customer.phone2)
+    p.drawString(50, height - 135, customer.email)
+    p.drawString(50, height - 149, 'Source: ' + customer.source)
 
     p.setFont("Times-Bold", 12)
-    p.drawString(225, height-51, "Jobsite Info:")
+    p.drawString(225, height - 51, "Jobsite Info:")
 
     p.setFont("Times-Roman", 12)
-    p.drawString(225, height-65, jobsite.jobStreet)
-    p.drawString(225, height-79, job_add2)
-    p.drawString(225, height-93, "Stories: " + str(jobsite.stories))
-    p.drawString(225, height-107, "Access: " + jobsite.access)
+    p.drawString(225, height - 65, jobsite.jobStreet)
+    p.drawString(225, height - 79, job_add2)
+    p.drawString(225, height - 93, "Stories: " + str(jobsite.stories))
+    p.drawString(225, height - 107, "Access: " + jobsite.access)
 
     p.setFont("Times-Bold", 12)
-    p.drawString(50, height-172, "Workorder Info:")
+    p.drawString(50, height - 172, "Workorder Info:")
 
     p.setFont("Times-Roman", 12)
 
-    #make neon yellow box
-    p.setFillColorRGB(204,255,0, alpha=None)
-    p.rect(398, height-69, 100, 16, stroke=1, fill=1)
+    # make neon yellow box
+    p.setFillColorRGB(204, 255, 0, alpha=None)
+    p.rect(398, height - 69, 100, 16, stroke=1, fill=1)
 
     # set color back to black for text
-    p.setFillColorRGB(0,0,0, alpha=None)
+    p.setFillColorRGB(0, 0, 0, alpha=None)
 
-    p.drawString(400, height-65, "Call type: " + ticket.call_type)
-    p.drawString(400, height-51, "Date created: " + created)
-    p.drawString(50, height-186, "Problem: " + ticket.problem)
-    p.drawString(50, height-200, "Notes: " + ticket.notes)
+    p.drawString(400, height - 65, "Call type: " + ticket.call_type)
+    p.drawString(400, height - 51, "Date created: " + created)
+    p.drawString(50, height - 186, "Problem: " + ticket.problem)
+    p.drawString(50, height - 200, "Notes: " + ticket.notes)
 
-    p.line(25,height-227, width-25, height-227)
-
-
-
+    p.line(25, height - 227, width - 25, height - 227)
 
     # Close the PDF object cleanly, and we're done.
     p.showPage()
@@ -219,7 +204,6 @@ class IndexView(generic.ListView):
         context['latest_tickets'] = IndexView.latest_tickets
         context['open_tickets'] = IndexView.open_tickets
         return context
-
 
 
 '''
@@ -258,6 +242,8 @@ class CustomerDeleteView(generic.DeleteView):
 '''
 Jobsite Views
 '''
+
+
 class JobsiteDetailView(generic.DetailView):
     model = Jobsite
     template_name = 'CRM/jobsite_detail.html'
@@ -274,8 +260,6 @@ class JobsiteCreateView(generic.CreateView):
     template_name = 'CRM/jobsite_create.html'
     pk_url_kwarg = "cust"
     fields = ['customer_id', 'jobStreet', 'jobCity', 'jobState', 'jobZip', 'stories', 'access', 'notes']
-
-
 
     def get_initial(self):
         customer = get_object_or_404(Customer, pk=self.kwargs.get('cust'))
@@ -304,6 +288,8 @@ class JobsiteDeleteView(generic.DeleteView):
 '''
 Ticket Views
 '''
+
+
 class TicketDetailView(generic.DetailView):
     model = Ticket
     template_name = 'CRM/ticket_detail.html'
@@ -330,6 +316,7 @@ class TicketCreateView(generic.CreateView):
             'customer_id': customer.id,
             'jobsite_id': jobsite.id
         }
+
 
 class TicketUpdateView(generic.UpdateView):
     model = Ticket
