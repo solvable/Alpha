@@ -8,6 +8,62 @@ from reportlab.lib.pagesizes import letter
 from django.http import HttpResponse
 from .models import Customer, Jobsite, Ticket
 from django.conf import settings
+from docx import Document
+from io import StringIO
+import os
+
+
+def write_docx_view(request, cust, job, ticket):
+    current_path = request.get_full_path()
+    print(current_path)
+
+    # load objects
+    customer = get_object_or_404(Customer, id=cust)
+    jobsite = get_object_or_404(Jobsite, id=job)
+    ticket = get_object_or_404(Ticket, id=ticket)
+
+    # setup buffer
+    buffer = BytesIO()
+
+    # Set Some Variables for filename and path
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
+    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet +"-workorder#"+ str(ticket.id)
+
+    #Create HttpResponse object with appropriate PDF headers
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachement; filename='+filename+".docx"
+
+
+    # Create the docx object
+    document  = Document()
+
+    # Set the filename variable
+    docx_title="%s.docx" % (filename,)
+
+    # Add content to docx file
+    >> > style = document.styles.add_style('Indent', WD_STYLE_TYPE.PARAGRAPH)
+    >> > paragraph_format = style.paragraph_format
+    >> > paragraph_format.left_indent = Inches(0.25)
+    >> > paragraph_format.first_line_indent = Inches(-0.25)
+    >> > paragraph_format.space_before = Pt(12)
+    >> > paragraph_format.widow_control = True
+
+    document.add_picture(headerimage)
+    document.add_heading(docx_title, 0)
+
+
+    # save docx
+    document.save(response)
+
+    # Get the value of the BytesIO buffer and write it to the response.
+    docx = buffer.getvalue()
+    buffer.close()
+    response.write(docx)
+    return response
+
+
+
 
 
 def write_pdf_view(request, cust, job, ticket):
@@ -29,6 +85,7 @@ def write_pdf_view(request, cust, job, ticket):
     p = canvas.Canvas(response, pagesize=letter)
     width, height = letter
 
+    # Setup buffer
     buffer = BytesIO()
 
     bill_add2 = customer.billCity + " " + customer.billState +","+customer.billZip
@@ -42,7 +99,7 @@ def write_pdf_view(request, cust, job, ticket):
     p.setFont("Times-Bold", 12)
     p.drawString(50, height -51, "Customer Info:")
     p.setFont("Times-Bold", 20)
-    p.drawString(225,height-25, "WORKORDER")
+    p.drawString(225,height-25, "WORK ORDER")
     p.line(25,height-27, width-25, height-27)
 
     p.setFont("Times-Roman", 12)
