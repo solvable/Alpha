@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include, url
 from django.conf import settings
 from CRM import views
+from Estimates.views import CreateEstimateView
 from django.conf.urls.static import static
 
 
@@ -43,8 +44,13 @@ urlpatterns = [
     path('customer/update/<cust>', views.CustomerUpdateView.as_view(), name='customer_update'),
     path('customer/delete/<cust>', views.CustomerDeleteView.as_view(), name='customer_delete'),
     path('generate-pdf/<cust>/<job>/<ticket>', views.write_pdf_view, name='generate-pdf'),
-    path('generate-docx/<cust>/<job>/<ticket>', views.write_docx_view, name='generate-docx')
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('generate-docx/<cust>/<job>/<ticket>', views.write_docx_view, name='generate-docx'),
+    path('create-estimate/<cust>/<job>/<ticket>', CreateEstimateView.as_view(), name='create-estimate'),
+
+
+    ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [

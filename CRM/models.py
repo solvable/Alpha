@@ -118,7 +118,7 @@ class Ticket(models.Model):
 
     customer_id = models.ForeignKey('Customer', on_delete=models.CASCADE)
     jobsite_id = models.ForeignKey('Jobsite', on_delete=models.CASCADE)
-    call_type = models.CharField(choices=TITLES,max_length=10)
+    call_type = models.CharField(choices=TITLES, max_length=10)
     problem = models.CharField(max_length=200, null=True)
     completed = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True, null=True)

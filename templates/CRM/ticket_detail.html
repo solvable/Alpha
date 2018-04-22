@@ -55,6 +55,11 @@
                     <a href="{% url 'generate-docx' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Export DocX</div></a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'create-estimate' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Create Estimate</div></a>
+                </td>
+            </tr>
         </table>
 
 {% endblock ticket_content %}
