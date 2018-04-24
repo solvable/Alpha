@@ -100,7 +100,7 @@ class Jobsite(models.Model):
         return str(self.id)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.jobStreet)
 
     def __delete__(self, instance):
         return reverse("jobsite_detail", args=[str(self.id)])

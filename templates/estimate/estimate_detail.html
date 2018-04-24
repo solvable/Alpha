@@ -1,60 +1,57 @@
 {% extends 'CRM/base.html' %}
 {% block content %}
-        <table>
-            <tr>
-                <th class="title" colspan="2">
-                    <h1>Estimate Information:</h1>
-                </th>
-            </tr>
-        <tr>
-                <td>
+
                     <a href="{% url 'estimate-update' cust=estimate.customer job=estimate.jobsite ticket=estimate.ticket est=estimate.id%}"
-                       role="button"><div class="btn orange edit-btn">Edit</div></a></td>
+                       role="button"><div class="btn orange edit-btn">Edit</div></a>
 {#                   <td> <a href="{% url 'estimate-delete' cust=estimate.customer job=estimate.jobsite ticket=estimate.ticket est=estimate.id%}"#}
 {#                       onclick="return confirm('Are you sure want to delete this Jobsite?');"#}
 {#                       role="button"><div  class="btn red delete-btn">Delete</div></a></td>#}
-            </tr>
+
+
+    <table class="estimate-table">
+
             <tr>
-                <td>Customer:</td>
                 <td>{{ object.customer.fullName }}</td>
+                <td></td>
+                <td>{{ object.created|date:'m-d-Y'}}</td>
             </tr>
 
             <tr>
-                <td>Billing Address:</td>
                 <td>{{ object.billStreet }}</td>
+                <td></td>
+                <td>{{ object.phone }}</td>
             </tr>
             <tr>
                 <td colspan="2">{{ object.billCityStateZip }}</td>
-            </tr>
 
-            <tr>
-                <td>Phone:</td>
-                <td>{{ object.phone }}</td>
-            </tr>
-
-            <tr>
-                <td>Email:</td>
                 <td>{{ object.email }}</td>
             </tr>
-
             <tr>
-                <td>Created:</td>
-                <td>{{ object.created }}</td>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td><br></td>
             </tr>
             {% for section in object.section_set.all %}
             <tr>
-                <td>{{ section.heading }}</td>
+                <td></td>
+                <td class="section-heading">{{ section.heading }}</td>
+                <td>({{ section.price }})</td>
             </tr>
             <tr>
-                <td>{{ section.description }}</td>
+                <td colspan="3">{{ section.description }}</td>
             </tr>
             <tr>
-                <td>{{ section.price }}</td>
-            </tr>
             {% endfor %}
             <tr>
-                <td>Total:</td>
-                <td>{{ object.total }}</td>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td>Total: ${{ object.total }}</td>
+
             </tr>
 
         </table>

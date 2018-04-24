@@ -64,6 +64,11 @@ class EstimateUpdateView(generic.UpdateView):
     pk_url_kwarg = 'est'
     fields='__all__'
 
+    def get_success_url(self):
+        return reverse('estimate-detail',
+                       kwargs={'cust': self.object.customer, 'job': self.object.jobsite, 'ticket': self.object.ticket,
+                               'est': self.object.id})
+
     def get_context_data(self, **kwargs):
         context = super(EstimateUpdateView, self).get_context_data(**kwargs)
 
