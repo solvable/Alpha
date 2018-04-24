@@ -14,7 +14,7 @@ class EstimateCreateView(generic.CreateView):
     model = Estimate
     template_name = 'estimate/create_estimate.html'
     fields = ['customer', 'jobsite', 'ticket', 'name', 'billStreet', 'billCityStateZip', 'phone', 'email', 'job_address', 'total']
-    # success_url = 'estimate_detail'
+
     def get_success_url(self):
         return reverse('estimate-detail', kwargs={'cust': self.object.customer, 'job': self.object.jobsite, 'ticket': self.object.ticket, 'est': self.object.id})
 
@@ -65,18 +65,17 @@ class EstimateUpdateView(generic.UpdateView):
     fields='__all__'
 
     def get_success_url(self):
-        return reverse('estimate-detail',
-                       kwargs={'cust': self.object.customer, 'job': self.object.jobsite, 'ticket': self.object.ticket,
-                               'est': self.object.id})
+        return reverse('estimate-detail', kwargs={'cust': self.object.customer, 'job': self.object.jobsite, 'ticket': self.object.ticket, 'est': self.object.id})
+
 
     def get_context_data(self, **kwargs):
         context = super(EstimateUpdateView, self).get_context_data(**kwargs)
 
         if self.request.POST:
-
-            context['sectionform'] = SectionFormset(self.request.POST)
+            context['sectionform'] = SectionFormset(self.request.POST, instance=self.object)
         else:
-            context['sectionform'] = SectionFormset()
+            context['sectionform'] = SectionFormset(instance=self.object)
+
         return context
 
 
