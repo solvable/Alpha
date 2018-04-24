@@ -2,6 +2,7 @@ from django.db import models
 from tinymce.models import HTMLField
 from django.conf import settings
 from CRM.models import Customer, Jobsite, Ticket
+from django.urls import reverse
 
 # Create your models here.
 
@@ -31,13 +32,13 @@ class Estimate(models.Model):
         super(Estimate, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return str(self.content)
+        return str(self.id)
 
     def __str__(self):
-        return str(self.content)
+        return str(self.id)
 
     def get_absolute_url(self):
-        return reverse("estimate", kwargs={"est": self.pk})
+        return reverse("estimate_detail", kwargs={"cust":self.customer_id, "job":self.jobsite_id, "ticket":self.ticket_id, "est": self.pk})
     #
     # def edit_url(self):
     #     return reverse("estimate_edit", args={"est":self.pk})
@@ -56,7 +57,7 @@ class Section(models.Model):
 
 
     def save(self, *args, **kwargs):
-        super(Estimate, self).save(*args, **kwargs)
+        super(Section, self).save(*args, **kwargs)
 
 
     def __unicode__(self):

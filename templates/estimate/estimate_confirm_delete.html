@@ -1,0 +1,7 @@
+{% extends 'CRM/base.html' %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object.created }}", this cannot be undone?</p>
+    <input type="submit" value="Confirm" />
+</form>
+{% endblock content %}

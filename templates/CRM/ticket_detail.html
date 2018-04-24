@@ -57,9 +57,25 @@
             </tr>
             <tr>
                 <td>
-                    <a href="{% url 'create-estimate' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Create Estimate</div></a>
+                    <a href="{% url 'estimate-create' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Create Estimate</div></a>
                 </td>
             </tr>
+
+            <tr>
+                <td>Estimates on Ticket:</td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    {% for estimate in object.estimate_set.all %}
+
+                    <a href="{% url 'estimate-detail' cust=customer.pk job=jobsite.pk ticket=ticket.pk est=estimate.pk%}"><div class="btn yellow pdf-btn">{{ estimate.created }}<br>{{ estimate.total }}</div></a>
+
+                    {% endfor %}
+                </td>
+            </tr>
+
+
         </table>
 
 {% endblock ticket_content %}
