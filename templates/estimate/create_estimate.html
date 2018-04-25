@@ -1,20 +1,55 @@
 {% extends 'CRM/base.html' %}
 {% block content %}
+                                            {{ sectionform.management_form}}
 
 
     <div class="row">
         <div class="card col s4 m4 ">
             <h1>Create Estimate:</h1>
+
+
             <form action="" method="post">{% csrf_token %}
                 {{ form.as_p }}
-                {{ sectionform.as_p }}
+
+
+                {% for form in sectionform.forms %}
+
+                    <div class="table">
+                        <table class="no_error">
+                            {{ sectionform.as_p }}
+                        </table>
+                    </div>
+                {% endfor %}
+            <input type="button" value="Add More" id="add_more">
 
                 <input type="submit" value="Save"/>
 
             </form>
         </div>
+    <script>
+            $('#add_more').click(function() {
+        cloneMore('div.table:last', 'section');
+    });
+    </script>
     </div>
 
-
+<script>
+function cloneMore(selector, type) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + type + '-TOTAL_FORMS').val();
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+        $(this).attr('for', newFor);
+    });
+    total++;
+    $('#id_' + type + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+}
+</script>
 
 {% endblock content %}

@@ -22,7 +22,11 @@ class EstimateCreateView(generic.CreateView):
         customer = get_object_or_404(Customer, id=self.kwargs.get('cust'))
         jobsite = get_object_or_404(Jobsite, id=self.kwargs.get('job'))
         ticket =  get_object_or_404(Ticket, id=self.kwargs.get('ticket'))
-
+        data = {
+        'form-TOTAL_FORMS': '1',
+        'form-INITIAL_FORMS': '0',
+        'form-MAX_NUM_FORMS': '',
+        }
         return{
             'customer':customer.id,
             'jobsite':jobsite.id,
@@ -40,9 +44,9 @@ class EstimateCreateView(generic.CreateView):
 
         if self.request.POST:
 
-            context['sectionform'] = SectionFormset(self.request.POST)
+            context['sectionform'] = SectionFormset(self.request.POST,prefix='section')
         else:
-            context['sectionform'] = SectionFormset()
+            context['sectionform'] = SectionFormset(prefix='section')
         return context
 
 
