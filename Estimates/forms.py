@@ -19,7 +19,7 @@ class EstimateForm(forms.ModelForm):
         fields = '__all__'
 
 
-SectionFormset = inlineformset_factory(Estimate, Section, fields=('__all__'),  formset=SectionInline,fk_name='estimate', extra=1)
+SectionFormset = inlineformset_factory(Estimate, Section, fields=('__all__'),  formset=SectionInline,fk_name='estimate', extra=1, can_delete=True, )
 
 
 
