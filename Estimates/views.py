@@ -22,11 +22,7 @@ class EstimateCreateView(generic.CreateView):
         customer = get_object_or_404(Customer, id=self.kwargs.get('cust'))
         jobsite = get_object_or_404(Jobsite, id=self.kwargs.get('job'))
         ticket =  get_object_or_404(Ticket, id=self.kwargs.get('ticket'))
-        data = {
-        'form-TOTAL_FORMS': '1',
-        'form-INITIAL_FORMS': '0',
-        'form-MAX_NUM_FORMS': '',
-        }
+
         return{
             'customer':customer.id,
             'jobsite':jobsite.id,
@@ -43,8 +39,7 @@ class EstimateCreateView(generic.CreateView):
         context = super(EstimateCreateView, self).get_context_data(**kwargs)
 
         if self.request.POST:
-
-            context['sectionform'] = SectionFormset(self.request.POST,prefix='section')
+            context['sectionform'] = SectionFormset(self.request.POST, prefix='section')
         else:
             context['sectionform'] = SectionFormset(prefix='section')
         return context
@@ -58,6 +53,7 @@ class EstimateCreateView(generic.CreateView):
             self.object = form.save()
             section_form.instance = self.object
             section_form.save()
+            print('form valid')
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -76,9 +72,10 @@ class EstimateUpdateView(generic.UpdateView):
         context = super(EstimateUpdateView, self).get_context_data(**kwargs)
 
         if self.request.POST:
-            context['sectionform'] = SectionFormset(self.request.POST, instance=self.object)
+            context['sectionform'] = SectionFormset(self.request.POST, instance=self.object, prefix='section')
+
         else:
-            context['sectionform'] = SectionFormset(instance=self.object)
+            context['sectionform'] = SectionFormset(instance=self.object, prefix='section')
 
         return context
 
@@ -99,6 +96,8 @@ class EstimateDetailView(generic.DetailView):
     model=Estimate
     template_name = 'estimate/estimate_detail.html'
     pk_url_kwarg = "est"
+
+
 
 class EstimateDeleteView(generic.DeleteView):
     model = Estimate

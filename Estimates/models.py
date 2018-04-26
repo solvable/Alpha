@@ -31,6 +31,7 @@ class Estimate(models.Model):
     def save(self, *args, **kwargs):
         super(Estimate, self).save(*args, **kwargs)
 
+
     def __unicode__(self):
         return str(self.id)
 
@@ -58,6 +59,7 @@ class Section(models.Model):
 
     def save(self, *args, **kwargs):
         super(Section, self).save(*args, **kwargs)
+
 
 
     def __unicode__(self):

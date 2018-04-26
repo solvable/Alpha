@@ -1,6 +1,5 @@
 {% extends 'CRM/base.html' %}
 {% block content %}
-                                            {{ sectionform.management_form}}
 
 
     <div class="row">
@@ -9,6 +8,9 @@
 
 
             <form action="" method="post">{% csrf_token %}
+                {{ sectionform.management_form }}
+                {{ form.management_form }}
+
                 {{ form.as_p }}
 
 
@@ -16,7 +18,7 @@
 
                     <div class="table">
                         <table class="no_error">
-                            {{ sectionform.as_p }}
+                            {{ form.as_p }}
                         </table>
                     </div>
                 {% endfor %}
@@ -28,7 +30,7 @@
         </div>
     <script>
             $('#add_more').click(function() {
-        cloneMore('div.table:last', 'section');
+        cloneMore('div.table:last', 'sections');
     });
     </script>
     </div>
