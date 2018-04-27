@@ -15,7 +15,7 @@ class Estimate(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete="CASCADE")
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     name = models.CharField(max_length=100)
     billStreet = models.CharField(max_length=100)
     billCityStateZip = models.CharField(max_length=100)
@@ -29,11 +29,14 @@ class Estimate(models.Model):
 
     # Geocode Full Address
     def save(self, *args, **kwargs):
+        super(Estimate, self).save(*args, **kwargs)
+
         dollar = 0
         for i in self.section_set.all():
             dollar = dollar + i.price
 
         self.total = dollar
+
         super(Estimate, self).save(*args, **kwargs)
 
     def __unicode__(self):
