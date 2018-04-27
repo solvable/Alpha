@@ -13,7 +13,7 @@ from django.urls import reverse
 class EstimateCreateView(generic.CreateView):
     model = Estimate
     template_name = 'estimate/create_estimate.html'
-    fields = ['customer', 'jobsite', 'ticket', 'name', 'billStreet', 'billCityStateZip', 'phone', 'email', 'job_address', 'total']
+    fields = ['customer', 'jobsite', 'ticket', 'name', 'billStreet', 'billCityStateZip', 'phone', 'email', 'job_address']
 
     def get_success_url(self):
         return reverse('estimate-detail', kwargs={'cust': self.object.customer, 'job': self.object.jobsite, 'ticket': self.object.ticket, 'est': self.object.id})
