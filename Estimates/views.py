@@ -80,17 +80,30 @@ class EstimateUpdateView(generic.UpdateView):
         return context
 
 
+
+
+
+
     def form_valid(self, form):
         context = self.get_context_data()
         section_form = context['sectionform']
 
         if form.is_valid() and section_form.is_valid():
-            self.object = form.save()
+            self.object = form.save(commit=False)
             section_form.instance = self.object
+            section_form.save(commit=False)
             section_form.save()
+
+            form.save()
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+
+
+
+
 
 class EstimateDetailView(generic.DetailView):
     model=Estimate

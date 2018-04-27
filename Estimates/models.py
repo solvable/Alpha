@@ -29,8 +29,12 @@ class Estimate(models.Model):
 
     # Geocode Full Address
     def save(self, *args, **kwargs):
-        super(Estimate, self).save(*args, **kwargs)
+        dollar = 0
+        for i in self.section_set.all():
+            dollar = dollar + i.price
 
+        self.total = dollar
+        super(Estimate, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return str(self.id)
