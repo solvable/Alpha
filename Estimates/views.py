@@ -55,6 +55,7 @@ class EstimateCreateView(generic.CreateView):
             section_form.save(commit=False)
             form.save()
             section_form.save()
+            form.save()
 
 
 
@@ -83,11 +84,6 @@ class EstimateUpdateView(generic.UpdateView):
             context['sectionform'] = SectionFormset(instance=self.object, prefix='section')
 
         return context
-
-
-
-
-
 
     def form_valid(self, form):
         context = self.get_context_data()
