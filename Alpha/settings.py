@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'CRM',
     'Estimates',
     'debug_toolbar',
+    # 'tinymce'
 
 ]
 

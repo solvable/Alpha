@@ -1,6 +1,7 @@
 from django import forms
 from .models import Estimate, Section
 from django.forms import BaseInlineFormSet, ModelForm, inlineformset_factory
+# from tinymce.widgets import TinyMCE
 
 
 class SectionInline(BaseInlineFormSet):
@@ -20,6 +21,6 @@ class EstimateForm(forms.ModelForm):
 
 
 SectionFormset = inlineformset_factory(Estimate, Section, fields=('__all__'),  formset=SectionInline,fk_name='estimate', extra=1)
-
+# , widgets={'description': TinyMCE(attrs={'cols': 80, 'rows': 20})})
 
 

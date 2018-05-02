@@ -12,6 +12,7 @@
                 {{ form.management_form }}
 
                 {{ form.as_p }}
+                {{ form.media }}
 
 
                 {% for form in sectionform.forms %}
@@ -19,6 +20,7 @@
                     <div class="table">
                         <table class="no_error">
                             {{ form.as_p }}
+                            {{ form.media }}
                         </table>
                     </div>
                 {% endfor %}
@@ -53,6 +55,7 @@ function cloneMore(selector, type) {
     $(selector).after(newElement);
 }
 </script>
+
 
 {% endblock content %}
 

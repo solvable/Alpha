@@ -41,7 +41,7 @@
                 <td>({{ section.price }})</td>
             </tr>
             <tr>
-                <td colspan="3">{{ section.description }}</td>
+                <td colspan="3">{{ section.description|safe }}</td>
             </tr>
             <tr>
             {% endfor %}
