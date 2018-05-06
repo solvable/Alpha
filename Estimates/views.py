@@ -145,6 +145,7 @@ class EstimateDeleteView(generic.DeleteView):
 
 
 def write_docx_view(request, cust, job, ticket, est):
+    import html2text
     current_path = request.get_full_path()
     print(current_path)
 
@@ -152,6 +153,7 @@ def write_docx_view(request, cust, job, ticket, est):
     customer = get_object_or_404(Customer, id=cust)
     jobsite = get_object_or_404(Jobsite, id=job)
     ticket = get_object_or_404(Ticket, id=ticket)
+    estimate = get_object_or_404(Estimate, id=est)
 
     # setup buffer
     buffer = BytesIO()
@@ -205,15 +207,19 @@ def write_docx_view(request, cust, job, ticket, est):
     p = document.add_paragraph()
     p = document.add_paragraph()
     p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,)).bold = True
+    p = document.add_paragraph()
+    sections = estimate.section_set.all()
+    for section in sections:
+        p=document.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.add_run(section.heading).bold = True
 
-    p = document.add_paragraph()
-    p = document.add_paragraph()
-    p = document.add_paragraph()
-    p = document.add_paragraph()
-    p = document.add_paragraph()
-    p = document.add_paragraph()
-    p = document.add_paragraph()
+        html = section.description
+        text = html2text.html2text(html)
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph(text)
 
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p.add_run('TOTAL PRICE: $').bold = True
     p = document.add_paragraph()
 
