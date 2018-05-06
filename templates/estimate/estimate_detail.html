@@ -9,7 +9,14 @@
 
 
     <table class="estimate-table">
-
+<tr>
+                <td>
+                    <a href="{% url 'generate-pdf' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn">Export PDF</div></a>
+                </td>
+                <td>
+                    <a href="{% url 'generate-docx' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn">Export DocX</div></a>
+                </td>
+            </tr>
             <tr>
                 <td>{{ object.customer.fullName }}</td>
                 <td></td>
