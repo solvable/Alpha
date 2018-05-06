@@ -66,7 +66,7 @@ class EstimateCreateView(generic.CreateView):
 
 class EstimateUpdateView(generic.UpdateView):
     model = Estimate
-    template_name = 'estimate/estimate_update.html'
+    template_name = 'estimate/create_estimate.html'
     pk_url_kwarg = 'est'
     fields='__all__'
 

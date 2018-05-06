@@ -50,7 +50,6 @@ urlpatterns = [
     path('customer/<cust>/detail/<job>/<ticket>/detail/<est>', EstimateDetailView.as_view(), name='estimate-detail'),
     path('customer/<cust>/detail/<job>/<ticket>/update/<est>', EstimateUpdateView.as_view(), name='estimate-update'),
     path('customer/<cust>/detail/<job>/<ticket>/delete/<est>', EstimateDeleteView.as_view(), name='estimate-delete'),
-    url(r'^tinymce/', include('tinymce.urls')),
 
               ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

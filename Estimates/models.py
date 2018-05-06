@@ -3,7 +3,6 @@ from tinymce.models import HTMLField
 from django.conf import settings
 from CRM.models import Customer, Jobsite, Ticket
 from django.urls import reverse
-# from tinymce.models import HTMLField
 # Create your models here.
 
 
@@ -60,7 +59,6 @@ class Estimate(models.Model):
 class Section(models.Model):
     heading = models.CharField(max_length=100, null=False)
     description = models.TextField()
-    # description = HTMLField('description')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     estimate = models.ForeignKey(Estimate, on_delete=models.CASCADE, default='')
 

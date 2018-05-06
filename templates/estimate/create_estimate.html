@@ -1,13 +1,49 @@
 {% extends 'CRM/base.html' %}
-{% block content %}
+{% block addhead %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.12/tinymce.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.12/plugins/textcolor/plugin.js"></script>
 
+
+<script>
+
+  tinymce.init({
+    selector: '.textarea',
+      plugins: 'paste template spellchecker',
+      toolbar: 'template spellchecker',
+  templates: [
+    {title: 'New Flat Roof',
+        description: 'New Flat Roof White Granulated',
+        content: 'Furnish and install complete new white granulated modified bitumen roof system to entire roof and parapet wall areas.<br>' +
+        'Seal all flashings on entire roof using 4 inch membrane fabric and roofing cement.<br>' +
+        'Furnish and install new white aluminum capping to perimeter edge of roof.<br>' +
+        'Remove all job-connected debris from property.<br>'+
+        '<strong><u>10 year guarantee on labor and materials. In order to maintain guarantee status, roof must be resealed/coated every 4 years by Reiter roofing at additional cost to owner as preventive maintenance. If roof is properly maintained guarantee is extended to 15 years.</u></strong>'
+
+
+
+    },
+
+    {title: 'Flash/Coat',
+     description: 'Flash and Coat a Roof',
+     content: 'Clean all debris from roof.<br> ' +
+     'Clean drain on roof of all debris.<br> ' +
+     'Seal all necessary flashings using roof cement and membrane fabric.<br>' +
+     'Seal all penetrations in roof, including vent stacks, A/C Line sets, and chimneys. Seal all metal edge capping.<br>' +
+     'Furnish and install a thick layer of reflective fibered aluminum silver coating to entire roof surface.<br>'
+    }
+  ]
+  });
+  </script>
+
+{% endblock addhead %}
+{% block content %}
 
     <div class="row">
         <div class="card col s4 m4 ">
             <h1>Create Estimate:</h1>
 
 
-            <form action="" method="post">{% csrf_token %}
+            <form action="" method="post" id="form1">{% csrf_token %}
                 {{ sectionform.management_form }}
                 {{ form.management_form }}
 
@@ -17,45 +53,44 @@
 
                 {% for form in sectionform.forms %}
 
-                    <div class="table">
+                    <div class="table" id ='table'>
+
+
+
                         <table class="no_error">
                             {{ form.as_p }}
                             {{ form.media }}
                         </table>
                     </div>
                 {% endfor %}
-            <input type="button" value="Add More" id="add_more">
 
                 <input type="submit" value="Save"/>
 
             </form>
         </div>
-    <script>
-            $('#add_more').click(function() {
-        cloneMore('div.table:last', 'section');
-    });
-    </script>
     </div>
 
-<script>
-function cloneMore(selector, type) {
-    var newElement = $(selector).clone(true);
-    var total = $('#id_' + type + '-TOTAL_FORMS').val();
-    newElement.find(':input').each(function() {
-        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
-        var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-    });
-    newElement.find('label').each(function() {
-        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
-        $(this).attr('for', newFor);
-    });
-    total++;
-    $('#id_' + type + '-TOTAL_FORMS').val(total);
-    $(selector).after(newElement);
-}
-</script>
+
+
 
 
 {% endblock content %}
 
+<script>
+
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.text());
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    tinymce.activeEditor.settings.paste_block_drop
+
+}
+</script>
