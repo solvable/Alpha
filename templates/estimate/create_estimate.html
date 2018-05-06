@@ -8,8 +8,10 @@
 
   tinymce.init({
     selector: '.textarea',
-      plugins: 'paste template spellchecker',
-      toolbar: 'template spellchecker',
+      plugins: 'paste template spellchecker textcolor',
+      toolbar: 'template forecolor',
+      browser_spellcheck: true,
+
   templates: [
     {title: 'New Flat Roof',
         description: 'New Flat Roof White Granulated',
