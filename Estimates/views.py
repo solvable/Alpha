@@ -146,6 +146,7 @@ class EstimateDeleteView(generic.DeleteView):
 
 def write_docx_view(request, cust, job, ticket, est):
     import html2text
+    import re
     current_path = request.get_full_path()
     print(current_path)
 
@@ -212,15 +213,25 @@ def write_docx_view(request, cust, job, ticket, est):
     for section in sections:
         p=document.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p.add_run(section.heading).bold = True
+        runner = p.add_run(section.heading +' ('+'${:,.2f}'.format(section.price) +')')
+        runner.font.all_caps = True
+        runner.bold = True
+        runner.underline = True
 
         html = section.description
         text = html2text.html2text(html)
+        # m = re.search('/*/*/_(.+?)/_/*/*', text)
+        # guarantee = ''
+        # if m:
+        #     guarantee = m.group(1)
+        #     p = document.add_paragraph(guarantee)
+
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph(text)
 
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.add_run('TOTAL PRICE: $').bold = True
+    total = '${:,.2f}'.format(estimate.total)
+    p.add_run('TOTAL PRICE: %s' % (total,)).bold = True
     p = document.add_paragraph()
 
     p = document.add_paragraph()
