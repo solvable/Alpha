@@ -14,20 +14,21 @@
     <body>
         <div class="menu-container">
             <div class="top-menu">
-                <a href="{% url 'index' %}" ><div class="btn blue">Home</div></a>
-                <a href ="{% url 'customer_create' %}"> <div  class="btn green">Add Customer</div></a>
-                <div class="legend">
-                <div class="lead box"></div>Estimate
-                <div class="service box"></div>Service
-                <div class="inspection box "></div>Inspection
+                <a href="{% url 'index' %}" ><div class="btn blue nav-btn">Home</div></a>
+                <a href ="{% url 'customer_create' %}"> <div  class="btn green nav-btn">Add Customer</div></a>
+                <div class="searchbox">
+                     <form action="/search" method="get" style="display: inline-block">
+                        <input name="q" type="text" class="searchinput"  placeholder="Search"/>
+                        <input type="submit" class="btn-search" />
+                     </form>
+                </div>
+                <a href="http://www.gmail.com"><div class="btn red nav-btn">Gmail</div></a>
+                <a href="http://www.authorize.net"><div class="btn orange nav-btn">Authorize</div></a>
 
-                                        <div class="linkbox">
-        <a href="http://www.gmail.com"><i class="fa fa-envelope fa-3x" style="color:red;" aria-hidden="true"></i></a>
-        <a href="http://www.authorize.net"><i class="fa fa-credit-card fa-3x" style="color:midnightblue;" aria-hidden="true"></i></a>
 
-    </div>
-                    </div>
+            <div>
 
+            </div>
 
 
             </div>

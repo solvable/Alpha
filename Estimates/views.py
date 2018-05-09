@@ -220,11 +220,10 @@ def write_docx_view(request, cust, job, ticket, est):
 
         html = section.description
         text = html2text.html2text(html)
-        # m = re.search('/*/*/_(.+?)/_/*/*', text)
-        # guarantee = ''
-        # if m:
-        #     guarantee = m.group(1)
-        #     p = document.add_paragraph(guarantee)
+
+        m = re.search('\*\* _(.*?)_\*\*', text, re.MULTILINE)
+        if m != '':
+            p.add_run(m).bold =True
 
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p = document.add_paragraph(text)

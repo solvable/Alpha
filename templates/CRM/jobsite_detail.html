@@ -1,6 +1,7 @@
 {% extends 'CRM/customer_detail.html' %}
 
 {% block jobsite_content %}
+
     <table>
         <tr>
             <th class="title" colspan="2"><h1>Jobsite Information:</h1></th>
@@ -45,6 +46,17 @@
         <h1>Tickets:</h1></th>
         <th>
         <a href="{% url 'ticket_create' cust=customer.id job=jobsite.id %}" class="btn green">Create a Ticket</a></th>
+    </tr>
+    <tr>
+        <td colspan="2">
+                    <div class="legend">
+                    <div class="lead box"></div>Estimate
+                    <div class="service box"></div>Service
+                    <div class="inspection box "></div>Inspection
+
+
+                </div>
+        </td>
     </tr>
      <tr>
             <td><h4>Open Tickets:</h4></td>

@@ -197,7 +197,6 @@
 
     .linkbox{
         display:inline-block;
-
         order:3;
         background-color:lightgray;
     }
@@ -212,21 +211,43 @@
         width:25px;
         height:25px;
     }
-    .legend{
-        background-color: white;
-        margin-left:60%;
-        padding:5px;
-    }
+
 
     .section-heading{
         font-weight: bold;
     }
 
-/*.tinymce{*/
-    /*width:500px;*/
-    /*height 400px;*/
-/*}*/
+    .searchbox{
+        padding-left:10px;
+        padding-right:10px;
+        margin:0px;
 
+    }
+
+    .nav-btn{
+        height:auto;
+    }
+
+
+    .top-menu{
+
+        height:40px;
+    }
+
+    .top-menu .btn{
+        padding-left:10px;
+
+    }
+    input.searchinput{
+        height:40px;
+
+        margin:0px;
+    }
+    input.btn-search{
+        height:40px;
+        margin:0px;
+
+    }
 
 
 }
