@@ -3,6 +3,8 @@ from tinymce.models import HTMLField
 from django.conf import settings
 from CRM.models import Customer, Jobsite, Ticket
 from django.urls import reverse
+from datetime import date
+from datetime import timedelta
 # Create your models here.
 
 
@@ -21,10 +23,8 @@ class Estimate(models.Model):
     phone = models.CharField(max_length=12)
     email = models.EmailField(max_length=100)
     job_address= models.CharField(max_length=100)
-
-
-
-
+    completed = models.BooleanField(default=False)
+    completedDate = models.DateField(null=True)
 
     # Geocode Full Address
     def save(self, *args, **kwargs):
@@ -35,6 +35,11 @@ class Estimate(models.Model):
             dollar = dollar + i.price
 
         self.total = dollar
+
+        if self.completed:
+            self.completedDate = date.today() - timedelta(1)
+
+
 
         super(Estimate, self).save(*args, **kwargs)
 

@@ -20,7 +20,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-
+import datetime
 
 
 
@@ -140,6 +140,149 @@ class EstimateDeleteView(generic.DeleteView):
     def get_success_url(self):
         return reverse('ticket_detail', kwargs={'cust': self.kwargs.get('cust'), 'job': self.kwargs.get('job'), 'ticket': self.kwargs.get('ticket')})
 
+
+
+def write_invoice_view(request, cust, job, ticket, est):
+    import html2text
+    import re
+    from docx.shared import RGBColor
+    from docx.enum.text import WD_COLOR_INDEX
+
+    current_path = request.get_full_path()
+    print(current_path)
+
+    # load objects
+    customer = get_object_or_404(Customer, id=cust)
+    jobsite = get_object_or_404(Jobsite, id=job)
+    ticket = get_object_or_404(Ticket, id=ticket)
+    estimate = get_object_or_404(Estimate, id=est)
+
+    estimate.completed = True
+    estimate.save()
+
+    # setup buffer
+    buffer = BytesIO()
+
+    # Set Some Variables for filename and path
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
+    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
+    doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
+
+    # Create HttpResponse object with appropriate PDF headers
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachement; filename=' + filename + ".docx"
+
+    # Create the docx object
+    document = Document(doc)
+
+    # Set the filename variable
+    docx_title = "%s.docx" % (filename,)
+
+    # Add content to docx file
+
+    # Add invoice line
+    p = document.add_paragraph()
+
+    run = p.add_run('***********************************INVOICE************************************')
+    run.font.bold = True
+    run.font.highlight_color = WD_COLOR_INDEX.YELLOW
+
+    # setup variables for docx table
+    today = datetime.date.today()
+    bill1 = customer.billStreet
+    bill2 = '%s, %s, %s' % (customer.billCity, customer.billState, customer.billZip)
+    phone = customer.fullName
+    email = customer.email
+
+    # Create table
+    table = document.add_table(rows=3, cols=2)
+
+    # fill in row 1
+    row1 = table.rows[0].cells
+    row1[0].text = '%s' % (customer.fullName,)
+    row1[1].text = '%s' % (today,)
+    row1[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+
+    # fill in row 2
+    row2 = table.rows[1].cells
+    row2[0].text = bill1
+    row2[1].text = customer.phone1
+    row2[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+
+    # fill in row 3
+    row3 = table.rows[2].cells
+    row3[0].text = bill2
+    row3[1].text = customer.email
+    row3[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    # add Job location
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,)).bold = True
+    p = document.add_paragraph()
+    sections = estimate.section_set.all()
+    for section in sections:
+        p=document.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        runner = p.add_run(section.heading +' ('+'${:,.2f}'.format(section.price) +')')
+        runner.font.all_caps = True
+        runner.bold = True
+        runner.underline = True
+
+        html = section.description
+        text = html2text.html2text(html)
+
+        m = re.search('\*\* _(.*?)_\*\*', text, re.MULTILINE)
+        if m != '':
+            p.add_run(m).bold =True
+
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p = document.add_paragraph(text)
+
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    total = '${:,.2f}'.format(estimate.total)
+    p.add_run('BALANCE DUE: %s' % (total,)).bold = True
+    p = document.add_paragraph()
+
+    p = document.add_paragraph()
+    p.paragraph_format.left_indent = Inches(4.5)
+    p.add_run('THANK YOU').bold = True
+    p = document.add_paragraph()
+    p.paragraph_format.left_indent = Inches(0.5)
+    user = request.user
+    username = '%s %s' % (user.first_name, user.last_name)
+    username = username.upper()
+    p.paragraph_format.left_indent = Inches(4.5)
+    p.add_run('%s' % (username,)).bold = True # add in username from logged in user
+    p = document.add_paragraph()
+    p.paragraph_format.left_indent = Inches(4.5)
+    p.add_run('REITER ROOFING').bold = True
+
+
+    p= document.add_paragraph()
+
+    dt = estimate.completedDate
+    run = p.add_run('JOB COMPLETE %s' %(dt.strftime('%m/%d/%y')))
+    run.font.color.rgb = RGBColor(150, 0, 0)
+    run.font.bold = True
+    p = document.add_paragraph()
+    run = p.add_run('BALANCE DUE')
+    run.font.color.rgb = RGBColor(150, 0, 0)
+    run.font.bold = True
+    p = document.add_paragraph()
+    run = p.add_run('THANK YOU')
+    run.font.color.rgb = RGBColor(150, 0, 0)
+    run.font.bold = True
+
+
+    # save docx
+    document.save(response)
+
+    # Get the value of the BytesIO buffer and write it to the response.
+    docx = buffer.getvalue()
+    buffer.close()
+    response.write(docx)
+    return response
 
 
 

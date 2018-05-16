@@ -1,19 +1,22 @@
 {% extends 'CRM/base.html' %}
 {% block content %}
     <div class="mini-navbar">
-            <div class="mini-nav"><a href="{% url 'ticket_detail' cust=estimate.customer.pk job=estimate.jobsite.pk ticket=estimate.ticket.pk%}"><div class="ticket-item btn yellow ">{% comment %}Back to Ticket {% endcomment %}<i class="far fa-hand-point-left"></i></div>
+            <div class="mini-nav"><a href="{% url 'ticket_detail' cust=estimate.customer.pk job=estimate.jobsite.pk ticket=estimate.ticket.pk%}"><div class="ticket-item btn yellow " title="Back to Ticket View">{% comment %}Back to Ticket {% endcomment %}<i class="far fa-hand-point-left fa-3x"></i></div>
 
 </div></a>
 
                     <div class="mini-nav"><a href="{% url 'estimate-update' cust=estimate.customer job=estimate.jobsite ticket=estimate.ticket est=estimate.id%}"
-                       role="button"><div class="btn orange edit-btn">{% comment %}Edit {% endcomment %}<i class="fas fa-edit"></i>
+                       role="button"><div class="btn orange edit-btn" title="Edit Estimate">{% comment %}Edit {% endcomment %}<i class="fas fa-edit fa-3x"></i>
 
 </div></a></div>
 {#                   <td> <a href="{% url 'estimate-delete' cust=estimate.customer job=estimate.jobsite ticket=estimate.ticket est=estimate.id%}"#}
 {#                       onclick="return confirm('Are you sure want to delete this Jobsite?');"#}
 {#                       role="button"><div  class="btn red delete-btn">Delete</div></a></td>#}
 
-                    <div class="mini-nav"><a href="{% url 'generate-docx' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn">{% comment %}Export DocX {% endcomment %}<i class="fas fa-save"></i>
+                    <div class="mini-nav"><a href="{% url 'generate-docx' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn" title="Export DocX">{% comment %}Export DocX {% endcomment %}<i class="fas fa-file-alt fa-3x"></i></div></a></div>
+                    <div class="mini-nav"><a href="{% url 'generate-invoice' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn" title="Generate Invoice as DocX">{% comment %}Export DocX {% endcomment %}<i class="fas fa-money-bill-alt fa-3x"></i>
+
+
 
 </div></a></div>
 
