@@ -1,64 +1,80 @@
 <!-- DOCTYPE html-->
 {% load static %}
 <html>
-    <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    {% block addhead %}
 
-        <link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
-<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
-{% block addhead %}
+    {% endblock addhead %}
 
-        {% endblock addhead %}
+</head>
+<body>
+<div class="menu-container">
+    <div class="top-menu">
+        <a href="{% url 'index' %}">
+            <div class="btn blue nav-btn">Home</div>
+        </a>
+        <a href="{% url 'customer_create' %}">
+            <div class="btn green nav-btn">Add Customer</div>
+        </a>
+        <div class="searchbox">
+            <form action="/search" method="get" style="display: inline-block">
+                <input name="q" type="text" class="searchinput" placeholder="Search"/>
+                <input type="submit" class="btn-search"/>
+            </form>
+            {#                </div>#}
+            {#                <a href="http://www.gmail.com"><div class="btn red nav-btn">Gmail</div></a>#}
+            {#                <a href="http://www.authorize.net"><div class="btn orange nav-btn">Authorize</div></a>#}
+            {##}
+            {##}
+            {#            <div>#}
 
-    </head>
-    <body>
-        <div class="menu-container">
-            <div class="top-menu">
-                <a href="{% url 'index' %}" ><div class="btn blue nav-btn">Home</div></a>
-                <a href ="{% url 'customer_create' %}"> <div  class="btn green nav-btn">Add Customer</div></a>
-                <div class="searchbox">
-                     <form action="/search" method="get" style="display: inline-block">
-                        <input name="q" type="text" class="searchinput"  placeholder="Search"/>
-                        <input type="submit" class="btn-search" />
-                     </form>
+        </div>
+
+
+    </div>
+</div>
+    <div class="content-container">
+        <div class="index-container">
+
+                <div class="linkbox">
+                    <div class="box-title">LINKS</div>
+                    <a href="http://www.gmail.com">
+                        <div class="btn red link-btn">Gmail</div>
+                    </a>
+                    <a href="http://www.authorize.net">
+                        <div class="btn orange link-btn">Authorize</div>
+                    </a>
                 </div>
-                <a href="http://www.gmail.com"><div class="btn red nav-btn">Gmail</div></a>
-                <a href="http://www.authorize.net"><div class="btn orange nav-btn">Authorize</div></a>
-
-
-            <div>
 
             </div>
 
-
-            </div>
-
-            <div class="content-container">
-
-                {% block content %}
-                {% endblock content %}
+        {% block content %}
+        {% endblock content %}
 
 
 
-                {% block jobsite_content %}
-                {% endblock jobsite_content %}
+        {% block jobsite_content %}
+        {% endblock jobsite_content %}
 
 
 
-                {% block ticket_content %}
-                {% endblock ticket_content %}
+        {% block ticket_content %}
+        {% endblock ticket_content %}
 
-{#                {% block misc-links %}#}
-{#                    <div class="linkbox">#}
-{#                      <a href="http://euramax-intl.dcatalog.com/r/Berger-BP-Catalog-2015/#page=1">Berger Brothers Catalog</a>#}
-{#                    </div>#}
-{#                {% endblock misc-links %}#}
+        {#                {% block misc-links %}#}
+        {#                    <div class="linkbox">#}
+        {#                      <a href="http://euramax-intl.dcatalog.com/r/Berger-BP-Catalog-2015/#page=1">Berger Brothers Catalog</a>#}
+        {#                    </div>#}
+        {#                {% endblock misc-links %}#}
 
 
-
-        </div>
-        </div>
-    </body>
+    </div>
+</body>
 
 
 </html>

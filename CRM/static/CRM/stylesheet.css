@@ -25,8 +25,15 @@
         background-color: dimgray;
     }
     .index-container{
-        display: flex;
-        }
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        /*flex-wrap: wrap;*/
+        /*background-color: dimgrey;*/
+        /*border:white solid thin;*/
+        /*box-shadow: 5px 5px 5px grey;*/
+        /*margin-right: 15px;*/
+
+    }
 
     .content-container{
         display: flex;
@@ -85,8 +92,10 @@
     }
 
 
+
+
     .edit-btn{
-        width:90%;
+        width:100%;
         /*display: inline-block;*/
     }
     .delete-btn{
@@ -196,20 +205,53 @@
     }
 
     .linkbox{
-        display:inline-block;
-        order:3;
-        background-color:lightgray;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        background-color: white;
+        padding:10px;
+        border:black solid medium;
+        margin:0 15px 15px 0px;
+        box-shadow: 3px 3px 2px grey;
+
     }
     .linkbox a{
-        margin-left:10px;
-        margin-right:10px;
+        margin:auto;
         color:red;
+
+    }
+
+    .legend{
+        display: flex;
+        flex-direction: column;
+
+        flex-wrap: wrap;
+        background-color: white;
+        padding:10px;
+        border:black solid medium;
+        margin:0 15px 15px 0px;
+        box-shadow: 3px 3px 2px grey;
+
+    }
+
+    .box-title{
+        padding: auto;
+        color:black;
+        font-weight: bold;
     }
 
     .box{
-        display: inline-block;
-        width:25px;
-        height:25px;
+
+        height:10px;
+        width:10px;
+        color: white;
+        border: 1px solid black;
+
+
+
+
+
     }
 
 
@@ -228,6 +270,14 @@
         height:auto;
     }
 
+    .link-btn{
+        width:100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 3px 3px 2px grey;
+
+    }
 
     .top-menu{
 
@@ -246,6 +296,19 @@
     input.btn-search{
         height:40px;
         margin:0px;
+
+    }
+.mini-navbar{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+    .mini-nav{
+
+
+    margin-top: 10px;
+
 
     }
 
