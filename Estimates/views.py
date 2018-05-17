@@ -169,6 +169,9 @@ def write_invoice_view(request, cust, job, ticket, est):
     filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
     doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
 
+    # Set misc variables
+    blank_space = 6
+
     # Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     response['Content-Disposition'] = 'attachement; filename=' + filename + ".docx"
@@ -229,6 +232,7 @@ def write_invoice_view(request, cust, job, ticket, est):
 
     # add Job location
     p = document.add_paragraph()
+    p.paragraph_format.line_spacing = Pt(blank_space)
     p = document.add_paragraph()
     runner = p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,))
     runner.font.size = Pt(10)
@@ -238,6 +242,7 @@ def write_invoice_view(request, cust, job, ticket, est):
     sections = estimate.section_set.all()
     for section in sections:
         p = document.add_paragraph()
+        p.paragraph_format.line_spacing = Pt(blank_space)
         p= document.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.keep_with_next = True
