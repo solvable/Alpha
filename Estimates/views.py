@@ -300,7 +300,6 @@ def write_invoice_view(request, cust, job, ticket, est):
 
 
     p = document.add_paragraph()
-    p = document.add_paragraph()
     runner = p.add_run()
     runner.add_tab()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -337,25 +336,36 @@ def write_invoice_view(request, cust, job, ticket, est):
     # runner.font.size = Pt(10)
     # runner.font.bold = True
 
+
+
     # add thank you note
     p = document.add_paragraph()
-    p.paragraph_format.left_indent = Inches(4.5)
+    p.paragraph_format.left_indent = Inches(5)
+    p.paragraph_format.keep_together = True
+    p.paragraph_format.keep_with_next = True
     runner = p.add_run('THANK YOU')
     runner.font.size = Pt(10)
     runner.font.bold = True
 
+    # add user name
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(0.5)
+    p.paragraph_format.keep_together = True
+    p.paragraph_format.keep_with_next = True
     user = request.user
     username = '%s %s' % (user.first_name, user.last_name)
     username = username.upper()
-    p.paragraph_format.left_indent = Inches(4.5)
-    runner = p.add_run('%s' % (username,)) # add in username from logged in user
+    p.paragraph_format.left_indent = Inches(5)
+    runner = p.add_run('%s' % (username,))  # add in username from logged in user
     runner.font.size = Pt(10)
     runner.font.bold = True
 
+    # add reiter roofing
     p = document.add_paragraph()
-    p.paragraph_format.left_indent = Inches(4.5)
+    p.paragraph_format.left_indent = Inches(5)
+    p.paragraph_format.keep_together = True
+    p.paragraph_format.keep_with_next = True
+    p.paragraph_format.widow_control = True
     runner = p.add_run('REITER ROOFING')
     runner.font.size = Pt(10)
     runner.font.bold = True
@@ -424,14 +434,14 @@ def write_docx_view(request, cust, job, ticket, est):
 
     # Add content to docx file
 
-    # # Add invoice line
-    # p = document.add_paragraph()
-    # runner = p.add_run(
-    #     '**************************************************INVOICE************************************************')
-    # runner.font.bold = True
-    # runner.font.size = Pt(10)
-    # runner.font.all_caps = True
-    # runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
+    # Add invoice line
+    p = document.add_paragraph()
+    runner = p.add_run(
+        '**************************************************ESTIMATE***********************************************')
+    runner.font.bold = True
+    runner.font.size = Pt(10)
+    runner.font.all_caps = True
+    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
     # setup variables for docx table
     today = datetime.date.today()
@@ -518,9 +528,8 @@ def write_docx_view(request, cust, job, ticket, est):
         runner.font.bold = True
         runner.font.underline = True
 
-        # p.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
-    p = document.add_paragraph()
+
     p = document.add_paragraph()
     runner = p.add_run()
     runner.add_tab()
@@ -536,7 +545,9 @@ def write_docx_view(request, cust, job, ticket, est):
 
     # add thank you note
     p = document.add_paragraph()
-    p.paragraph_format.left_indent = Inches(4.5)
+    p.paragraph_format.left_indent = Inches(5)
+    p.paragraph_format.keep_together = True
+    p.paragraph_format.keep_with_next = True
     runner = p.add_run('THANK YOU')
     runner.font.size = Pt(10)
     runner.font.bold = True
@@ -544,17 +555,22 @@ def write_docx_view(request, cust, job, ticket, est):
     # add user name
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(0.5)
+    p.paragraph_format.keep_together = True
+    p.paragraph_format.keep_with_next = True
     user = request.user
     username = '%s %s' % (user.first_name, user.last_name)
     username = username.upper()
-    p.paragraph_format.left_indent = Inches(4.5)
+    p.paragraph_format.left_indent = Inches(5)
     runner = p.add_run('%s' % (username,))  # add in username from logged in user
     runner.font.size = Pt(10)
     runner.font.bold = True
 
     # add reiter roofing
     p = document.add_paragraph()
-    p.paragraph_format.left_indent = Inches(4.5)
+    p.paragraph_format.left_indent = Inches(5)
+    p.paragraph_format.keep_together = True
+    p.paragraph_format.keep_with_next = True
+    p.paragraph_format.widow_control = True
     runner = p.add_run('REITER ROOFING')
     runner.font.size = Pt(10)
     runner.font.bold = True
