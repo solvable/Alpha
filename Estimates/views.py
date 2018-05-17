@@ -145,7 +145,7 @@ class EstimateDeleteView(generic.DeleteView):
 def write_invoice_view(request, cust, job, ticket, est):
     import html2text
     import re
-    from docx.shared import RGBColor
+    from docx.shared import RGBColor, Pt
     from docx.enum.text import WD_COLOR_INDEX
 
     current_path = request.get_full_path()
@@ -183,10 +183,11 @@ def write_invoice_view(request, cust, job, ticket, est):
 
     # Add invoice line
     p = document.add_paragraph()
-
-    run = p.add_run('***********************************INVOICE************************************')
-    run.font.bold = True
-    run.font.highlight_color = WD_COLOR_INDEX.YELLOW
+    runner = p.add_run('*******************************************INVOICE********************************************')
+    runner.font.bold = True
+    runner.font.size = Pt(10)
+    runner.font.all_caps = True
+    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
     # setup variables for docx table
     today = datetime.date.today()
@@ -215,16 +216,34 @@ def write_invoice_view(request, cust, job, ticket, est):
     row3[0].text = bill2
     row3[1].text = customer.email
     row3[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+
+    # Change Font size of Table
+    for row in table.rows:
+        for cell in row.cells:
+            paragraphs = cell.paragraphs
+            for paragraph in paragraphs:
+                for run in paragraph.runs:
+                    font = run.font
+                    font.size = Pt(10)
+
+
     # add Job location
     p = document.add_paragraph()
     p = document.add_paragraph()
-    p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,)).bold = True
-    p = document.add_paragraph()
+    runner = p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,))
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+    runner.font.all_caps = True
+
     sections = estimate.section_set.all()
     for section in sections:
-        p=document.add_paragraph()
+        p = document.add_paragraph()
+        p= document.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.paragraph_format.keep_with_next = True
+        p.paragraph_format.keep_together = True
         runner = p.add_run(section.heading +' ('+'${:,.2f}'.format(section.price) +')')
+        runner.font.size = Pt(10)
         runner.font.all_caps = True
         runner.bold = True
         runner.underline = True
@@ -232,48 +251,93 @@ def write_invoice_view(request, cust, job, ticket, est):
         html = section.description
         text = html2text.html2text(html)
 
-        m = re.search('\*\* _(.*?)_\*\*', text, re.MULTILINE)
-        if m != '':
-            p.add_run(m).bold =True
 
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p = document.add_paragraph(text)
+        spl = text.split('** _')
 
+        # Sanity
+        print(spl)
+        i = 0
+        for i in range(0, len(spl)):
+            if '_**' not in spl[i]:
+                sect = spl[i]
+                split = sect.split('\n')
+                for i in range(0,len(split)):
+                    p = document.add_paragraph()
+                    p.paragraph_format.keep_together = True
+                    p.paragraph_format.keep_with_next = True
+                    runner = p.add_run()
+                    runner.add_tab()
+                    runner = p.add_run(split[i])
+                    runner.font.size = Pt(10)
+            else:
+                spl[i] = spl[i].replace('_**\n', '')
+                guar = spl[i]
+                # Sanity
+                print(guar)
+                runner = p.add_run(guar)
+                runner.font.size = Pt(10)
+                runner.font.bold = True
+                runner.font.underline = True
+
+    p = document.add_paragraph()
+    runner = p.add_run()
+    runner.add_tab()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     total = '${:,.2f}'.format(estimate.total)
-    p.add_run('BALANCE DUE: %s' % (total,)).bold = True
-    p = document.add_paragraph()
+    runner = p.add_run('BALANCE DUE: %s' % (total,))
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
+
+    # add job complete
+    p = document.add_paragraph()
+    dt = estimate.completedDate
+    runner = p.add_run()
+    runner.add_tab()
+    runner = p.add_run('JOB COMPLETE %s' % (dt.strftime('%m/%d/%y')))
+    runner.font.color.rgb = RGBColor(150, 0, 0)
+    runner.font.bold = True
+    runner.font.size = Pt(10)
+
+    # p = document.add_paragraph()
+    # runner = p.add_run()
+    # runner.add_tab()
+    # runner = p.add_run('BALANCE DUE')
+    # runner.font.color.rgb = RGBColor(150, 0, 0)
+    # runner.font.bold = True
+    # runner.font.size = Pt(10)
+    #
+    # p = document.add_paragraph()
+    # runner = p.add_run()
+    # runner.add_tab()
+    # runner = p.add_run('THANK YOU')
+    # runner.font.color.rgb = RGBColor(150, 0, 0)
+    # runner.font.size = Pt(10)
+    # runner.font.bold = True
+
+    # add thank you note
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(4.5)
-    p.add_run('THANK YOU').bold = True
+    runner = p.add_run('THANK YOU')
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(0.5)
     user = request.user
     username = '%s %s' % (user.first_name, user.last_name)
     username = username.upper()
     p.paragraph_format.left_indent = Inches(4.5)
-    p.add_run('%s' % (username,)).bold = True # add in username from logged in user
+    runner = p.add_run('%s' % (username,)) # add in username from logged in user
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(4.5)
-    p.add_run('REITER ROOFING').bold = True
-
-
-    p= document.add_paragraph()
-
-    dt = estimate.completedDate
-    run = p.add_run('JOB COMPLETE %s' %(dt.strftime('%m/%d/%y')))
-    run.font.color.rgb = RGBColor(150, 0, 0)
-    run.font.bold = True
-    p = document.add_paragraph()
-    run = p.add_run('BALANCE DUE')
-    run.font.color.rgb = RGBColor(150, 0, 0)
-    run.font.bold = True
-    p = document.add_paragraph()
-    run = p.add_run('THANK YOU')
-    run.font.color.rgb = RGBColor(150, 0, 0)
-    run.font.bold = True
-
+    runner = p.add_run('REITER ROOFING')
+    runner.font.size = Pt(10)
+    runner.font.bold = True
 
     # save docx
     document.save(response)

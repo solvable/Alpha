@@ -24,7 +24,7 @@ class Estimate(models.Model):
     email = models.EmailField(max_length=100)
     job_address= models.CharField(max_length=100)
     completed = models.BooleanField(default=False)
-    completedDate = models.DateField(null=True)
+    completedDate = models.DateField(null=True, blank=True)
 
     # Geocode Full Address
     def save(self, *args, **kwargs):
