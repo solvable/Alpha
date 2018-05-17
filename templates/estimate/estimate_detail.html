@@ -53,12 +53,16 @@
             {% for section in object.section_set.all %}
             <tr>
                 <td></td>
-                <td class="section-heading">{{ section.heading }}</td>
+                <td class="section-heading" colspan="2">{{ section.heading }}</td>
                 <td>({{ section.price }})</td>
             </tr>
             <tr>
-                <td colspan="3">{{ section.description|safe }}</td>
+                <td colspan="4" >{{ section.description|safe }}</td>
             </tr>
+                <tr>
+                <td colspan="4"><strong>{{ section.get_guarantee_display }}</strong></td>
+                </tr>
+
             <tr>
             {% endfor %}
             <tr>

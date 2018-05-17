@@ -5,6 +5,7 @@ from CRM.models import Customer, Jobsite, Ticket
 from django.urls import reverse
 from datetime import date
 from datetime import timedelta
+from Estimates.choices import GUARANTEE_CHOICES
 # Create your models here.
 
 
@@ -64,7 +65,7 @@ class Estimate(models.Model):
 class Section(models.Model):
     heading = models.CharField(max_length=100, null=False)
     description = models.TextField()
-
+    guarantee = models.CharField(max_length=2, blank=True, choices=GUARANTEE_CHOICES, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     estimate = models.ForeignKey(Estimate, on_delete=models.CASCADE, default='')
 

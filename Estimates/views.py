@@ -145,7 +145,7 @@ class EstimateDeleteView(generic.DeleteView):
 def write_invoice_view(request, cust, job, ticket, est):
     import html2text
     import re
-    from docx.shared import RGBColor, Pt
+    from docx.shared import RGBColor, Pt, Inches
     from docx.enum.text import WD_COLOR_INDEX
 
     current_path = request.get_full_path()
@@ -165,12 +165,15 @@ def write_invoice_view(request, cust, job, ticket, est):
 
     # Set Some Variables for filename and path
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
+    # headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
     filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
     doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
 
     # Set misc variables
     blank_space = 6
+    topmargin = .50
+    gutters = .50
+    bottommargin = .25
 
     # Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
@@ -179,6 +182,18 @@ def write_invoice_view(request, cust, job, ticket, est):
     # Create the docx object
     document = Document(doc)
 
+
+
+
+    sections = document.sections
+    for section in sections:
+        section.top_margin = Inches(topmargin)
+        section.bottom_margin = Inches(bottommargin)
+        section.left_margin = Inches(gutters)
+        section.right_margin = Inches(gutters)
+
+
+
     # Set the filename variable
     docx_title = "%s.docx" % (filename,)
 
@@ -186,7 +201,7 @@ def write_invoice_view(request, cust, job, ticket, est):
 
     # Add invoice line
     p = document.add_paragraph()
-    runner = p.add_run('*******************************************INVOICE********************************************')
+    runner = p.add_run('**************************************************INVOICE************************************************')
     runner.font.bold = True
     runner.font.size = Pt(10)
     runner.font.all_caps = True
@@ -243,6 +258,8 @@ def write_invoice_view(request, cust, job, ticket, est):
     for section in sections:
         p = document.add_paragraph()
         p.paragraph_format.line_spacing = Pt(blank_space)
+
+        #Add heading for each section
         p= document.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.keep_with_next = True
@@ -257,33 +274,32 @@ def write_invoice_view(request, cust, job, ticket, est):
         text = html2text.html2text(html)
 
 
-        spl = text.split('** _')
+        spl = text.split('\n')
 
         # Sanity
         print(spl)
         i = 0
         for i in range(0, len(spl)):
-            if '_**' not in spl[i]:
-                sect = spl[i]
-                split = sect.split('\n')
-                for i in range(0,len(split)):
-                    p = document.add_paragraph()
-                    p.paragraph_format.keep_together = True
-                    p.paragraph_format.keep_with_next = True
-                    runner = p.add_run()
-                    runner.add_tab()
-                    runner = p.add_run(split[i])
-                    runner.font.size = Pt(10)
-            else:
-                spl[i] = spl[i].replace('_**\n', '')
-                guar = spl[i]
-                # Sanity
-                print(guar)
-                runner = p.add_run(guar)
-                runner.font.size = Pt(10)
-                runner.font.bold = True
-                runner.font.underline = True
+            sect = spl[i]
+            p = document.add_paragraph()
+            p.paragraph_format.keep_together = True
+            p.paragraph_format.keep_with_next = True
+            runner = p.add_run()
+            runner.add_tab()
+            runner = p.add_run(sect)
+            runner.font.size = Pt(10)
 
+
+
+        runner = p.add_run(section.get_guarantee_display())
+        runner.font.size = Pt(10)
+        runner.font.bold = True
+        runner.font.underline = True
+
+        # p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+
+    p = document.add_paragraph()
     p = document.add_paragraph()
     runner = p.add_run()
     runner.add_tab()
@@ -359,6 +375,9 @@ def write_invoice_view(request, cust, job, ticket, est):
 def write_docx_view(request, cust, job, ticket, est):
     import html2text
     import re
+    from docx.shared import RGBColor, Pt, Inches
+    from docx.enum.text import WD_COLOR_INDEX
+
     current_path = request.get_full_path()
     print(current_path)
 
@@ -368,14 +387,23 @@ def write_docx_view(request, cust, job, ticket, est):
     ticket = get_object_or_404(Ticket, id=ticket)
     estimate = get_object_or_404(Estimate, id=est)
 
+    estimate.completed = True
+    estimate.save()
+
     # setup buffer
     buffer = BytesIO()
 
     # Set Some Variables for filename and path
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
+    # headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
     filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
     doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
+
+    # Set misc variables
+    blank_space = 6
+    topmargin = .50
+    gutters = .50
+    bottommargin = .25
 
     # Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
@@ -384,10 +412,26 @@ def write_docx_view(request, cust, job, ticket, est):
     # Create the docx object
     document = Document(doc)
 
+    sections = document.sections
+    for section in sections:
+        section.top_margin = Inches(topmargin)
+        section.bottom_margin = Inches(bottommargin)
+        section.left_margin = Inches(gutters)
+        section.right_margin = Inches(gutters)
+
     # Set the filename variable
     docx_title = "%s.docx" % (filename,)
 
     # Add content to docx file
+
+    # # Add invoice line
+    # p = document.add_paragraph()
+    # runner = p.add_run(
+    #     '**************************************************INVOICE************************************************')
+    # runner.font.bold = True
+    # runner.font.size = Pt(10)
+    # runner.font.all_caps = True
+    # runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
     # setup variables for docx table
     today = datetime.date.today()
@@ -416,16 +460,37 @@ def write_docx_view(request, cust, job, ticket, est):
     row3[0].text = bill2
     row3[1].text = customer.email
     row3[1].paragraphs[0].paragraph_format.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+
+    # Change Font size of Table
+    for row in table.rows:
+        for cell in row.cells:
+            paragraphs = cell.paragraphs
+            for paragraph in paragraphs:
+                for run in paragraph.runs:
+                    font = run.font
+                    font.size = Pt(10)
+
     # add Job location
     p = document.add_paragraph()
+    p.paragraph_format.line_spacing = Pt(blank_space)
     p = document.add_paragraph()
-    p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,)).bold = True
-    p = document.add_paragraph()
+    runner = p.add_run('JOB LOCATION: %s' % (jobsite.jobStreet,))
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+    runner.font.all_caps = True
+
     sections = estimate.section_set.all()
     for section in sections:
-        p=document.add_paragraph()
+        p = document.add_paragraph()
+        p.paragraph_format.line_spacing = Pt(blank_space)
+
+        # Add heading for each section
+        p = document.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        runner = p.add_run(section.heading +' ('+'${:,.2f}'.format(section.price) +')')
+        p.paragraph_format.keep_with_next = True
+        p.paragraph_format.keep_together = True
+        runner = p.add_run(section.heading + ' (' + '${:,.2f}'.format(section.price) + ')')
+        runner.font.size = Pt(10)
         runner.font.all_caps = True
         runner.bold = True
         runner.underline = True
@@ -433,27 +498,66 @@ def write_docx_view(request, cust, job, ticket, est):
         html = section.description
         text = html2text.html2text(html)
 
-        m = re.search('\*\* _(.*?)_\*\*', text, re.MULTILINE)
-        if m != '':
-            p.add_run(m).bold =True
+        spl = text.split('\n')
 
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p = document.add_paragraph(text)
+        # Sanity
+        print(spl)
+        i = 0
+        for i in range(0, len(spl)):
+            sect = spl[i]
+            p = document.add_paragraph()
+            p.paragraph_format.keep_together = True
+            p.paragraph_format.keep_with_next = True
+            runner = p.add_run()
+            runner.add_tab()
+            runner = p.add_run(sect)
+            runner.font.size = Pt(10)
 
+        runner = p.add_run(section.get_guarantee_display())
+        runner.font.size = Pt(10)
+        runner.font.bold = True
+        runner.font.underline = True
+
+        # p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    p = document.add_paragraph()
+    p = document.add_paragraph()
+    runner = p.add_run()
+    runner.add_tab()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     total = '${:,.2f}'.format(estimate.total)
-    p.add_run('TOTAL PRICE: %s' % (total,)).bold = True
-    p = document.add_paragraph()
+    runner = p.add_run('TOTAL PRICE: %s' % (total,))
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+    # runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
+
+
+
+    # add thank you note
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(4.5)
-    p.add_run('THANK YOU').bold = True
-    # p = document.add_paragraph()
-    # p.paragraph_format.left_indent = Inches(0.5)
-    # p.add_run('USERNAME').bold = True // add in username from logged in user
+    runner = p.add_run('THANK YOU')
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+
+    # add user name
+    p = document.add_paragraph()
+    p.paragraph_format.left_indent = Inches(0.5)
+    user = request.user
+    username = '%s %s' % (user.first_name, user.last_name)
+    username = username.upper()
+    p.paragraph_format.left_indent = Inches(4.5)
+    runner = p.add_run('%s' % (username,))  # add in username from logged in user
+    runner.font.size = Pt(10)
+    runner.font.bold = True
+
+    # add reiter roofing
     p = document.add_paragraph()
     p.paragraph_format.left_indent = Inches(4.5)
-    p.add_run('REITER ROOFING').bold = True
+    runner = p.add_run('REITER ROOFING')
+    runner.font.size = Pt(10)
+    runner.font.bold = True
 
     # save docx
     document.save(response)
