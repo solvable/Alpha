@@ -199,13 +199,6 @@ def write_invoice_view(request, cust, job, ticket, est):
 
     # Add content to docx file
 
-    # Add invoice line
-    p = document.add_paragraph()
-    runner = p.add_run('**************************************************INVOICE************************************************')
-    runner.font.bold = True
-    runner.font.size = Pt(10)
-    runner.font.all_caps = True
-    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
     # setup variables for docx table
     today = datetime.date.today()
@@ -213,6 +206,7 @@ def write_invoice_view(request, cust, job, ticket, est):
     bill2 = '%s, %s, %s' % (customer.billCity, customer.billState, customer.billZip)
     phone = customer.fullName
     email = customer.email
+    p = document.add_paragraph()
 
     # Create table
     table = document.add_table(rows=3, cols=2)
@@ -253,6 +247,13 @@ def write_invoice_view(request, cust, job, ticket, est):
     runner.font.size = Pt(10)
     runner.font.bold = True
     runner.font.all_caps = True
+    # Add invoice line
+    p = document.add_paragraph()
+    runner = p.add_run('**************************************************INVOICE************************************************')
+    runner.font.bold = True
+    runner.font.size = Pt(10)
+    runner.font.all_caps = True
+    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
     sections = estimate.section_set.all()
     for section in sections:
@@ -434,14 +435,9 @@ def write_docx_view(request, cust, job, ticket, est):
 
     # Add content to docx file
 
-    # Add invoice line
+    # Add blank line
     p = document.add_paragraph()
-    runner = p.add_run(
-        '**************************************************ESTIMATE***********************************************')
-    runner.font.bold = True
-    runner.font.size = Pt(10)
-    runner.font.all_caps = True
-    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
+
 
     # setup variables for docx table
     today = datetime.date.today()
@@ -488,6 +484,16 @@ def write_docx_view(request, cust, job, ticket, est):
     runner.font.size = Pt(10)
     runner.font.bold = True
     runner.font.all_caps = True
+
+    # Add Estimate Line
+    p=document.add_paragraph()
+
+    runner = p.add_run(
+        '**************************************************ESTIMATE***********************************************')
+    runner.font.bold = True
+    runner.font.size = Pt(10)
+    runner.font.all_caps = True
+    runner.font.highlight_color = WD_COLOR_INDEX.YELLOW
 
     sections = estimate.section_set.all()
     for section in sections:
