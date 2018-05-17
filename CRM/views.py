@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
+from Estimates.models import Estimate, Section
 
 
 from .models import Customer, Jobsite, Ticket
@@ -15,13 +16,16 @@ class IndexView(generic.ListView):
     model = Ticket
     template_name = 'CRM/index.html'
     open_tickets = Ticket.objects.filter(completed=False)[:]
-
     latest_tickets = Ticket.objects.order_by('-created')[:5]
+
+    unpaid_invoices = Estimate.objects.filter(completed=True, paid=False)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['latest_tickets'] = IndexView.latest_tickets
         context['open_tickets'] = IndexView.open_tickets
+        context['unpaid_invoices'] = IndexView.unpaid_invoices
         return context
 
 

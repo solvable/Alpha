@@ -180,6 +180,13 @@
         color:white;
     }
 
+
+    .invoice{
+        background-color: #a2c529;
+        color:black;
+
+    }
+
     .inspection-completed{
         background-color:  #121254;
         color:white;
@@ -203,6 +210,7 @@
         height:auto;
         order:1;
     }
+
 
     .linkbox{
 
@@ -312,5 +320,11 @@
 
     }
 
+
+    .unpaid_invoices{
+        display: flex;
+        flex-wrap:wrap;
+        margin:10px;
+    }
 
 }

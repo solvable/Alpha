@@ -1,0 +1,39 @@
+{%  extends 'CRM/base.html' %}
+{% block addhead %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+<script>
+ $(function() {
+
+  // page is now ready, initialize the calendar...
+
+$('#calendar').fullCalendar({
+  dayClick: function() {
+    alert('a day has been clicked!');
+  },
+  header: {
+    left: 'prev,next today myCustomButton',
+    center: 'title',
+    right: 'month,agendaWeek,agendaDay'
+  }
+
+});
+
+});
+
+
+
+    </script>
+{% endblock addhead %}
+
+
+{% block content %}
+
+     <div class="content-container">
+<div id="calendar"></div>
+
+    </div>
+{% endblock content %}
+
