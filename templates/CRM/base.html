@@ -2,7 +2,17 @@
 {% load static %}
 <html>
 <head>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"></link>
+
+
+
     <link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
             integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
@@ -29,12 +39,6 @@
                 <input name="q" type="text" class="searchinput" placeholder="Search"/>
                 <input type="submit" class="btn-search"/>
             </form>
-            {#                </div>#}
-            {#                <a href="http://www.gmail.com"><div class="btn red nav-btn">Gmail</div></a>#}
-            {#                <a href="http://www.authorize.net"><div class="btn orange nav-btn">Authorize</div></a>#}
-            {##}
-            {##}
-            {#            <div>#}
 
         </div>
 
@@ -69,11 +73,7 @@
         {% block ticket_content %}
         {% endblock ticket_content %}
 
-        {#                {% block misc-links %}#}
-        {#                    <div class="linkbox">#}
-        {#                      <a href="http://euramax-intl.dcatalog.com/r/Berger-BP-Catalog-2015/#page=1">Berger Brothers Catalog</a>#}
-        {#                    </div>#}
-        {#                {% endblock misc-links %}#}
+
 
 
     </div>

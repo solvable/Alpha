@@ -57,6 +57,9 @@
                 <td>
                     <a href="{% url 'estimate-create' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Create Estimate</div></a>
                 </td>
+                               <td>
+                    <a href="{% url 'appointment-create' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn red pdf-btn">Create Appointment</div></a>
+                </td>
             </tr>
 
             <tr>

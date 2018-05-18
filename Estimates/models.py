@@ -27,6 +27,7 @@ class Estimate(models.Model):
     completed = models.BooleanField(default=False)
     completedDate = models.DateField(null=True, blank=True)
     paid = models.BooleanField(blank=True, default=False)
+    scheduleDate = models.DateField(blank=True, null=True)
 
     # Geocode Full Address
     def save(self, *args, **kwargs):

@@ -1,29 +1,37 @@
-{%  extends 'CRM/base.html' %}
+{% extends 'CRM/base.html' %}
 {% block addhead %}
+    <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
-<link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-<script>
- $(function() {
+    <script>
+        $(function () {
 
-  // page is now ready, initialize the calendar...
+            // page is now ready, initialize the calendar...
 
-$('#calendar').fullCalendar({
-  dayClick: function() {
-    alert('a day has been clicked!');
-  },
-  header: {
-    left: 'prev,next today myCustomButton',
-    center: 'title',
-    right: 'month,agendaWeek,agendaDay'
-  }
+            $('#calendar').fullCalendar({
+                  schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
 
-});
+                dayClick: function () {
+                    alert('a day has been clicked!');
+                },
+                header: {
+                    left: 'prev,next today myCustomButton',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events:[
+                    {% autoescape off%}
+                        {{data}}
+                    {% endautoescape %}
+        ]
 
-});
 
+            });
 
+        });
 
     </script>
 {% endblock addhead %}
@@ -31,8 +39,8 @@ $('#calendar').fullCalendar({
 
 {% block content %}
 
-     <div class="content-container">
-<div id="calendar"></div>
+    <div class="content-container">
+        <div id="calendar"></div>
 
     </div>
 {% endblock content %}

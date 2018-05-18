@@ -1,0 +1,36 @@
+{% extends 'CRM/base.html' %}
+{% block addhead %}
+
+
+{% endblock addhead %}
+
+
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="card col s4 m4 ">
+            <h1>Create Appointment:</h1>
+            <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save"/>
+            </form>
+        </div>
+    </div>
+
+ <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "2018:2050",
+      // You can put more options here.
+
+    });
+  });
+  </script>
+
+{% endblock content %}
+
+

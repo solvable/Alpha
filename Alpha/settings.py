@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'haystack',
     'CRM',
     'Estimates',
+    'Calendar',
     'debug_toolbar',
 
 ]
