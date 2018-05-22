@@ -14,25 +14,36 @@
             $('#calendar').fullCalendar({
                   schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
 
-                dayClick: function () {
-                    alert('a day has been clicked!');
+                  eventClick: function(event) {
+                        if (event.url) {
+{#                        window.open(event.url, '', "width=200,height=100");#}
+                            window.open(event.url);
+                        return false;
+                }
                 },
                 header: {
                     left: 'prev,next today myCustomButton',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
+
+                editable:true,
+                eventStartEditable:true,
+
                 events:[
                     {% autoescape off%}
                         {{data}}
                     {% endautoescape %}
-        ]
+                ]
+
 
 
             });
 
         });
-
+    console.log(    {% autoescape off%}
+                        {{data}}
+                    {% endautoescape %})
     </script>
 {% endblock addhead %}
 

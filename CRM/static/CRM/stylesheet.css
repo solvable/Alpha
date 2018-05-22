@@ -84,7 +84,8 @@
 
         color: white;
         border: 1px solid black;
-        padding: 10px;
+        padding:10px 0px 10px 0px;
+
         display: inline-block;
         text-align: center;
         box-shadow: 3px 3px 2px grey;
@@ -106,6 +107,8 @@
     }
     .pdf-btn{
         width:100%;
+                /*display: inline-block;*/
+
     }
 
     .grey {
@@ -327,4 +330,7 @@
         margin:10px;
     }
 
+    .spacer{
+        padding:20px 0px 20px 0px;
+    }
 }

@@ -1,0 +1,57 @@
+{% extends 'CRM/base.html' %}
+
+{% block addhead %}
+{% endblock addhead %}
+
+
+{% block content %}
+
+    <table>
+        <tr>
+                <td>
+                    <a href="{% url 'appointment-update' app=object.id %}"
+                       role="button"><div class="btn orange edit-btn">Edit</div></a></td>
+                   <td> <a href="{% url 'appointment-delete' app=object.id %}"
+                       onclick="return confirm('Are you sure want to delete this Jobsite?');"
+                       role="button"><div  class="btn red delete-btn">Delete</div></a></td>
+            </tr>
+
+       <tr>
+            <td>
+                Created: {{ object.created| date:"m/d/Y g:iA" }}
+            </td>
+
+            <td>
+                Modified: {{ object.modified|date:"m/d/Y g:iA" }}
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                Customer: {{ object.title }}
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+               Appointment Date:  {{ object.schedule_date| date:"m/d/Y" }}
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                Time Slot: {{ object.get_time_slot_display }}
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                Employee: {{ object.get_estimator_display }}
+            </td>
+
+        </tr>
+     </table>
+
+
+
+{% endblock content %}

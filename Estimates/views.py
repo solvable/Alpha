@@ -395,10 +395,7 @@ def write_docx_view(request, cust, job, ticket, est):
     customer = get_object_or_404(Customer, id=cust)
     jobsite = get_object_or_404(Jobsite, id=job)
     ticket = get_object_or_404(Ticket, id=ticket)
-    estimate = get_object_or_404(Estimate, id=est)
 
-    estimate.completed = True
-    estimate.save()
 
     # setup buffer
     buffer = BytesIO()
@@ -590,7 +587,7 @@ def write_docx_view(request, cust, job, ticket, est):
     return response
 
 
-def write_pdf_view(request, cust, job, ticket, est):
+def write_pdf_view(request, cust, job, ticket):
     current_path = request.get_full_path()
     print(current_path)
 

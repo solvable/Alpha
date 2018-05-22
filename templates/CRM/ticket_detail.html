@@ -49,18 +49,22 @@
             </tr>
             <tr>
                 <td>
-                    <a href="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Export PDF</div></a>
+                    <a href="{% url 'generate-pdf' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Export Workorder</div></a>
                 </td>
+            <td>
+                    <a href="{% url 'appointment-create' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn red pdf-btn">Create Appointment</div></a>
+                </td>
+            </tr>
 
+                <tr>
+            <div class="spacer">nbsp</div>
             </tr>
             <tr>
                 <td>
                     <a href="{% url 'estimate-create' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn navy pdf-btn">Create Estimate</div></a>
                 </td>
-                               <td>
-                    <a href="{% url 'appointment-create' cust=customer.pk job=jobsite.pk ticket=ticket.pk %}"><div  class="btn red pdf-btn">Create Appointment</div></a>
-                </td>
-            </tr>
+                </tr>
+
 
             <tr>
                 <td>Estimates on Ticket:</td>
