@@ -279,6 +279,8 @@
 
     .nav-btn{
         height:auto;
+        margin-right:5px;
+        padding-right: 10px;
     }
 
     .link-btn{
@@ -333,4 +335,26 @@
     .spacer{
         padding:20px 0px 20px 0px;
     }
+
+    #cal-content{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .appt-list{
+    display:flex;
+        flex-direction: row;
+
+    }
+    #calendar{
+        width:100%;
+    }
+
+    .appt{
+        background-color: lightgray;
+        color:black;
+    }
+
+
 }

@@ -49,7 +49,8 @@ urlpatterns = [
     path('customer/<cust>/detail/<job>/<ticket>/update/<est>', EstimateUpdateView.as_view(), name='estimate-update'),
     path('customer/<cust>/detail/<job>/<ticket>/delete/<est>', EstimateDeleteView.as_view(), name='estimate-delete'),
 
-    path('calendar/', CalendarView.as_view(), name='calendar'),
+    path('calendar/', CalendarView, name='calendar'),
+    # path('calendar/', CalendarView.as_view(), name='calendar'),
     path('appointment-create/<cust>/<job>/<ticket>', AppointmentCreateView.as_view(), name='appointment-create'),
     path('appointment-edit/<app>', AppointmentUpdateView.as_view(), name='appointment-update'),
     path('appointment-detail/<app>', AppointmentDetailView.as_view(), name='appointment-detail'),

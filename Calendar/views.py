@@ -3,35 +3,32 @@ from CRM.models import Ticket
 from django.views import generic
 from django.core import serializers
 from CRM.models import Customer, Jobsite, Ticket
+from django.views.decorators.cache import never_cache, cache_control
 
 from .models import Appointment
 from .forms import AppointmentForm
 from django.shortcuts import get_object_or_404, redirect, reverse
+from django.urls import reverse_lazy
 
-
-
-class CalendarView(generic.ListView):
-    model = Appointment
-    template_name = 'Calendar/calendar.html'
-
-    scheduled_appointments = Appointment.objects.filter(unscheduled=False)
-    # data = serializers.serialize('json', scheduled_appointments, fields=('appt'))
-
+# @login_required(login_url='customers:login')
+def CalendarView(request):
     data = ''
+    scheduled_appointments = Appointment.objects.filter(unscheduled=False)
+    unscheduled = Appointment.objects.all().filter(unscheduled=True).order_by('created')
+
     for appointment in scheduled_appointments:
-        data = data + appointment.appt +","
+        data = data + appointment.appt+','
         print(appointment.unscheduled)
         print(data)
 
 
+    context = {
+        "data":data,
+        "unscheduled":unscheduled,
 
+    }
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['data'] = self.data
-        return context
-
-
+    return render(request, "Calendar/calendar.html", context)
 
 
 class AppointmentCreateView(generic.CreateView):
@@ -80,7 +77,7 @@ class AppointmentUpdateView(generic.UpdateView):
 class AppointmentDeleteView(generic.DeleteView):
     model = Appointment
     pk_url_kwarg = 'app'
-
+    success_url = reverse_lazy('calendar')
 
 class AppointmentDetailView(generic.DetailView):
     model = Appointment
