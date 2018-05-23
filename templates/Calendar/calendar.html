@@ -79,20 +79,53 @@
         <div id="calendar"></div>
 
 
+{#    <div class="appt-list">#}
+{#    {% for appt in unscheduled %}#}
+{#        <a href="{% url 'appointment-detail' app=appt.id %}">#}
+{#             <div class="btn ticket-item appt">#}
+{#                 {{ appt.created }}<br>#}
+{#                 Ticket No: {{ appt.ticket.id }}<br>#}
+{#                 {{ appt.jobsite }}<br>#}
+{#                 {{ appt.title }}<br>#}
+{#                </div>#}
+{#        </a>#}
+{#        {% endfor %}#}
+{##}
+{#    </div>#}
     <div class="appt-list">
-    {% for appt in unscheduled %}
-        <a href="{% url 'appointment-detail' app=appt.id %}">
-             <div class="btn ticket-item appt">
-                 {{ appt.created }}<br>
-                 Ticket No: {{ appt.ticket.id }}<br>
-                 {{ appt.jobsite }}<br>
-                 {{ appt.title }}<br>
+    {% for ticket in open_tickets %}
+        {% if ticket.call_type == "Estimate"%}
+             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                 <div class="btn ticket-item lead">
+                     {{ ticket.created }}<br>
+                     Ticket No: {{ ticket.id }}<br>
+                     {{ ticket.customer_id.fullName }}<br>
+                     {{ ticket.jobsite_id.jobStreet }}<br>
                 </div>
-        </a>
-        {% endfor %}
+             </a>
+        {% elif ticket.call_type == "Service" %}
+            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                <div class="btn ticket-item service">
+                     {{ ticket.created }}<br>
+                     Ticket No: {{ ticket.id }}<br>
+                     {{ ticket.customer_id.fullName }}<br>
+                     {{ ticket.jobsite_id.jobStreet }}<br>
+                </div>
+            </a>
 
+        {% elif ticket.call_type == "Inspection" %}
+            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                <div class="btn ticket-item inspection">
+                    {{ ticket.created }}<br>
+                    Ticket No: {{ ticket.id }}<br>
+                    {{ ticket.customer_id.fullName }}<br>
+                    {{ ticket.jobsite_id.jobStreet }}<br>
+                </div>
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
     </div>
-
     </div>
 
 

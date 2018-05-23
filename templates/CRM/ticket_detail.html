@@ -65,6 +65,18 @@
                 </td>
                 </tr>
 
+            <tr>
+                <td>Appointments for Ticket:</td>
+
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {% for app in object.appointment_set.all %}
+                    <a href="{% url 'appointment-detail' app=app.id %}"><div class="btn yellow pdf-btn">{{ app.schedule_date }}</div></a>
+                {% endfor %}
+
+                </td>
+            </tr>
 
             <tr>
                 <td>Estimates on Ticket:</td>

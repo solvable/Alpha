@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from Estimates.models import Estimate, Section
+from Calendar.models import Appointment
 
 
 from .models import Customer, Jobsite, Ticket
@@ -125,6 +126,7 @@ class TicketDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['customer'] = get_object_or_404(Customer, id=self.kwargs['cust'])
         context['jobsite'] = get_object_or_404(Jobsite, id=self.kwargs['job'])
+        # context['appt'] = get_object_or_404(Appointment, id=self.kwargs['appt'])
         return context
 
 
