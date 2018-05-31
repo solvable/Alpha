@@ -12,6 +12,7 @@
 
     <script>
 
+        save_event_link = "{% url 'Calendar:save_event' %}";
 
 
         $(function () {
@@ -19,7 +20,19 @@
             $.ajaxSetup ({
             // Disable caching of AJAX responses
             cache: false
+
             });
+
+
+        function save_event(event) {
+            $.post(save_answer_link, {
+            'csrfmiddlewaretoken': $("input[name='csrfmiddlewaretoken']").val(),
+            'title': event.title,
+            'start': event.start,
+            'end': event.end,
+            'color':event.color,
+            });
+        };
 
 
 
@@ -40,6 +53,20 @@
                 }
                 },
 
+
+                  eventDrop: function(event, delta, revertFunc) {
+
+                        alert(event.title + " was dropped on " + event.start.format());
+
+                        if (!confirm("Are you sure about this change?")) {
+                        revertFunc();
+                        }
+                        else{
+                            save_event(event)
+                        }
+
+                },
+
                 header: {
                     left: 'prev,next today myCustomButton',
                     center: 'title',
@@ -57,7 +84,17 @@
                     event_list,
                 ]
 
+
+
+
+
+
             });
+
+
+
+
+
 
 
         });
