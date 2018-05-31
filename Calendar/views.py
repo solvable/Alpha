@@ -43,6 +43,20 @@ def CalendarView(request):
     return render(request, "Calendar/calendar.html", context)
 
 
+def save_event(request):
+    appointment_pk = request.POST.get('pk')
+    appointment = Appointment.objects.get(pk=appointment_pk)
+    appointment.title = request.POST.get('title')
+    appointment.start = request.POST.get('start')
+    appointment.end = request.POST.get('end')
+    appointment.color = request.POST.get('color')
+    appointment.url = request.POST.get('url')
+    appointment.save()
+    print('saved' + appointment_pk)
+    # Return a response. An empty dictionary is still a 200
+    return HttpResponse(json.dumps([{}]), content_type='application/json')
+
+
 class AppointmentCreateView(generic.CreateView):
     model = Appointment
     form_class = AppointmentForm

@@ -55,7 +55,7 @@ class Appointment(models.Model):
         super(Appointment, self).save()
         url = self.get_absolute_url()
 
-        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.estimator)+"', url:'http://127.0.0.1:8000"+str(url)+"'}")
+        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.estimator) +"', pk:'" +str(self.pk) +"', url:'http://127.0.0.1:8000"+str(url)+"'}")
         if self.schedule_date:
             self.unscheduled = False
 

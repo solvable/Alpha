@@ -19,7 +19,7 @@ from django.conf.urls import include, url
 from django.conf import settings
 from CRM import views
 from Estimates.views import EstimateCreateView, EstimateDetailView, EstimateUpdateView, EstimateDeleteView, write_pdf_view, write_docx_view, write_invoice_view
-from Calendar.views import CalendarView, AppointmentCreateView, AppointmentUpdateView, AppointmentDeleteView, AppointmentDetailView
+from Calendar.views import CalendarView, AppointmentCreateView, AppointmentUpdateView, AppointmentDeleteView, AppointmentDetailView, save_event
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -55,6 +55,7 @@ urlpatterns = [
     path('appointment-edit/<app>', AppointmentUpdateView.as_view(), name='appointment-update'),
     path('appointment-detail/<app>', AppointmentDetailView.as_view(), name='appointment-detail'),
     path('appointment-delete/<app>', AppointmentDeleteView.as_view(), name='appointment-delete'),
+    path('save_event', save_event, name='save_event'),
 
               ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
