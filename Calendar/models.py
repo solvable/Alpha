@@ -52,7 +52,7 @@ class Appointment(models.Model):
             end = "16:00"
         self.start = start
         self.end = end
-
+        super(Appointment, self).save()
         url = self.get_absolute_url()
 
         self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.estimator)+"', url:'http://127.0.0.1:8000"+str(url)+"'}")

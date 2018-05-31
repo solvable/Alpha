@@ -39,6 +39,7 @@
                         return false;
                 }
                 },
+
                 header: {
                     left: 'prev,next today myCustomButton',
                     center: 'title',
@@ -92,7 +93,9 @@
 {#        {% endfor %}#}
 {##}
 {#    </div>#}
+
     <div class="appt-list">
+    <h2>OPEN TICKETS:</h2>
     {% for ticket in open_tickets %}
         {% if ticket.call_type == "Estimate"%}
              <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">

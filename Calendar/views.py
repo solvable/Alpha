@@ -12,16 +12,26 @@ from django.urls import reverse_lazy
 
 # @login_required(login_url='customers:login')
 def CalendarView(request):
+    data_list =  []
     data = ''
-    scheduled_appointments = Appointment.objects.filter(unscheduled=False)
-
-
-    unscheduled = Appointment.objects.all().filter(unscheduled=True).order_by('created')
     open_tickets = Ticket.objects.all().filter(completed=False)
-    for appointment in scheduled_appointments:
-        data = data + appointment.appt+','
-        print(appointment.unscheduled)
-        print(data)
+    unscheduled = Appointment.objects.all().filter(unscheduled=True).order_by('created')
+
+    # scheduled_appointments = Appointment.objects.filter(unscheduled=False)
+    # for appointment in scheduled_appointments:
+    #     data = data + appointment.appt+','
+    #     print(appointment.unscheduled)
+    #     print(data)
+
+
+    data_list =  Appointment.objects.all().values_list('appt', flat=True)
+
+    print(data_list)
+
+
+    data = ",".join(data_list)
+
+    print(data)
 
 
     context = {
