@@ -7,10 +7,15 @@ from django.views.decorators.cache import never_cache, cache_control
 
 from .models import Appointment
 from .forms import AppointmentForm
-from django.shortcuts import get_object_or_404, redirect, reverse
+from django.shortcuts import get_object_or_404, redirect, reverse, HttpResponse
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
+import json
 
 # @login_required(login_url='customers:login')
+
+@ensure_csrf_cookie
 def CalendarView(request):
     data_list =  []
     data = ''
@@ -45,9 +50,13 @@ def CalendarView(request):
 
 def save_event(request):
     appointment_pk = request.POST.get('pk')
-    appointment = Appointment.objects.get(pk=appointment_pk)
+    print(appointment_pk)
+    appointment = Appointment.objects.get(id=appointment_pk)
+    print(appointment)
     appointment.title = request.POST.get('title')
+
     appointment.start = request.POST.get('start')
+    print(appointment.start)
     appointment.end = request.POST.get('end')
     appointment.color = request.POST.get('color')
     appointment.url = request.POST.get('url')
@@ -62,7 +71,32 @@ class AppointmentCreateView(generic.CreateView):
     form_class = AppointmentForm
     template_name = 'Calendar/appointment_form.html'
 
-
+    def save(self):
+        self.title = self.ticket.customer_id.fullName
+        if self.time_slot == 't0810':
+            start = "08:00"
+            end = "10:00"
+        elif self.time_slot == 't0911':
+            start = "09:00"
+            end = "11:00"
+        elif self.time_slot == 't1012':
+            start = "10:00"
+            end = "12:00"
+        elif self.time_slot == 't1113':
+            start = "11:00"
+            end = "13:00"
+        elif self.time_slot == 't1214':
+            start = "12:00"
+            end = "14:00"
+        elif self.time_slot == 't1315':
+            start = "13:00"
+            end = "15:00"
+        else:
+            start = "14:00"
+            end = "16:00"
+        self.start = start
+        self.end = end
+        super(Appointment, self).save()
 
     def get_success_url(self):
         return reverse('calendar')
@@ -99,6 +133,32 @@ class AppointmentUpdateView(generic.UpdateView):
     template_name = 'Calendar/appointment_form.html'
     pk_url_kwarg = 'app'
 
+    def save(self):
+        self.title = self.ticket.customer_id.fullName
+        if self.time_slot == 't0810':
+            start = "08:00"
+            end = "10:00"
+        elif self.time_slot == 't0911':
+            start = "09:00"
+            end = "11:00"
+        elif self.time_slot == 't1012':
+            start = "10:00"
+            end = "12:00"
+        elif self.time_slot == 't1113':
+            start = "11:00"
+            end = "13:00"
+        elif self.time_slot == 't1214':
+            start = "12:00"
+            end = "14:00"
+        elif self.time_slot == 't1315':
+            start = "13:00"
+            end = "15:00"
+        else:
+            start = "14:00"
+            end = "16:00"
+        self.start = start
+        self.end = end
+        super(Appointment, self).save()
 
 class AppointmentDeleteView(generic.DeleteView):
     model = Appointment

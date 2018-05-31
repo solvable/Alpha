@@ -28,31 +28,31 @@ class Appointment(models.Model):
 
     def save(self):
 
-        self.title = self.ticket.customer_id.fullName
-        if self.time_slot == 't0810':
-            start = "08:00"
-            end = "10:00"
-        elif self.time_slot == 't0911':
-            start = "09:00"
-            end = "11:00"
-        elif self.time_slot == 't1012':
-            start = "10:00"
-            end = "12:00"
-        elif self.time_slot == 't1113':
-            start = "11:00"
-            end = "13:00"
-        elif self.time_slot == 't1214':
-            start = "12:00"
-            end = "14:00"
-        elif self.time_slot == 't1315':
-            start = "13:00"
-            end = "15:00"
-        else:
-            start = "14:00"
-            end = "16:00"
-        self.start = start
-        self.end = end
-        super(Appointment, self).save()
+        # self.title = self.ticket.customer_id.fullName
+        # if self.time_slot == 't0810':
+        #     start = "08:00"
+        #     end = "10:00"
+        # elif self.time_slot == 't0911':
+        #     start = "09:00"
+        #     end = "11:00"
+        # elif self.time_slot == 't1012':
+        #     start = "10:00"
+        #     end = "12:00"
+        # elif self.time_slot == 't1113':
+        #     start = "11:00"
+        #     end = "13:00"
+        # elif self.time_slot == 't1214':
+        #     start = "12:00"
+        #     end = "14:00"
+        # elif self.time_slot == 't1315':
+        #     start = "13:00"
+        #     end = "15:00"
+        # else:
+        #     start = "14:00"
+        #     end = "16:00"
+        # self.start = start
+        # self.end = end
+        # super(Appointment, self).save()
         url = self.get_absolute_url()
 
         self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.estimator) +"', pk:'" +str(self.pk) +"', url:'http://127.0.0.1:8000"+str(url)+"'}")

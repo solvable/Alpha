@@ -13,7 +13,22 @@
     <script>
 
         save_event_link = "{% url 'save_event' %}";
-
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
 
         $(function () {
 
@@ -28,10 +43,11 @@
 
 
             $.post(save_event_link, {
-            'csrfmiddlewaretoken': $("input[name='csrfmiddlewaretoken']").val(),
+            'csrfmiddlewaretoken': csrftoken,
+            'pk':event.pk,
             'title': event.title,
-            'start': event.start,
-            'end': event.end,
+            'start': event.start.format(),
+            'end': event.end.format(),
             'color':event.color,
             'url':event.url,
             });
@@ -66,6 +82,7 @@
                         }
                         else{
                             save_event(event)
+
                         }
 
                 },
