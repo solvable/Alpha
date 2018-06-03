@@ -43,15 +43,17 @@ var csrftoken = getCookie('csrftoken');
 
 
             $.post(save_event_link, {
+
             'csrfmiddlewaretoken': csrftoken,
             'pk':event.pk,
+            'scheduled_date':event.date,
             'title': event.title,
             'start': event.start.format(),
             'end': event.end.format(),
             'color':event.color,
-            'url':event.url,
+            'url':event.url
             });
-        };
+        }
 
 
 
