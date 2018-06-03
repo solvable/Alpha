@@ -43,23 +43,35 @@ def CalendarView(request):
 
 def save_event(request):
     appointment_pk = request.POST.get('pk')
+    print('Appointment:'+ appointment_pk)
+    appointment = Appointment.objects.get(id=appointment_pk)
+
+    appointment.title = request.POST.get('title')
+
     date = request.POST.get('start')
     date = date[:10]
     print(date)
-    print('Appointment:'+ appointment_pk)
-    appointment = Appointment.objects.get(id=appointment_pk)
-    print(appointment)
-    appointment.title = request.POST.get('title')
+
     appointment.schedule_date = date
-    appointment.start = request.POST.get('start')
-    appointment.end = request.POST.get('end')
+
+
+    start = request.POST.get('start')
+    appointment.start = start[10:]
+    print('Start:' + appointment.start)
+
+
+    end = request.POST.get('end')
+    appointment.end = end[10:]
     print(appointment.start + appointment.end)
+
     appointment.color = request.POST.get('color')
+
     appointment.url = request.POST.get('url')
     try:
         appointment.save()
         print('saved:' + appointment_pk)
         print('New Date: '+appointment.schedule_date+ 'New Time:'+ appointment.start +'-'+appointment.end)
+        print(appointment.appt)
     except:
         print('error')
     # Return a response. An empty dictionary is still a 200

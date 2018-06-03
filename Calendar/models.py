@@ -19,7 +19,7 @@ class Appointment(models.Model):
     notes = models.TextField(blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True, null=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False, null=True)
-    appt = models.CharField(null=True, max_length=200, blank=True)
+    appt = models.CharField(null=True, max_length=250, blank=True)
 
 
     def get_absolute_url(self):
@@ -33,8 +33,9 @@ class Appointment(models.Model):
         self.date = self.schedule_date
         super(Appointment, self).save()
         url = self.get_absolute_url()
-
-        self.appt = str("{title:'" + str(self.title) +"', date:'"+ str(self.schedule_date) +"', start:'"+str(self.schedule_date) +(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.estimator)+"', startEditable:'" + 'True' +"', pk:'" +str(self.pk) +"', url:'http://127.0.0.1:8000"+str(url)+"'}")
+        self.appt=''
+        super(Appointment, self).save()
+        self.appt = str("{title:'" + str(self.title) +"', date:'"+ str(self.schedule_date) +"', start:'"+str(self.schedule_date) +(self.start) +"', end:'" + str(self.schedule_date)+str(self.end) +"', color:'" + str(self.estimator)+"', startEditable:'" + 'True' +"', pk:'" +str(self.pk) +"', url:'http://127.0.0.1:8000"+str(url)+"'}")
         if self.schedule_date:
             self.unscheduled = False
 
