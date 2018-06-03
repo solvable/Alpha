@@ -20,15 +20,43 @@
     </div>
 
  <script>
+
   $(function() {
     $( ".datepicker" ).datepicker({
       changeMonth: true,
       changeYear: true,
-      yearRange: "2018:2050",
+      yearRange: "2018:2070",
+      dateFormat: "yy-mm-dd",
+
       // You can put more options here.
 
+
+
     });
+
+    var options = {
+        showMinutes: false,
+        showPeriod: false,
+        hours: {
+                starts: 8,                // First displayed hour
+                ends: 17                  // Last displayed hour
+        },
+        rows: 2,
+        onSelect: function(time, inst) {
+
+        $('#'+inst.id).val('T'+time+':00:00')
+    },
+
+
+
+    }
+
+    $('.timepicker').timepicker(options);
+
   });
+
+
+
   </script>
 
 {% endblock content %}

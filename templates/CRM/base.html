@@ -10,13 +10,20 @@
   crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"></link>
+{#<script src="https://cdn.jsdelivr.net/npm/timepicker@1.11.12/jquery.timepicker.min.js"></script>#}
+{#<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/timepicker@1.11.12/jquery.timepicker.min.css"</link>#}
+<script src="{% static "CRM/js/jquery.ui.timepicker.js" %}"></script>
+<link rel="stylesheet" href="{% static "CRM/js/jquery.ui.timepicker.css" %}"></link>
 
 
 
-    <link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
             integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
             crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="{% static 'CRM/stylesheet.css' %}"></link>
     {% block addhead %}
 
     {% endblock addhead %}
