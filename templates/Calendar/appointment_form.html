@@ -10,9 +10,9 @@
 
 
     <div class="row">
-        <div class="card col s4 m4 ">
+        <div class="card col s4 m4 " id="appt_form">
             <h1>Create Appointment:</h1>
-            <form action="" method="post">{% csrf_token %}
+            <form action="" method="post" autocomplete="off">{% csrf_token %}
                 {{ form.as_p }}
                 <input type="submit" value="Save"/>
             </form>
