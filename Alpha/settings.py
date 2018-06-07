@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,6 +23,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=k$smtt&++1#y%pcro)^qlc#!n@5f08&v662mq@e2gajtjv&3)'
+
+# try:
+#     load_dotenv(BASE_DIR('.env'))
+# except:
+#     print('Error loading API keys')
+
+
+
+
+MAP_KEY = os.getenv('MAP_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

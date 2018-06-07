@@ -21,10 +21,11 @@
 }
 
 @media screen {
-    body{
+    body {
         background-color: dimgray;
     }
-    .index-container{
+
+    .index-container {
         /*display: flex;*/
         /*flex-direction: column;*/
         /*flex-wrap: wrap;*/
@@ -35,40 +36,38 @@
 
     }
 
-    .content-container{
+    .content-container {
         display: flex;
-        margin-left:50px;
-        margin-right:50px;
+        margin-left: 50px;
+        margin-right: 50px;
         background-color: white;
-        height:100%;
+        height: 100%;
     }
 
-   .top-menu {
+    .top-menu {
         /*margin-top: 25px;*/
         display: flex;
         justify-content: center;
         margin-bottom: 1em;
     }
 
-
-    .content-container{
+    .content-container {
         display: flex;
         justify-content: left;
         align-items: flex-start;
     }
 
-
-
-    .job-item{
-        width:100%;
+    .job-item {
+        width: 100%;
 
     }
 
     .ticket-content {
 
     }
-    .ticket-item{
-        width:100%;
+
+    .ticket-item {
+        width: 100%;
     }
 
     .row:after {
@@ -77,14 +76,11 @@
         clear: both;
     }
 
-
-
-
     .btn {
 
         color: white;
         border: 1px solid black;
-        padding:10px 0px 10px 0px;
+        padding: 10px 0px 10px 0px;
 
         display: inline-block;
         text-align: center;
@@ -92,22 +88,21 @@
 
     }
 
-
-
-
-    .edit-btn{
-        width:100%;
+    .edit-btn {
+        width: 100%;
         /*display: inline-block;*/
     }
-    .delete-btn{
 
-        width:90%;
+    .delete-btn {
+
+        width: 90%;
         /*display: inline-block;*/
 
     }
-    .pdf-btn{
-        width:100%;
-                /*display: inline-block;*/
+
+    .pdf-btn {
+        width: 100%;
+        /*display: inline-block;*/
 
     }
 
@@ -138,154 +133,146 @@
 
     .navy {
         background-color: navy;
-        color:white;
+        color: white;
     }
 
     table {
-        margin:2em;
+        margin: 2em;
         table-layout: fixed;
-        width:400px;
+        width: 400px;
     }
 
     th, td {
         /*border-bottom: 1px solid #ddd;*/
 
     }
-    th{
+
+    th {
         text-align: left;
     }
 
-    .service{
+    .service {
         background-color: #990202;
-        color:white;
+        color: white;
     }
 
-    .service-completed{
+    .service-completed {
         background-color: #4b0101;
-        color:white;
+        color: white;
     }
 
-    .lead{
-        background-color: #029902
-;
-        color:white;
+    .lead {
+        background-color: #029902;
+        color: white;
     }
 
-    .lead-completed{
-                background-color: #014b01;
-        color:white;
+    .lead-completed {
+        background-color: #014b01;
+        color: white;
     }
 
-
-
-    .inspection{
-        background-color:  #191970;
-        color:white;
+    .inspection {
+        background-color: #191970;
+        color: white;
     }
 
-
-    .invoice{
+    .invoice {
         background-color: #a2c529;
-        color:black;
+        color: black;
 
     }
 
-    .inspection-completed{
-        background-color:  #121254;
-        color:white;
+    .inspection-completed {
+        background-color: #121254;
+        color: white;
     }
 
-
-    .open_tickets{
+    .open_tickets {
         flex-wrap: wrap;
-        margin:10px;
-        width:50%;
+        margin: 10px;
+        width: 50%;
     }
 
-    .latest_customers{
+    .latest_customers {
         flex-wrap: wrap;
         width: 10%;
         order: 2;
-        margin:10px;
+        margin: 10px;
 
     }
+
     .open_tickets .btn {
-        width:15%;
-        height:auto;
-        order:1;
+        width: 15%;
+        height: auto;
+        order: 1;
     }
 
-
-    .linkbox{
+    .linkbox {
 
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         background-color: white;
-        padding:10px;
-        border:black solid medium;
-        margin:0 15px 15px 0px;
+        padding: 10px;
+        border: black solid medium;
+        margin: 0 15px 15px 0px;
         box-shadow: 3px 3px 2px grey;
 
     }
-    .linkbox a{
-        margin:auto;
-        color:red;
+
+    .linkbox a {
+        margin: auto;
+        color: red;
 
     }
 
-    .legend{
+    .legend {
         display: flex;
         flex-direction: column;
 
         flex-wrap: wrap;
         background-color: white;
-        padding:10px;
-        border:black solid medium;
-        margin:0 15px 15px 0px;
+        padding: 10px;
+        border: black solid medium;
+        margin: 0 15px 15px 0px;
         box-shadow: 3px 3px 2px grey;
 
     }
 
-    .box-title{
+    .box-title {
         padding: auto;
-        color:black;
+        color: black;
         font-weight: bold;
     }
 
-    .box{
+    .box {
 
-        height:10px;
-        width:10px;
+        height: 10px;
+        width: 10px;
         color: white;
         border: 1px solid black;
 
-
-
-
-
     }
 
-
-    .section-heading{
+    .section-heading {
         font-weight: bold;
     }
 
-    .searchbox{
-        padding-left:10px;
-        padding-right:10px;
-        margin:0px;
+    .searchbox {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0px;
 
     }
 
-    .nav-btn{
-        height:auto;
-        margin-right:5px;
+    .nav-btn {
+        height: auto;
+        margin-right: 5px;
         padding-right: 10px;
     }
 
-    .link-btn{
-        width:100px;
+    .link-btn {
+        width: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -293,94 +280,98 @@
 
     }
 
-    .top-menu{
+    .top-menu {
 
-        height:40px;
+        height: 40px;
     }
 
-    .top-menu .btn{
-        padding-left:10px;
-
-    }
-    input.searchinput{
-        height:40px;
-
-        margin:0px;
-    }
-    input.btn-search{
-        height:40px;
-        margin:0px;
-
-    }
-.mini-navbar{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding: 10px;
-}
-    .mini-nav{
-
-
-    margin-top: 10px;
-
+    .top-menu .btn {
+        padding-left: 10px;
 
     }
 
+    input.searchinput {
+        height: 40px;
 
-    .unpaid_invoices{
+        margin: 0px;
+    }
+
+    input.btn-search {
+        height: 40px;
+        margin: 0px;
+
+    }
+
+    .mini-navbar {
         display: flex;
-        flex-wrap:wrap;
-        margin:10px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 10px;
     }
 
-    .spacer{
-        padding:20px 0px 20px 0px;
+    .mini-nav {
+
+        margin-top: 10px;
+
     }
 
-    #cal-content{
+    .unpaid_invoices {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 10px;
+    }
+
+    .spacer {
+        padding: 20px 0px 20px 0px;
+    }
+
+    #cal-content {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
     }
 
-    .appt-list{
-    display:flex;
+    .appt-list {
+        display: flex;
         flex-direction: row;
 
     }
-    #calendar{
-        width:100%;
+
+    #calendar {
+        width: 100%;
     }
 
-    .appt{
+    .appt {
         background-color: lightgray;
-        color:black;
+        color: black;
     }
 
     .fc-day-top {
-    /*background-color:blue;*/
+        /*background-color:blue;*/
 
+    }
 
-
-}
-    table.ui-timepicker{
-        border:2px solid black;
+    table.ui-timepicker {
+        border: 2px solid black;
         background-color: white;
         box-shadow: 5px 5px 5px grey;
 
     }
 
-    table.ui-timepicker td{
+    table.ui-timepicker td {
 
-
-        margin-top:10px;
-        margin-bottom:10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
+    .ui-timepicker-title {
+        display: none;
+    }
 
+    #map {
+        height: 100%;
+        width:100%
 
-
-    .ui-timepicker-title{
-        display:none;    }
+    }
 
 }
