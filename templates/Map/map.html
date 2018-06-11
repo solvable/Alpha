@@ -7,68 +7,87 @@
 {% block content %}
 
     <div id="map"></div>
-
+    <div id="street-view"></div>
 
 
     <script>
-        var content = []
-        var locations = {{ data_list|safe }};
-        var i = 0;
-        for (i = 0; i < locations.length; i++) {
-            console.log(locations[i][0] + ',' + locations[i][1]);
+    var content = []
+    var locations = {{ data_list|safe }};
+    var i=0;
 
-        }
+    for (i=0;i<locations.length;i++){
+                            console.log(locations[i][0]+','+locations[i][1]);
 
-
-        function initMap() {
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: {lat: 39.9526, lng: -75.1652}
-            });
-
-            var marker, i;
-            var contentString = []
-            for (i = 0; i < locations.length; i++) {
-
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-                    map: map,
-                    title: locations[i][2] + ' ' + locations[i][3],
-                })
+    }
 
 
-                contentString[i] =
-                        '<div id="content">' +
-                        '<div id="siteNotice">'
-                        + '</div>' +
-                        '<h1 id="firstHeading" class="firstHeading">' + locations[i][2] + '-' + locations[i][3] + '</h1>' +
-                        '<div id="bodyContent">' +
-                        '<p>' + locations[i][3] + '<br>' + locations[i][4] + '<br>' + locations[i][5] + ',' + locations[i][6] + '</p>' + '<p>' + locations[i][2] + '</p> ' +
-                        '<p>' + 'Created:' + locations[i][7] + '</p>' +
-                        '</div>' +
-                        '</div>';
+      function initMap() {
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString[i]
-                });
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: {lat: 39.9526, lng: -75.1652}
+        });
 
+   var marker, i;
+   var contentString = []
+    for (i = 0; i < locations.length; i++) {
 
-                google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
-                    return function () {
-                        infowindow.setContent(contentString);
-                        infowindow.open(map, marker);
-                    };
-                })
-                (marker, contentString, infowindow));
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+            map: map,
+            title:locations[i][2] + ' '+locations[i][3],
+            animation: google.maps.Animation.DROP,
+
+        })
 
 
-            }
+        contentString[i] =
+            '<div id="content">'+
+                '<div id="siteNotice">'
+                +'</div>'+
+                '<h1 id="firstHeading" class="firstHeading">'+locations[i][2]+'-' +locations[i][3]+'</h1>'+
+                    '<div id="bodyContent">'+
+                        '<p>' + locations[i][3] +'<br>' + locations[i][4]+'<br>'+locations[i][5]+','+locations[i][6]+'</p>'+                             '<p>' + locations[i][2]+'</p> ' +
+                        '<p>'+'Created:'+locations[i][7]+'</p>'+
+                        '<p>'+'<a href="http://localhost:8000' + locations[i][9] +'">Go to Ticket</a>'+
+                    '</div>'+
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString[i]
+        });
 
 
-        }
 
-        console.log(locations);
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                   infowindow.setContent(contentString);
+                   infowindow.open(map,marker);
+
+                          var panorama;
+
+
+
+
+
+                };
+            })
+        (marker,contentString,infowindow));
+
+
+
+
+
+   }
+
+
+
+
+
+
+      }
+
+    console.log(locations);
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
@@ -86,9 +105,6 @@
 
 
     </script>
-    <
-    script
-    src = "https://maps.googleapis.com/maps/api/js?key={{key}}&callback=initMap"
-    async
-    defer ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{key}}&callback=initMap"
+    async defer></script>
 {% endblock content %}
