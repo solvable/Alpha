@@ -125,7 +125,7 @@ class Ticket(models.Model):
     modified = models.DateTimeField(auto_now=True, auto_now_add=False, null=True)
     modified_by = models.CharField(max_length=50, default=1, null=True)
     notes = models.TextField(max_length=200, default='', null=True)
-
+    printed = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         super(Ticket, self).save(*args, **kwargs)

@@ -13,6 +13,9 @@
     <script>
     var content = []
     var locations = {{ data_list|safe }};
+
+
+
     var i=0;
 
     for (i=0;i<locations.length;i++){
@@ -30,10 +33,20 @@
 
    var marker, i;
    var contentString = []
+   var selected_list = []
     for (i = 0; i < locations.length; i++) {
+            var lat = locations[i][0]
+            var lng = locations[i][1]
+            var fullname = locations[i][2]
+            var jobstreet = locations[i][3]
+            var jobcity = locations[i][4]
+            var jobstate = locations[i][5]
+            var jobzip = locations[i][6]
+            var created = locations[i][7]
+            var url = locations[i][9]
 
         marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+            position: new google.maps.LatLng(lat, lng),
             map: map,
             title:locations[i][2] + ' '+locations[i][3],
             animation: google.maps.Animation.DROP,
@@ -45,11 +58,13 @@
             '<div id="content">'+
                 '<div id="siteNotice">'
                 +'</div>'+
-                '<h1 id="firstHeading" class="firstHeading">'+locations[i][2]+'-' +locations[i][3]+'</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">'+ fullname+'-' + jobstreet +'</h1>'+
                     '<div id="bodyContent">'+
-                        '<p>' + locations[i][3] +'<br>' + locations[i][4]+'<br>'+locations[i][5]+','+locations[i][6]+'</p>'+                             '<p>' + locations[i][2]+'</p> ' +
-                        '<p>'+'Created:'+locations[i][7]+'</p>'+
-                        '<p>'+'<a href="http://localhost:8000' + locations[i][9] +'">Go to Ticket</a>'+
+                        '<p>' + jobstreet +'<br>' + jobcity +'<br>'+jobstate+','+jobzip+'</p>'+                             '<p>' + locations[i][2]+'</p> ' +
+                        '<p>'+'Created:'+ created +'</p>'+
+                        '<p>'+'<a href="http://'+ url +'">Go to Ticket</a>'+
+
+
                     '</div>'+
             '</div>';
 
@@ -64,7 +79,6 @@
                    infowindow.setContent(contentString);
                    infowindow.open(map,marker);
 
-                          var panorama;
 
 
 
@@ -73,10 +87,6 @@
                 };
             })
         (marker,contentString,infowindow));
-
-
-
-
 
    }
 

@@ -595,6 +595,9 @@ def write_pdf_view(request, cust, job, ticket):
     jobsite = get_object_or_404(Jobsite, id=job)
     ticket = get_object_or_404(Ticket, id=ticket)
 
+    ticket.printed = True
+    ticket.save()
+
     filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
 
     # Create HttpResponse object with appropriate PDF headers
