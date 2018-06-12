@@ -30,6 +30,7 @@
           zoom: 11,
           center: {lat: 39.9526, lng: -75.1652}
         });
+        var bounds = new google.maps.LatLngBounds();
 
    var marker, i;
    var contentString = []
@@ -68,10 +69,12 @@
                     '</div>'+
             '</div>';
 
+
         var infowindow = new google.maps.InfoWindow({
           content: contentString[i]
         });
-
+  bounds.extend(marker.position);
+map.fitBounds(bounds);
 
 
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
