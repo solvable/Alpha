@@ -30,36 +30,76 @@
           zoom: 11,
           center: {lat: 39.9526, lng: -75.1652}
         });
+
+
+
         var bounds = new google.maps.LatLngBounds();
 
    var marker, i;
    var contentString = []
    var selected_list = []
     for (i = 0; i < locations.length; i++) {
-            var lat = locations[i][0]
-            var lng = locations[i][1]
-            var fullname = locations[i][2]
-            var jobstreet = locations[i][3]
-            var jobcity = locations[i][4]
-            var jobstate = locations[i][5]
-            var jobzip = locations[i][6]
-            var created = locations[i][7]
-            var url = locations[i][9]
+            var lat = locations[i][0];
+            var lng = locations[i][1];
+            var fullname = locations[i][2];
+            var jobstreet = locations[i][3];
+            var jobcity = locations[i][4];
+            var jobstate = locations[i][5];
+            var jobzip = locations[i][6];
+            var created = locations[i][7];
+            var url = locations[i][9];
+            var tickettype = locations[i][10];
+            var leadicon = '{% static 'green_MarkerL.png' %}';
+            var inspectionicon = '{% static 'blue_MarkerI.png' %}';
+            var serviceicon = '{% static 'red_MarkerS.png' %}';
 
-        marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, lng),
-            map: map,
-            title:locations[i][2] + ' '+locations[i][3],
-            animation: google.maps.Animation.DROP,
 
-        })
+        if(tickettype=='Estimate') {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lng),
+                map: map,
+                title: locations[i][2] + ' ' + locations[i][3],
+                animation: google.maps.Animation.DROP,
+                icon: leadicon,
+
+
+            })
+            bounds.extend(marker.position);
+        }
+
+            else if(tickettype=='Service') {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lng),
+                map: map,
+                title: locations[i][2] + ' ' + locations[i][3],
+                animation: google.maps.Animation.DROP,
+                icon: serviceicon,
+
+
+            })
+            bounds.extend(marker.position);
+        }
+
+            else  if(tickettype=='Inspection') {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lng),
+                map: map,
+                title: locations[i][2] + ' ' + locations[i][3],
+                animation: google.maps.Animation.DROP,
+                icon: inspectionicon,
+
+
+            })
+            bounds.extend(marker.position);
+        }
+
 
 
         contentString[i] =
             '<div id="content">'+
                 '<div id="siteNotice">'
                 +'</div>'+
-                '<h1 id="firstHeading" class="firstHeading">'+ fullname+'-' + jobstreet +'</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">'+tickettype+' '+ fullname+'-' + jobstreet +'</h1>'+
                     '<div id="bodyContent">'+
                         '<p>' + jobstreet +'<br>' + jobcity +'<br>'+jobstate+','+jobzip+'</p>'+                             '<p>' + locations[i][2]+'</p> ' +
                         '<p>'+'Created:'+ created +'</p>'+
@@ -73,19 +113,19 @@
         var infowindow = new google.maps.InfoWindow({
           content: contentString[i]
         });
-  bounds.extend(marker.position);
 map.fitBounds(bounds);
 
 
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+
+                google.maps.event.addListener(map, "click", function(event) {
+                    infowindow.close();
+                });
+
                 return function() {
+
                    infowindow.setContent(contentString);
                    infowindow.open(map,marker);
-
-
-
-
-
 
                 };
             })
@@ -99,6 +139,8 @@ map.fitBounds(bounds);
 
 
       }
+
+
 
     console.log(locations);
     </script>

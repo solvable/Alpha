@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'Calendar',
     'debug_toolbar',
 
+
 ]
 
 MIDDLEWARE = [
@@ -138,12 +139,15 @@ USE_TZ = True
 
 DATE_FORMAT = '%m/%d/%y %H:%M'
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static/markers/'),
+)
 # HAYSTACK_CONNECTIONS = {
 #     'default': {
 #         'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
