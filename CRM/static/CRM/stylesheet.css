@@ -201,6 +201,19 @@
 
     }
 
+    .stats h2{
+        text-align: center;
+    }
+    .stats{
+        flex-wrap: wrap;
+        width:20%;
+        order:1;
+        border:1px solid black;
+        padding: 10px;
+        box-shadow: 3px 3px 2px grey;
+
+    }
+
     .open_tickets .btn {
         width: 15%;
         height: auto;
@@ -315,6 +328,10 @@
 
     }
 
+    .unpaid_invoices h2{
+        text-align: center;
+    }
+
     .unpaid_invoices {
         display: flex;
         flex-wrap: wrap;
@@ -334,6 +351,7 @@
     .appt-list {
         display: flex;
         flex-direction: row;
+        width:100%;
 
     }
 
@@ -374,5 +392,15 @@
 
     }
 
+  .brick.small {
+    width: 140px;
+    height: 80px;
+      margin:3px;
 
+  }
+
+  .brick.large {
+    width: 300px;
+    height: 300px;
+  }
 }

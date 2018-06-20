@@ -1,6 +1,7 @@
 import datetime
 import os
 from io import BytesIO
+from django.utils import timezone
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -8,18 +9,45 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from Estimates.models import Estimate, Section
 from Calendar.models import Appointment
+from django.views.decorators.cache import never_cache, cache_control
 
 
 from .models import Customer, Jobsite, Ticket
-
+from django.utils.decorators import method_decorator
 
 class IndexView(generic.ListView):
+    @method_decorator(never_cache)
+    def dispatch(self,request,*args,**kwargs):
+        return super(IndexView,self).dispatch(request,*args,**kwargs)
+    now = timezone.now()
+
+
+
     model = Ticket
     template_name = 'CRM/index.html'
     open_tickets = Ticket.objects.filter(completed=False)[:]
     latest_tickets = Ticket.objects.order_by('-created')[:5]
+    service_call_total = Ticket.objects.filter(call_type='Service').filter(created__year=now.year).count()
+
+    tickets_ytd = Ticket.objects.filter(created__year=now.year).count()
+    jobs_complete_ytd = Estimate.objects.count()
+    chalie_tickets = open_tickets.filter(assigned_to='Chalie').count()
+    evan_tickets = open_tickets.filter(assigned_to='Chalie').count()
+    barry_tickets = open_tickets.filter(assigned_to='Chalie').count()
+    timmy_tickets = open_tickets.filter(assigned_to='Chalie').count()
+    service_percent = round((service_call_total/ tickets_ytd)*100,0)
+
+
+
+
 
     unpaid_invoices = Estimate.objects.filter(completed=True, paid=False)
+    street = 0
+    if unpaid_invoices:
+        for i in unpaid_invoices:
+            street = street + i.total
+    else:
+        street = 0
 
 
     def get_context_data(self, **kwargs):
@@ -27,6 +55,16 @@ class IndexView(generic.ListView):
         context['latest_tickets'] = IndexView.latest_tickets
         context['open_tickets'] = IndexView.open_tickets
         context['unpaid_invoices'] = IndexView.unpaid_invoices
+        context['street_balance'] = IndexView.street
+        context['tickets_ytd'] = IndexView.tickets_ytd
+        context['jobs_complete_ytd'] = IndexView.jobs_complete_ytd
+        context['open_ticket_count'] = IndexView.open_tickets.count()
+        context['chalie_tickets'] = IndexView.chalie_tickets
+        context['barry_tickets'] = IndexView.barry_tickets
+        context['evan_tickets'] = IndexView.evan_tickets
+        context['timmy_tickets'] = IndexView.timmy_tickets
+        context['service_call_YTD'] = IndexView.service_call_total
+        context['service_percent'] = IndexView.service_percent
         return context
 
 

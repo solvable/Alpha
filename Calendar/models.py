@@ -38,6 +38,8 @@ class Appointment(models.Model):
         self.appt = str("{title:'" + str(self.title) +"', date:'"+ str(self.schedule_date) +"', start:'"+str(self.schedule_date) +(self.start) +"', end:'" + str(self.schedule_date)+str(self.end) +"', color:'" + str(self.estimator)+"', startEditable:'" + 'True' +"', pk:'" +str(self.pk) +"', url:'http://127.0.0.1:8000"+str(url)+"'}")
         if self.schedule_date:
             self.unscheduled = False
+        if self.estimator:
+            self.ticket.assigned_to = self.estimator
 
         super(Appointment, self).save()
 

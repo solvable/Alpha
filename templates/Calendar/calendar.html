@@ -155,41 +155,40 @@ var csrftoken = getCookie('csrftoken');
 {##}
 {#    </div>#}
 
-    <div class="appt-list">
-    <h2>OPEN TICKETS:</h2>
-    {% for ticket in open_tickets %}
-        {% if ticket.call_type == "Estimate"%}
-             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                 <div class="btn ticket-item lead">
-                     {{ ticket.created }}<br>
-                     Ticket No: {{ ticket.id }}<br>
-                     {{ ticket.customer_id.fullName }}<br>
-                     {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-             </a>
-        {% elif ticket.call_type == "Service" %}
-            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn ticket-item service">
-                     {{ ticket.created }}<br>
-                     Ticket No: {{ ticket.id }}<br>
-                     {{ ticket.customer_id.fullName }}<br>
-                     {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-            </a>
-
-        {% elif ticket.call_type == "Inspection" %}
-            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn ticket-item inspection">
-                    {{ ticket.created }}<br>
-                    Ticket No: {{ ticket.id }}<br>
-                    {{ ticket.customer_id.fullName }}<br>
-                    {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-            </a>
-        {% endif %}
-    {% endfor %}
-</div>
-    </div>
+{#    <div class="appt-list">#}
+{#    <h2>OPEN TICKETS:</h2>#}
+{#    {% for ticket in open_tickets %}#}
+{#        {% if ticket.call_type == "Estimate"%}#}
+{#             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">#}
+{#                 <div class="btn ticket-item lead">#}
+{#                     {{ ticket.created }}<br>#}
+{#                     Ticket No: {{ ticket.id }}<br>#}
+{#                     {{ ticket.customer_id.fullName }}<br>#}
+{#                     {{ ticket.jobsite_id.jobStreet }}<br>#}
+{#                </div>#}
+{#             </a>#}
+{#        {% elif ticket.call_type == "Service" %}#}
+{#            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">#}
+{#                <div class="btn ticket-item service">#}
+{#                     {{ ticket.created }}<br>#}
+{#                     Ticket No: {{ ticket.id }}<br>#}
+{#                     {{ ticket.customer_id.fullName }}<br>#}
+{#                     {{ ticket.jobsite_id.jobStreet }}<br>#}
+{#                </div>#}
+{#            </a>#}
+{##}
+{#        {% elif ticket.call_type == "Inspection" %}#}
+{#            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">#}
+{#                <div class="btn ticket-item inspection">#}
+{#                    {{ ticket.created }}<br>#}
+{#                    Ticket No: {{ ticket.id }}<br>#}
+{#                    {{ ticket.customer_id.fullName }}<br>#}
+{#                    {{ ticket.jobsite_id.jobStreet }}<br>#}
+{#                </div>#}
+{#            </a>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}
     </div>
 
 

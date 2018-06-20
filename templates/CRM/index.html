@@ -1,6 +1,25 @@
 {% extends 'CRM/base.html' %}
 
 {% block content %}
+    <div class="stats">
+    <h2>Stats:</h2>
+        <div>Current open tickets: {{ open_ticket_count }}</div>
+        <div>Total Tickets YTD: {{ tickets_ytd }}</div>
+        <div>Service Calls YTD:{{ service_call_YTD }}</div>
+        <div>Service Percentage:{{ service_percent }}%</div>
+        <div>Jobs Completed YTD: {{ jobs_complete_ytd }}</div>
+        <div>Open Invoice Total: ${{ street_balance }}</div>
+        <div>Open tickets assigned to Chalie:{{ chalie_tickets}}</div>
+        <div>Open tickets assigned to Evan:{{ evan_tickets }}</div>
+        <div>Open tickets assigned to Barry:{{ barry_tickets }}</div>
+        <div>Open tickets assigned to Timmy:{{ tickets_ytd }}</div>
+
+    </div>
+
+
+
+
+
     <div class="latest_customers">
                 <div class="legend">
                 <div class="box-title ">LEGEND</div>
@@ -15,7 +34,7 @@
     {% for ticket in latest_tickets %}
               {% if ticket.call_type == "Estimate"%}
              <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                 <div class="btn ticket-item lead">
+                 <div class="btn lead brick small">
                      {{ ticket.created }}<br>
                      Ticket No: {{ ticket.id }}<br>
                      {{ ticket.customer_id.fullName }}<br>
@@ -24,7 +43,7 @@
              </a>
         {% elif ticket.call_type == "Service" %}
             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn ticket-item service">
+                <div class="btn  service brick small">
                      {{ ticket.created }}<br>
                      Ticket No: {{ ticket.id }}<br>
                      {{ ticket.customer_id.fullName }}<br>
@@ -34,7 +53,7 @@
 
         {% elif ticket.call_type == "Inspection" %}
             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn ticket-item inspection">
+                <div class="btn  inspection brick small">
                     {{ ticket.created }}<br>
                     Ticket No: {{ ticket.id }}<br>
                     {{ ticket.customer_id.fullName }}<br>
@@ -45,25 +64,24 @@
     {% endfor %}
     </div>
 
-
-    <div class="open_tickets">
-        <h2>Open Tickets:</h2>
+    <div class="open_tickets gridly">
+        <h2>There are currently {{ open_tickets.count }} open tickets in the system:</h2>
 
     {% for ticket in open_tickets %}
         {% if ticket.call_type == "Estimate"%}
              <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                 <div class="btn ticket-item lead">
-                     {{ ticket.created }}<br>
-                     Ticket No: {{ ticket.id }}<br>
+                 <div class="btn lead brick small">
+                     {{ ticket.created|date:'m/d/y' }}<br>
+                     Ticket #: {{ ticket.id }}<br>
                      {{ ticket.customer_id.fullName }}<br>
                      {{ ticket.jobsite_id.jobStreet }}<br>
                 </div>
              </a>
         {% elif ticket.call_type == "Service" %}
             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn ticket-item service">
-                     {{ ticket.created }}<br>
-                     Ticket No: {{ ticket.id }}<br>
+                <div class="btn service brick small">
+                     {{ ticket.created|date:'m/d/y' }}<br>
+                     Ticket #: {{ ticket.id }}<br>
                      {{ ticket.customer_id.fullName }}<br>
                      {{ ticket.jobsite_id.jobStreet }}<br>
                 </div>
@@ -71,9 +89,10 @@
 
         {% elif ticket.call_type == "Inspection" %}
             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn ticket-item inspection">
-                    {{ ticket.created }}<br>
-                    Ticket No: {{ ticket.id }}<br>
+                <div class="btn inspection brick small">
+
+                    {{ ticket.created|date:'m/d/y' }}<br>
+                    Ticket #: {{ ticket.id }}<br>
                     {{ ticket.customer_id.fullName }}<br>
                     {{ ticket.jobsite_id.jobStreet }}<br>
                 </div>
@@ -84,11 +103,14 @@
     </div>
 
         <div class="unpaid_invoices">
+
             <h2>Unpaid Invoices:</h2>
+        <div>
+        <p>
 
     {% for invoice in unpaid_invoices %}
         <a href="{% url 'estimate-detail' cust=invoice.customer_id  job=invoice.jobsite_id ticket=invoice.ticket_id est=invoice.id%}">
-            <div class="btn ticket-item invoice">
+            <div class="btn invoice brick small">
               {{ invoice.completedDate }}<br>
               Invoice No: {{ invoice.id }}<br>
               {{ invoice.customer.fullName }}<br>
@@ -97,13 +119,14 @@
         </a>
 
     {% endfor %}
-
+</p>
     </div>
-
-
-
-
 </div>
+<script>
+
+</script>
+
+
 {% endblock content %}
 
 
