@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 
 t0810 = '8:00-10:00'
 t0911 = '9:00-11:00'
@@ -17,9 +18,3 @@ TIME_SLOTS = (
     ('t1416', u'2-4')
 )
 
-EMPLOYEE = (
-    ( 'red','Chalie'),
-    ('green', 'Evan'),
-    ('blue', 'Timmy'),
-    ('pink', 'Barry')
-)

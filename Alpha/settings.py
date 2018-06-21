@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'CRM',
     'Estimates',
     'Calendar',
+    'Profile',
     'debug_toolbar',
 
 
