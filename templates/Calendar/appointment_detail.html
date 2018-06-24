@@ -40,13 +40,13 @@
         </tr>
         <tr>
             <td colspan="2">
-                Time Slot: {{ object.get_time_slot_display }}
+                Time Slot: {{ start }} - {{ end }}
             </td>
 
         </tr>
         <tr>
             <td colspan="2">
-                Employee: {{ object.get_estimator_display }}
+                Employee: {{ object.estimator|capfirst }}
             </td>
 
         </tr>

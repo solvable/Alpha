@@ -130,7 +130,11 @@ class AppointmentDetailView(generic.DetailView):
     template_name = 'Calendar/appointment_detail.html'
     pk_url_kwarg = 'app'
 
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['object'] = self.object
+        context['start'] = self.object.start[1:]
+        context['end'] = self.object.end[1:]
+
         return context

@@ -35,7 +35,7 @@ class Appointment(models.Model):
 
     def save(self):
 
-        self.title = self.ticket.customer_id.fullName
+        self.title = self.ticket.customer_id.fullName + ' - ' + self.ticket.jobsite_id.jobStreet
 
         self.date = self.schedule_date
         super(Appointment, self).save()
