@@ -1,8 +1,9 @@
 from django.db import models
 from CRM.models import Customer, Jobsite, Ticket
 from django.shortcuts import reverse
-
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from CRM.models import update_ticket
 
 
 # Create your models here.
@@ -26,12 +27,6 @@ class Appointment(models.Model):
     def get_absolute_url(self):
         return reverse("appointment-detail", kwargs={"app":self.id})
 
-    def update_tickets(self):
-        ticket = self.ticket
-        ticket.assigned_to = self.estimator.first_name
-        ticket.save()
-
-
 
     def save(self):
 
@@ -46,8 +41,9 @@ class Appointment(models.Model):
         self.appt = str("{title:'" + str(self.title) +"', date:'"+ str(self.schedule_date) +"', start:'"+str(self.schedule_date) +(self.start) +"', end:'" + str(self.schedule_date)+str(self.end) +"', color:'" + str(self.color)+"', startEditable:'" + 'True' +"', pk:'" +str(self.pk) +"', url:'http://127.0.0.1:8000"+str(url)+"'}")
         if self.schedule_date:
             self.unscheduled = False
-
-        self.update_tickets()
-
         super(Appointment, self).save()
+
+post_save.connect(update_ticket, sender=Appointment)
+
+
 

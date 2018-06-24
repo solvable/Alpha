@@ -50,8 +50,71 @@
             </td>
 
         </tr>
+        <tr>
+            <td>&nbsp</td>
+        </tr>
+
+        <tr>
+            <td>
+                View Ticket:
+            </td>
+
+        </tr>
+        {% if not object.ticket.completed and object.ticket.call_type == "Estimate"%}
+            <tr>
+        <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id%}"><div class="ticket-item btn yellow lead">{{ object.ticket.created }}<br>{{ object.ticket.problem }}</div></a>
+
+        </td>
+        </tr>
+        {% elif not object.ticket.completed and object.ticket.call_type == "Service" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id%}"><div class="ticket-item btn yellow service">{{ object.ticket.created }}<br>{{ object.ticket.problem }}</div></a>
+
+        </td>
+        </tr>
+
+        {% elif not object.ticket.completed  and object.ticket.call_type == "Inspection" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id%}"><div class="ticket-item btn yellow inspection">{{ object.ticket.created }}<br>{{ object.ticket.problem }}</div></a>
+
+        </td>
+
+
+        {% elif object.ticket.completed and object.ticket.call_type == "Estimate"%}
+        <tr>
+        <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id%}"><div class="ticket-item btn yellow lead-completed">{{ object.ticket.created }}<br>{{ object.ticket.problem }}</div></a>
+
+        </td>
+        </tr>
+        {% elif object.ticket.completed and object.ticket.call_type == "Service" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id%}"><div class="ticket-item btn yellow service-completed">{{ object.ticket.created }}<br>{{ object.ticket.problem }}</div></a>
+
+        </td>
+        </tr>
+
+        {% elif object.ticket.completed  and object.ticket.call_type == "Inspection" %}
+        <tr>
+            <td colspan="2">
+            <a href="{% url 'ticket_detail' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id%}"><div class="ticket-item btn yellow inspection-completed">{{ object.ticket.created }}<br>{{ object.ticket.problem }}</div></a>
+
+        </td>
+            </tr>
+        {%  endif %}
+
+
+
+
+
+
+
+
+
      </table>
-
-
 
 {% endblock content %}

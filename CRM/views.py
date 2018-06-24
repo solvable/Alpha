@@ -13,6 +13,7 @@ from django.shortcuts import render
 from Estimates.models import Estimate, Section
 from Calendar.models import Appointment
 from django.views.decorators.cache import never_cache, cache_control
+from django.contrib.auth.models import User
 
 
 from .models import Customer, Jobsite, Ticket
@@ -162,6 +163,7 @@ class TicketDetailView(generic.DetailView):
     model = Ticket
     template_name = 'CRM/ticket_detail.html'
     pk_url_kwarg = "ticket"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

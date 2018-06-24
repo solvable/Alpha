@@ -9,6 +9,10 @@ from .choices import *
 import os
 from .api import googlemaps as googlemapsAPI
 os.environ["GOOGLE_API_KEY"] = googlemapsAPI
+from django.dispatch import receiver
+from django.core.signals import request_finished
+
+
 
 class Customer(models.Model):
 
@@ -127,20 +131,32 @@ class Ticket(models.Model):
     notes = models.TextField(max_length=200, default='', null=True)
     printed = models.BooleanField(default=False)
     assigned_to = models.CharField(max_length=50, blank=True, default='Unassigned')
+
     def save(self, *args, **kwargs):
         super(Ticket, self).save(*args, **kwargs)
-
 
     def __unicode(self):
         return str(self.id)
 
-
     def __str__(self):
         return str(self.id)
-
 
     def __delete__(self, instance):
         return reverse("ticket_detail")
 
     def get_absolute_url(self):
         return reverse("ticket_detail", kwargs={"ticket": self.id, "cust": self.customer_id.id, "job": self.jobsite_id_id})
+
+
+
+
+# method for updating
+
+@receiver(request_finished)
+def update_ticket(sender, **kwargs):
+    print(kwargs)
+    appointment = kwargs['instance']
+    ticket = Ticket.objects.get(pk = appointment.ticket.id)
+    ticket.assigned_to = appointment.estimator_id
+    print(ticket.assigned_to)
+    ticket.save()
