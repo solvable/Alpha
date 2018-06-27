@@ -1,5 +1,5 @@
 from django.db import models
-from CRM.models import Customer, Jobsite, Ticket
+from CRM.models import Customer, Jobsite, Ticket, update_ticket
 from django.shortcuts import reverse
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -43,7 +43,7 @@ class Appointment(models.Model):
             self.unscheduled = False
         super(Appointment, self).save()
 
-post_save.connect(update_ticket, sender=Appointment)
+post_save.connect(update_ticket, sender=Appointment,  dispatch_uid="update_ticket")
 
 
 

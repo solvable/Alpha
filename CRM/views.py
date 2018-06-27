@@ -173,6 +173,12 @@ class TicketDetailView(generic.DetailView):
         return context
 
 
+
+
+
+
+
+
 class TicketCreateView(generic.CreateView):
     model = Ticket
     template_name = 'CRM/ticket_create.html'

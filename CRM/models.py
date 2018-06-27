@@ -11,6 +11,7 @@ from .api import googlemaps as googlemapsAPI
 os.environ["GOOGLE_API_KEY"] = googlemapsAPI
 from django.dispatch import receiver
 from django.core.signals import request_finished
+from django.db.models.signals import post_save
 
 
 
@@ -153,10 +154,7 @@ class Ticket(models.Model):
 # method for updating
 
 @receiver(request_finished)
-def update_ticket(sender, **kwargs):
-    print(kwargs)
-    appointment = kwargs['instance']
-    ticket = Ticket.objects.get(pk = appointment.ticket.id)
-    ticket.assigned_to = appointment.estimator_id
-    print(ticket.assigned_to)
+def update_ticket(sender, instance, **kwargs):
+    ticket = Ticket.objects.get(id = instance.ticket_id)
+    ticket.assigned_to = instance.estimator_id
     ticket.save()
