@@ -3,8 +3,11 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
 {% endblock addhead %}
-
 {% block content %}
+{% endblock content %}
+
+
+{% block customer_content %}
         <table>
         <tr>
                  <th class="title" colspan="2"><h1>Customer Information:</h1></th>
@@ -50,11 +53,10 @@
                 <td class="td-worktable">{{ customer.email }}</td>
             </tr>
         </table>
-{% endblock content %}
+{% endblock customer_content %}
 
 
 {% block jobsite_content %}
-
 <table>
 <tr>
     <th class="title"><h2>Jobsites:</h2></th>
@@ -75,6 +77,7 @@
 
 </tr>
 </table>
+
 {% endblock jobsite_content %}
 
 

@@ -43,9 +43,17 @@
                 <td style="word-wrap: break-word" >{{ object.notes }}</td>
             </tr>
             <tr>
-                <td>Assigned To:</td>
 
-                <td>{{ object.assigned_to }}</td>
+            {% if object.appointment_set %}
+                {% for appointment in object.appointment_set.all %}
+                    <td>Assigned To:</td>
+                    <td>{{ appointment.estimator }}</td>
+                {% endfor %}
+                    {% else  %}
+                    <td>Assigned To:</td>
+                    <td>Not Assigned</td>
+            {% endif %}
+
 
             </tr>
 

@@ -75,15 +75,20 @@
         {% block content %}
         {% endblock content %}
 
+        <div class="customer-content">
+            {% block customer_content %}
+            {% endblock %}
+        </div>
 
+        <div class="jobsite-content">
+            {% block jobsite_content %}
+            {% endblock jobsite_content %}
+        </div>
 
-        {% block jobsite_content %}
-        {% endblock jobsite_content %}
-
-
-
-        {% block ticket_content %}
-        {% endblock ticket_content %}
+        <div class="ticket-content">
+            {% block ticket_content %}
+            {% endblock ticket_content %}
+        </div>
 
         {% block unscheduled %}
         {% endblock unscheduled %}

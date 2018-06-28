@@ -172,13 +172,6 @@ class TicketDetailView(generic.DetailView):
         # context['appt'] = get_object_or_404(Appointment, id=self.kwargs['appt'])
         return context
 
-
-
-
-
-
-
-
 class TicketCreateView(generic.CreateView):
     model = Ticket
     template_name = 'CRM/ticket_create.html'
