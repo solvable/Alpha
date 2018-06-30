@@ -1,47 +1,37 @@
-@media print {
+.content-container{
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    height:auto;
 
-    header, nav, footer, .top-menu, .btn {
-        display: none;
-    }
 
-    .column {
-        float: left;
-        width: 33%;
 
-    }
-
-    .title {
-        column-span: all;
-    }
-
-    th {
-        white-space: nowrap;
-    }
+}
+.center-content{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 50% 50%;
 
 }
 
-@media screen {
-    body {
+.main-content{
+    margin:10px;
+}
+
+.left-sidebar{
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+
+.right-sidebar{
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+    .top-menu-container{
         background-color: dimgray;
-    }
-
-    .index-container {
-        /*display: flex;*/
-        /*flex-direction: column;*/
-        /*flex-wrap: wrap;*/
-        /*background-color: dimgrey;*/
-        /*border:white solid thin;*/
-        /*box-shadow: 5px 5px 5px grey;*/
-        /*margin-right: 15px;*/
-
-    }
-
-    .content-container {
-        display: flex;
-        margin-left: 50px;
-        margin-right: 50px;
-        background-color: white;
-        height: 100%;
+        padding:3px;
     }
 
     .top-menu {
@@ -49,50 +39,27 @@
         display: flex;
         justify-content: center;
         margin-bottom: 1em;
+        height: 40px;
     }
 
-    .contetnt-container {
-        display: flex;
-        justify-content: left;
-        align-items: flex-start;
-    }
-
-    .job-item {
-        width: 100%;
+     .top-menu .btn {
+        padding-left: 10px;
 
     }
 
-    .customer-content {
-        display: flex;
-        width:30%;
+        input.searchinput {
+        height: 40px;
 
-    }
-    .jobsite-content {
-        display: flex;
-                width:30%;
-
-        flex:2;
+        margin: 0px;
     }
 
-    .ticket-content {
-                width:30%;
-
-        order:2;
-
+    input.btn-search {
+        height: 40px;
+        margin: 0px;
 
     }
 
-    .ticket-item {
-        width: 100%;
-    }
-
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    .btn {
+     .btn {
 
         color: white;
         border: 1px solid black;
@@ -152,22 +119,61 @@
         color: white;
     }
 
-    table {
-        margin: 2em;
-        table-layout: fixed;
-        width: 400px;
+    .legend {
+        display: flex;
+        flex-direction: column;
+
+        flex-wrap: wrap;
+        background-color: white;
+        padding: 10px;
+        border: black solid medium;
+        margin: 0 15px 15px 0px;
+        box-shadow: 3px 3px 2px grey;
+
     }
 
-    th, td {
-        /*border-bottom: 1px solid #ddd;*/
+    .box-title {
+        padding: auto;
+        color: black;
+        font-weight: bold;
+    }
+
+    .box {
+
+        height: 10px;
+        width: 10px;
+        color: white;
+        border: 1px solid black;
+
+    }
+        .nav-btn {
+        height: auto;
+        margin-right: 5px;
+        padding-right: 10px;
+    }
+
+    .link-btn {
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 3px 3px 2px grey;
 
     }
 
-    th {
-        text-align: left;
-    }
+  .brick.small {
+    width: 140px;
+    height: 80px;
+      margin:3px;
 
-    .service {
+  }
+
+  .brick.large {
+    width: 300px;
+    height: 300px;
+  }
+
+      .service {
         background-color: #990202;
         color: white;
     }
@@ -203,220 +209,24 @@
         color: white;
     }
 
-    .open_tickets {
-        flex-wrap: wrap;
-        margin: 10px;
-        width: 50%;
-    }
-
-    .latest_customers {
-        flex-wrap: wrap;
-        width: 10%;
-        order: 2;
-        margin: 10px;
+    #map{
+        height:800px;
+          grid-area: 1 / 1 / span 2 / span 2;
 
     }
-
-    .stats h2{
-        text-align: center;
-    }
-    .stats{
-        flex-wrap: wrap;
-        width:20%;
-        order:1;
-        border:1px solid black;
-        padding: 10px;
-        box-shadow: 3px 3px 2px grey;
-
+    .mini-nav{
+        display: inline-flex;
     }
 
-    .open_tickets .btn {
-        width: 15%;
-        height: auto;
-        order: 1;
-    }
-
-    .linkbox {
-
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        background-color: white;
-        padding: 10px;
-        border: black solid medium;
-        margin: 0 15px 15px 0px;
-        box-shadow: 3px 3px 2px grey;
+    .mini-nav a{
+        margin:10px;
 
     }
-
-    .linkbox a {
-        margin: auto;
-        color: red;
-
+    .mini-nav .btn{
+        padding:5px;
     }
 
-    .legend {
-        display: flex;
-        flex-direction: column;
-
-        flex-wrap: wrap;
-        background-color: white;
-        padding: 10px;
-        border: black solid medium;
-        margin: 0 15px 15px 0px;
-        box-shadow: 3px 3px 2px grey;
+    .ticket-info{
+    grid-area: 2 / 1 / span 1 / span 2;
 
     }
-
-    .box-title {
-        padding: auto;
-        color: black;
-        font-weight: bold;
-    }
-
-    .box {
-
-        height: 10px;
-        width: 10px;
-        color: white;
-        border: 1px solid black;
-
-    }
-
-    .section-heading {
-        font-weight: bold;
-    }
-
-    .searchbox {
-        padding-left: 10px;
-        padding-right: 10px;
-        margin: 0px;
-
-    }
-
-    .nav-btn {
-        height: auto;
-        margin-right: 5px;
-        padding-right: 10px;
-    }
-
-    .link-btn {
-        width: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 3px 3px 2px grey;
-
-    }
-
-    .top-menu {
-
-        height: 40px;
-    }
-
-    .top-menu .btn {
-        padding-left: 10px;
-
-    }
-
-    input.searchinput {
-        height: 40px;
-
-        margin: 0px;
-    }
-
-    input.btn-search {
-        height: 40px;
-        margin: 0px;
-
-    }
-
-    .mini-navbar {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        padding: 10px;
-    }
-
-    .mini-nav {
-
-        margin-top: 10px;
-
-    }
-
-    .unpaid_invoices h2{
-        text-align: center;
-    }
-
-    .unpaid_invoices {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 10px;
-    }
-
-    .spacer {
-        padding: 20px 0px 20px 0px;
-    }
-
-    #cal-content {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-    }
-
-    .appt-list {
-        display: flex;
-        flex-direction: row;
-        width:100%;
-
-    }
-
-    #calendar {
-        width: 100%;
-    }
-
-    .appt {
-        background-color: lightgray;
-        color: black;
-    }
-
-    .fc-day-top {
-        /*background-color:blue;*/
-
-    }
-
-    table.ui-timepicker {
-        border: 2px solid black;
-        background-color: white;
-        box-shadow: 5px 5px 5px grey;
-
-    }
-
-    table.ui-timepicker td {
-
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-    .ui-timepicker-title {
-        display: none;
-    }
-
-    #map {
-        height: 100%;
-        width:100%
-
-    }
-
-  .brick.small {
-    width: 140px;
-    height: 80px;
-      margin:3px;
-
-  }
-
-  .brick.large {
-    width: 300px;
-    height: 300px;
-  }
-}

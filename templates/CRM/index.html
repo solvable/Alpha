@@ -1,133 +1,154 @@
 {% extends 'CRM/base.html' %}
 
-{% block content %}
+{% block main_content_tl %}
+    <div class="main-content">
+    <div class="open_tickets gridly">
+        <h2>There are currently {{ open_tickets.count }} open tickets in the system:</h2>
+
+        {% for ticket in open_tickets %}
+            {% if ticket.call_type == "Estimate" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn lead brick small">
+                        {{ ticket.created|date:'m/d/y' }}<br>
+                        Ticket #: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+            {% elif ticket.call_type == "Service" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn service brick small">
+                        {{ ticket.created|date:'m/d/y' }}<br>
+                        Ticket #: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+
+            {% elif ticket.call_type == "Inspection" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn inspection brick small">
+
+                        {{ ticket.created|date:'m/d/y' }}<br>
+                        Ticket #: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+</div>
+
+    </div>
+{% endblock main_content_tl %}
+
+
+
+{% block main_content_tr %}
+    <div>
+
+    </div>
+{% endblock main_content_tr %}
+
+
+
+{% block main_content_bl %}
+    <div>
+
+    </div>
+{% endblock main_content_bl %}
+
+
+
+{% block main_content_br %}
+          <div class="unpaid_invoices">
+
+        <h2>Unpaid Invoices:</h2>
+        <div>
+            <p>
+
+                {% for invoice in unpaid_invoices %}
+                    <a href="{% url 'estimate-detail' cust=invoice.customer_id  job=invoice.jobsite_id ticket=invoice.ticket_id est=invoice.id %}">
+                        <div class="btn invoice brick small">
+                            {{ invoice.completedDate }}<br>
+                            Invoice No: {{ invoice.id }}<br>
+                            {{ invoice.customer.fullName }}<br>
+                            {{ invoice.jobsite.jobStreet }}<br>
+                        </div>
+                    </a>
+
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endblock main_content_br %}
+
+
+
+
+
+
+
+{% block right_sidebar %}
+    <div class="right-sidebar">
+
+    <div class="latest_customers">
+        <h2>Last 5 Tickets:</h2>
+        {% for ticket in latest_tickets %}
+            {% if ticket.call_type == "Estimate" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn lead brick small">
+                        {{ ticket.created }}<br>
+                        Ticket No: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+            {% elif ticket.call_type == "Service" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn  service brick small">
+                        {{ ticket.created }}<br>
+                        Ticket No: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+
+            {% elif ticket.call_type == "Inspection" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn  inspection brick small">
+                        {{ ticket.created }}<br>
+                        Ticket No: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
     <div class="stats">
-    <h2>Stats:</h2>
+        <h2>Stats:</h2>
         <div>Current open tickets: {{ open_ticket_count }}</div>
         <div>Total Tickets YTD: {{ tickets_ytd }}</div>
         <div>Service Calls YTD:{{ service_call_YTD }}</div>
         <div>Service Percentage:{{ service_percent }}%</div>
         <div>Jobs Completed YTD: {{ jobs_complete_ytd }}</div>
         <div>Open Invoice Total: ${{ street_balance }}</div>
-        <div>Open tickets assigned to Chalie:{{ chalie_tickets}}</div>
+        <div>Open tickets assigned to Chalie:{{ chalie_tickets }}</div>
         <div>Open tickets assigned to Evan:{{ evan_tickets }}</div>
         <div>Open tickets assigned to Barry:{{ barry_tickets }}</div>
         <div>Open tickets assigned to Timmy:{{ tickets_ytd }}</div>
 
     </div>
-
-
-
-
-
-    <div class="latest_customers">
-                <div class="legend">
-                <div class="box-title ">LEGEND</div>
-                <div class="lead box "></div><div class="legend-text">Estimate</div>
-
-                <div class="service box"></div><div class="legend-text">Service</div>
-
-                <div class="inspection box"></div class="legend-text"><div>Inspection</div>
-
-            </div>
-    <h2>Last 5 Tickets:</h2>
-    {% for ticket in latest_tickets %}
-              {% if ticket.call_type == "Estimate"%}
-             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                 <div class="btn lead brick small">
-                     {{ ticket.created }}<br>
-                     Ticket No: {{ ticket.id }}<br>
-                     {{ ticket.customer_id.fullName }}<br>
-                     {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-             </a>
-        {% elif ticket.call_type == "Service" %}
-            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn  service brick small">
-                     {{ ticket.created }}<br>
-                     Ticket No: {{ ticket.id }}<br>
-                     {{ ticket.customer_id.fullName }}<br>
-                     {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-            </a>
-
-        {% elif ticket.call_type == "Inspection" %}
-            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn  inspection brick small">
-                    {{ ticket.created }}<br>
-                    Ticket No: {{ ticket.id }}<br>
-                    {{ ticket.customer_id.fullName }}<br>
-                    {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-            </a>
-        {% endif %}
-    {% endfor %}
     </div>
+{% endblock right_sidebar %}
 
-    <div class="open_tickets gridly">
-        <h2>There are currently {{ open_tickets.count }} open tickets in the system:</h2>
-
-    {% for ticket in open_tickets %}
-        {% if ticket.call_type == "Estimate"%}
-             <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                 <div class="btn lead brick small">
-                     {{ ticket.created|date:'m/d/y' }}<br>
-                     Ticket #: {{ ticket.id }}<br>
-                     {{ ticket.customer_id.fullName }}<br>
-                     {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-             </a>
-        {% elif ticket.call_type == "Service" %}
-            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn service brick small">
-                     {{ ticket.created|date:'m/d/y' }}<br>
-                     Ticket #: {{ ticket.id }}<br>
-                     {{ ticket.customer_id.fullName }}<br>
-                     {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-            </a>
-
-        {% elif ticket.call_type == "Inspection" %}
-            <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
-                <div class="btn inspection brick small">
-
-                    {{ ticket.created|date:'m/d/y' }}<br>
-                    Ticket #: {{ ticket.id }}<br>
-                    {{ ticket.customer_id.fullName }}<br>
-                    {{ ticket.jobsite_id.jobStreet }}<br>
-                </div>
-            </a>
-        {% endif %}
-    {% endfor %}
-
-    </div>
-
-        <div class="unpaid_invoices">
-
-            <h2>Unpaid Invoices:</h2>
-        <div>
-        <p>
-
-    {% for invoice in unpaid_invoices %}
-        <a href="{% url 'estimate-detail' cust=invoice.customer_id  job=invoice.jobsite_id ticket=invoice.ticket_id est=invoice.id%}">
-            <div class="btn invoice brick small">
-              {{ invoice.completedDate }}<br>
-              Invoice No: {{ invoice.id }}<br>
-              {{ invoice.customer.fullName }}<br>
-              {{ invoice.jobsite.jobStreet }}<br>
-            </div>
-        </a>
-
-    {% endfor %}
-</p>
-    </div>
-</div>
 <script>
 
 </script>
 
 
-{% endblock content %}
+
 
 
 

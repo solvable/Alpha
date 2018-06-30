@@ -395,6 +395,7 @@ def write_docx_view(request, cust, job, ticket, est):
     customer = get_object_or_404(Customer, id=cust)
     jobsite = get_object_or_404(Jobsite, id=job)
     ticket = get_object_or_404(Ticket, id=ticket)
+    estimate = get_object_or_404(Estimate, id=est)
 
 
     # setup buffer

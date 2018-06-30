@@ -156,9 +156,9 @@ var csrftoken = getCookie('csrftoken');
 {% endblock addhead %}
 
 
-{% block content %}
+{% block main_content_tl %}
 
-    <div class="content-container" id="cal-content">
+    <div id="cal-content">
 
 
         <div id="calendar"></div>
@@ -216,9 +216,48 @@ var csrftoken = getCookie('csrftoken');
 
 
 
-{% endblock content %}
+{% endblock main_content_tl %}
 
-{% block unscheduled%}
+{% block main_content_tr%}
+    <div class="main-content">
+    <div class="open_tickets gridly">
+        <h2>There are currently {{ open_tickets.count }} open tickets in the system:</h2>
 
+        {% for ticket in open_tickets %}
+            {% if ticket.call_type == "Estimate" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn lead brick small">
+                        {{ ticket.created|date:'m/d/y' }}<br>
+                        Ticket #: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+            {% elif ticket.call_type == "Service" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn service brick small">
+                        {{ ticket.created|date:'m/d/y' }}<br>
+                        Ticket #: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
 
-{% endblock unscheduled %}
+            {% elif ticket.call_type == "Inspection" %}
+                <a href="{% url 'ticket_detail' cust=ticket.customer_id.pk job=ticket.jobsite_id.pk ticket=ticket.pk %}">
+                    <div class="btn inspection brick small">
+
+                        {{ ticket.created|date:'m/d/y' }}<br>
+                        Ticket #: {{ ticket.id }}<br>
+                        {{ ticket.customer_id.fullName }}<br>
+                        {{ ticket.jobsite_id.jobStreet }}<br>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+</div>
+
+    </div>
+</div>
+
+{% endblock main_content_tr %}

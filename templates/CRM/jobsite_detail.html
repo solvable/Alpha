@@ -1,6 +1,7 @@
 {% extends 'CRM/customer_detail.html' %}
 
-{% block jobsite_content %}
+
+{% block main_content_tr %}
     <table>
         <tr>
             <th class="title" colspan="2"><h1>Jobsite Information:</h1></th>
@@ -36,9 +37,13 @@
         </tr>
     </table>
     <div>
-{% endblock jobsite_content %}
+{% endblock main_content_tr %}
 
-{% block ticket_content %}
+
+
+{% block main_content_bl%}
+    <div>
+    <div>
     <table>
     <tr>
         <th class="title">
@@ -60,7 +65,7 @@
      <tr>
             <td><h4>Open Tickets:</h4></td>
         </tr>
-
+</div>
     {% for ticket in object.ticket_set.all %}
         {% if not ticket.completed and ticket.call_type == "Estimate"%}
             <tr>
@@ -132,4 +137,24 @@
     </tr>
 
 </table>
-{% endblock ticket_content %}
+    </div>
+{% endblock main_content_bl %}
+
+{% block main_content_br %}
+<div></div>
+{% endblock main_content_br %}
+
+{% block right-sidebar %}
+    <div class="legend">
+        <div class="box-title ">LEGEND</div>
+        <div class="lead box "></div>
+        <div class="legend-text">Estimate</div>
+
+        <div class="service box"></div>
+        <div class="legend-text">Service</div>
+
+        <div class="inspection box"></div class="legend-text">
+        <div>Inspection</div>
+
+    </div>
+{% endblock right-sidebar %}

@@ -3,11 +3,11 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
 {% endblock addhead %}
-{% block content %}
-{% endblock content %}
 
 
-{% block customer_content %}
+
+{% block main_content_tl %}
+    <div>
         <table>
         <tr>
                  <th class="title" colspan="2"><h1>Customer Information:</h1></th>
@@ -53,10 +53,12 @@
                 <td class="td-worktable">{{ customer.email }}</td>
             </tr>
         </table>
-{% endblock customer_content %}
+    </div>
+{% endblock main_content_tl %}
 
 
-{% block jobsite_content %}
+{% block main_content_tr %}
+    <div>
 <table>
 <tr>
     <th class="title"><h2>Jobsites:</h2></th>
@@ -77,9 +79,29 @@
 
 </tr>
 </table>
+</div>
+{% endblock main_content_tr %}
 
-{% endblock jobsite_content %}
+
+{% block main_content_bl %}
+{% endblock main_content_bl %}
 
 
-{% block ticket_content %}
-{% endblock ticket_content %}
+{% block main_content_br %}
+{% endblock main_content_br %}
+
+{% block right-sidebar %}
+    <div class="legend">
+        <div class="box-title ">LEGEND</div>
+        <div class="lead box "></div>
+        <div class="legend-text">Estimate</div>
+
+        <div class="service box"></div>
+        <div class="legend-text">Service</div>
+
+        <div class="inspection box"></div class="legend-text">
+        <div>Inspection</div>
+
+    </div>
+
+{% endblock right-sidebar %}

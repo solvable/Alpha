@@ -4,7 +4,7 @@
 
 {% endblock addhead %}
 
-{% block content %}
+{% block main_content_tl %}
 
     <div id="map"></div>
     <div id="street-view"></div>
@@ -162,4 +162,4 @@ map.fitBounds(bounds);
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{key}}&callback=initMap"
     async defer></script>
-{% endblock content %}
+{% endblock main_content_tl %}
