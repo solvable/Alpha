@@ -12,9 +12,10 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-# @login_required(login_url='customers:login')
-
+@login_required
 @ensure_csrf_cookie
 def CalendarView(request):
     data_list =  []
@@ -40,7 +41,7 @@ def CalendarView(request):
 
     return render(request, "Calendar/calendar.html", context)
 
-
+@login_required
 def save_event(request):
     appointment_pk = request.POST.get('pk')
     print('Appointment:'+ appointment_pk)
@@ -78,7 +79,7 @@ def save_event(request):
     return HttpResponse(json.dumps([{}]), content_type='application/json')
 
 
-class AppointmentCreateView(generic.CreateView):
+class AppointmentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'Calendar/appointment_form.html'
@@ -113,19 +114,19 @@ class AppointmentCreateView(generic.CreateView):
 
 
 
-class AppointmentUpdateView(generic.UpdateView):
+class AppointmentUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'Calendar/appointment_form.html'
     pk_url_kwarg = 'app'
 
 
-class AppointmentDeleteView(generic.DeleteView):
+class AppointmentDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Appointment
     pk_url_kwarg = 'app'
     success_url = reverse_lazy('calendar')
 
-class AppointmentDetailView(generic.DetailView):
+class AppointmentDetailView(LoginRequiredMixin, generic.DetailView):
     model = Appointment
     template_name = 'Calendar/appointment_detail.html'
     pk_url_kwarg = 'app'

@@ -1,5 +1,7 @@
 {% extends 'CRM/base.html' %}
 {% block main_content_tl %}
+    {% load humanize %}
+
     <div>
     <div class="mini-navbar">
             <div class="mini-nav"><a href="{% url 'ticket_detail' cust=estimate.customer.pk job=estimate.jobsite.pk ticket=estimate.ticket.pk%}"><div class="ticket-item btn yellow " title="Back to Ticket View">{% comment %}Back to Ticket {% endcomment %}<i class="far fa-hand-point-left fa-3x"></i></div></a>
@@ -13,6 +15,8 @@
 {#                       role="button"><div  class="btn red delete-btn">Delete</div></a></td>#}
 
                     <a href="{% url 'generate-docx' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn" title="Export DocX">{% comment %}Export DocX {% endcomment %}<i class="fas fa-file-alt fa-3x"></i></div></a>
+                                     <a href="{% url 'convert-estimate' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn" title="Convert Estimate to Job"><i class="fas fa-dollar-sign fa-3x"></i></div></a>
+
                     <a href="{% url 'generate-invoice' cust=object.customer_id job=object.jobsite_id ticket=object.ticket_id est=object.id %}"><div  class="btn navy pdf-btn" title="Generate Invoice as DocX">{% comment %}Export DocX {% endcomment %}<i class="fas fa-money-bill-alt fa-3x"></i></div></a>
 
 </div>
@@ -24,20 +28,20 @@
 
             </tr>
             <tr>
-                <td>{{ object.customer.fullName }}</td>
+                <td colspan="2">{{ object.customer.fullName }}</td>
                 <td></td>
-                <td>{{ object.created|date:'m-d-Y'}}</td>
+                <td colspan="2" align="right">{{ object.created|date:'m-d-Y'}}</td>
             </tr>
 
             <tr>
-                <td>{{ object.billStreet }}</td>
+                <td colspan="2">{{ object.billStreet }}</td>
                 <td></td>
-                <td>{{ object.phone }}</td>
+                <td colspan="2" align="right">{{ object.phone }}</td>
             </tr>
             <tr>
                 <td colspan="2">{{ object.billCityStateZip }}</td>
 
-                <td>{{ object.email }}</td>
+                <td colspan="2" align="right">{{ object.email }}</td>
             </tr>
             <tr>
                 <td><br></td>
@@ -50,8 +54,8 @@
             {% for section in object.section_set.all %}
             <tr>
                 <td></td>
-                <td class="section-heading" colspan="2">{{ section.heading }}</td>
-                <td>({{ section.price }})</td>
+                <td colspan="3" class="section-heading"><strong>{{ section.heading }}</strong></td>
+                <td colspan="1" ><strong>(${{ section.price|intcomma }})</strong></td>
             </tr>
             <tr>
                 <td colspan="4" >{{ section.description|safe }}</td>
@@ -69,9 +73,11 @@
                 <td><br></td>
             </tr>
             <tr>
-                <td>Total: ${{ object.total }}</td>
-
+                <td colspan="2"><strong>Total: ${{ object.total|intcomma }}</strong></td>
+                <td colspan="2" align="right">Created By: {{ object.user }}</td>
             </tr>
+
+
 
         </table>
 </div>

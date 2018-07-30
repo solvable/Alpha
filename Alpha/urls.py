@@ -18,14 +18,21 @@ from django.urls import path
 from django.conf.urls import include, url
 from django.conf import settings
 from CRM import views
-from Estimates.views import EstimateCreateView, EstimateDetailView, EstimateUpdateView, EstimateDeleteView, write_pdf_view, write_docx_view, write_invoice_view
+from Estimates.views import EstimateCreateView, EstimateDetailView, EstimateUpdateView, EstimateDeleteView, write_pdf_view, write_docx_view, write_invoice_view, convertEstimateToJob
 from Calendar.views import CalendarView, AppointmentCreateView, AppointmentUpdateView, AppointmentDeleteView, AppointmentDetailView, save_event
 from Map.views import MapView
 from django.conf.urls.static import static
+# from django.contrib.auth import views as auth_views
+import django.contrib.auth.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.IndexView, name='index'),
+
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    path('', views.LandingView, name='index'),
+
+    path('index/', views.IndexView, name='index'),
 
     path('customer/<cust>/detail/<job>/ticket_create', views.TicketCreateView.as_view(), name='ticket_create'),
     path('customer/<cust>/detail/<job>/detail/<ticket>', views.TicketDetailView.as_view(), name='ticket_detail'),
@@ -49,7 +56,7 @@ urlpatterns = [
     path('customer/<cust>/detail/<job>/<ticket>/detail/<est>', EstimateDetailView.as_view(), name='estimate-detail'),
     path('customer/<cust>/detail/<job>/<ticket>/update/<est>', EstimateUpdateView.as_view(), name='estimate-update'),
     path('customer/<cust>/detail/<job>/<ticket>/delete/<est>', EstimateDeleteView.as_view(), name='estimate-delete'),
-
+    path('customer/<cust>/detail/<job>/<ticket>/convert/<est>', convertEstimateToJob, name='convert-estimate'),
     path('calendar/', CalendarView, name='calendar'),
     # path('calendar/', CalendarView.as_view(), name='calendar'),
     path('appointment-create/<cust>/<job>/<ticket>', AppointmentCreateView.as_view(), name='appointment-create'),

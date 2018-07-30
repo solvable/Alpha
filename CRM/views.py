@@ -14,11 +14,29 @@ from Estimates.models import Estimate, Section
 from Calendar.models import Appointment
 from django.views.decorators.cache import never_cache, cache_control
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from .models import Customer, Jobsite, Ticket
 
-@never_cache
+
+def LandingView(request):
+
+    login_message = "Please Login to continue"
+
+    context = {
+        "login_message":login_message,
+    }
+
+    return render(request, 'CRM/landing.html',context)
+
+
+
+
+
+@login_required
 def IndexView(request):
         now = timezone.now()
         open_tickets = Ticket.objects.filter(completed=False)[:]
@@ -44,6 +62,11 @@ def IndexView(request):
                 street = street + i.total
             else:
                 street = 0
+
+        unscheduled_jobs = Estimate.objects.filter(completed=False, sold=True)
+
+        old_tickets = open_tickets.filter(created=datetime.now()-timedelta(days=14))
+
         context = {
         "latest_tickets": latest_tickets,
         "open_tickets": open_tickets,
@@ -58,6 +81,8 @@ def IndexView(request):
         "timmy_tickets": timmy_tickets,
         "service_call_YTD": service_call_total,
         "service_percent": service_percent,
+        "unscheduled_jobs": unscheduled_jobs,
+        "old_tickets":old_tickets,
 
     }
 
@@ -77,13 +102,13 @@ Customer Views
 '''
 
 
-class CustomerDetailView(generic.DetailView):
+class CustomerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Customer
     template_name = 'CRM/customer_detail.html'
     pk_url_kwarg = "cust"
 
 
-class CustomerCreateView(generic.CreateView):
+class CustomerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Customer
     template_name = 'CRM/customer_create.html'
     pk_url_kwarg = "cust"
@@ -91,15 +116,14 @@ class CustomerCreateView(generic.CreateView):
               'source']
 
 
-class CustomerUpdateView(generic.UpdateView):
+class CustomerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Customer
     template_name = 'CRM/customer_update.html'
     pk_url_kwarg = "cust"
     fields = ['firstName', 'lastName', 'billStreet', 'billCity', 'billState', 'billZip', 'phone1', 'phone2', 'email',
               'source']
 
-
-class CustomerDeleteView(generic.DeleteView):
+class CustomerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Customer
     pk_url_kwarg = 'cust'
     success_url = reverse_lazy('index')
@@ -109,8 +133,7 @@ class CustomerDeleteView(generic.DeleteView):
 Jobsite Views
 '''
 
-
-class JobsiteDetailView(generic.DetailView):
+class JobsiteDetailView(LoginRequiredMixin, generic.DetailView):
     model = Jobsite
     template_name = 'CRM/jobsite_detail.html'
     pk_url_kwarg = "job"
@@ -123,8 +146,7 @@ class JobsiteDetailView(generic.DetailView):
         context['customer'] = get_object_or_404(Customer, id=self.kwargs['cust'])
         return context
 
-
-class JobsiteCreateView(generic.CreateView):
+class JobsiteCreateView(LoginRequiredMixin, generic.CreateView):
     model = Jobsite
     template_name = 'CRM/jobsite_create.html'
     pk_url_kwarg = "cust"
@@ -136,16 +158,14 @@ class JobsiteCreateView(generic.CreateView):
             'customer_id': customer.id,
         }
 
-
-class JobsiteUpdateView(generic.UpdateView):
+class JobsiteUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Jobsite
     template_name = 'CRM/jobsite_create.html'
     fields = ['customer_id', 'jobStreet', 'jobCity', 'jobState', 'jobZip', 'stories', 'access', 'notes']
 
     pk_url_kwarg = "job"
 
-
-class JobsiteDeleteView(generic.DeleteView):
+class JobsiteDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Jobsite
     pk_url_kwarg = "job"
 
@@ -158,8 +178,7 @@ class JobsiteDeleteView(generic.DeleteView):
 Ticket Views
 '''
 
-
-class TicketDetailView(generic.DetailView):
+class TicketDetailView(LoginRequiredMixin, generic.DetailView):
     model = Ticket
     template_name = 'CRM/ticket_detail.html'
     pk_url_kwarg = "ticket"
@@ -172,7 +191,8 @@ class TicketDetailView(generic.DetailView):
         # context['appt'] = get_object_or_404(Appointment, id=self.kwargs['appt'])
         return context
 
-class TicketCreateView(generic.CreateView):
+
+class TicketCreateView(LoginRequiredMixin, generic.CreateView):
     model = Ticket
     template_name = 'CRM/ticket_create.html'
     pk_url_kwarg = "job"
@@ -188,14 +208,13 @@ class TicketCreateView(generic.CreateView):
         }
 
 
-class TicketUpdateView(generic.UpdateView):
+class TicketUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Ticket
     template_name = 'CRM/ticket_create.html'
     fields = ['customer_id', 'jobsite_id', 'call_type', 'problem', 'completed', 'notes']
     pk_url_kwarg = "ticket"
 
-
-class TicketDeleteView(generic.DeleteView):
+class TicketDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Ticket
     pk_url_kwarg = "ticket"
 

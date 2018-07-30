@@ -9,14 +9,13 @@
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
 
-    {#<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"></link>#}
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/hot-sneaks/jquery-ui.min.css"></link>
-    {#<script src="https://cdn.jsdelivr.net/npm/timepicker@1.11.12/jquery.timepicker.min.js"></script>#}
-    {#<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/timepicker@1.11.12/jquery.timepicker.min.css"</link>#}
-    <script src="{% static "CRM/js/jquery.ui.timepicker.js" %}"></script>
-    <link rel="stylesheet" href="{% static "CRM/js/jquery.ui.timepicker.css" %}"></link>
 
+
+    <script src="{% static "CRM/js/jquery.ui.timepicker.js" %}"></script>
+
+    <link rel="stylesheet" href="{% static "CRM/js/jquery.ui.timepicker.css" %}"></link>
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
             integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
@@ -53,9 +52,27 @@
             </form>
 
         </div>
+        <div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}?next={{request.path}}">
+                <div class="btn nav-btn green">Logout</div>
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}?next={{request.path}}">
+                <div class="btn nav-btn green">Login</div>
+            </a>
+            {% endif %}
 
+
+        </div>
 
     </div>
+
+
+        {% block alertbox %}
+        {% endblock alertbox %}
+
+
 </div>
 <div class="content-container">
 {% block left-sidebar %}
@@ -82,6 +99,11 @@
             <a href="http://www.authorize.net">
                 <div class="btn orange link-btn">Authorize</div>
             </a>
+            <a href="https://explorer.pictometry.com/login.php">
+                <div class="btn orange link-btn">Pictometry</div>
+            </a>
+
+
         </div>
 
         <div cclass="internal_links">

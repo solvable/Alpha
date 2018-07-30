@@ -20,6 +20,8 @@ from docx.shared import Inches
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import datetime
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -28,8 +30,7 @@ import datetime
 
 
 
-
-class EstimateCreateView(generic.CreateView):
+class EstimateCreateView(LoginRequiredMixin, generic.CreateView):
     model = Estimate
     template_name = 'estimate/create_estimate.html'
     fields = ['customer', 'jobsite', 'ticket', 'name', 'billStreet', 'billCityStateZip', 'phone', 'email', 'job_address']
@@ -83,7 +84,7 @@ class EstimateCreateView(generic.CreateView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
-class EstimateUpdateView(generic.UpdateView):
+class EstimateUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Estimate
     template_name = 'estimate/create_estimate.html'
     pk_url_kwarg = 'est'
@@ -124,14 +125,14 @@ class EstimateUpdateView(generic.UpdateView):
 
 
 
-class EstimateDetailView(generic.DetailView):
+class EstimateDetailView(LoginRequiredMixin, generic.DetailView):
     model=Estimate
     template_name = 'estimate/estimate_detail.html'
     pk_url_kwarg = "est"
 
 
 
-class EstimateDeleteView(generic.DeleteView):
+class EstimateDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Estimate
     template_name = 'estimate/estimate_confirm_delete.html'
     pk_url_kwarg = "est"
@@ -140,7 +141,19 @@ class EstimateDeleteView(generic.DeleteView):
         return reverse('ticket_detail', kwargs={'cust': self.kwargs.get('cust'), 'job': self.kwargs.get('job'), 'ticket': self.kwargs.get('ticket')})
 
 
+def convertEstimateToJob(request, cust, job, ticket, est):
+   # load objects
+    customer = get_object_or_404(Customer, id=cust)
+    jobsite = get_object_or_404(Jobsite, id=job)
+    ticket = get_object_or_404(Ticket, id=ticket)
+    estimate = get_object_or_404(Estimate, id=est)
 
+    estimate.sold =  True
+    estimate.save()
+
+    return redirect('index')
+
+@login_required
 def write_invoice_view(request, cust, job, ticket, est):
     import html2text
     import re
@@ -165,14 +178,9 @@ def write_invoice_view(request, cust, job, ticket, est):
     # Set Some Variables for filename and path
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # headerimage = os.path.join(BASE_DIR, "static/CRM/img/logo-redux.png")
-    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id)
+    filename = customer.lastName + "_" + customer.firstName + "-" + jobsite.jobStreet + "-workorder#" + str(ticket.id) + '--invoice'
     doc = os.path.join(BASE_DIR, "static/CRM/doc-template/newest.docx")
 
-    # Set misc variables
-    blank_space = 6
-    topmargin = .50
-    gutters = .50
-    bottommargin = .25
 
     # Create HttpResponse object with appropriate PDF headers
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
@@ -182,6 +190,11 @@ def write_invoice_view(request, cust, job, ticket, est):
     document = Document(doc)
 
 
+    # Set misc variables
+    blank_space = 6
+    topmargin = .50
+    gutters = .50
+    bottommargin = .25
 
 
     sections = document.sections
@@ -381,7 +394,7 @@ def write_invoice_view(request, cust, job, ticket, est):
 
 
 
-
+@login_required
 def write_docx_view(request, cust, job, ticket, est):
     import html2text
     import re
@@ -587,7 +600,7 @@ def write_docx_view(request, cust, job, ticket, est):
     response.write(docx)
     return response
 
-
+@login_required
 def write_pdf_view(request, cust, job, ticket):
     current_path = request.get_full_path()
     print(current_path)

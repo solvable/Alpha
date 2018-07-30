@@ -98,7 +98,7 @@
     }
 
     .red {
-        background-color: #DD4A30;
+        background-color: red;
     }
 
     .orange {
@@ -150,7 +150,13 @@
         height: auto;
         margin-right: 5px;
         padding-right: 10px;
+
     }
+
+        .nav-btn:hover{
+            background-color;
+        }
+
 
     .link-btn {
         width: 100px;
@@ -199,10 +205,21 @@
     }
 
     .invoice {
-        background-color: #a2c529;
+        background-color: green;
+        color: white;
+
+    }
+
+    .job {
+        background-color: lawngreen;
         color: black;
 
     }
+
+
+
+
+
 
     .inspection-completed {
         background-color: #121254;
