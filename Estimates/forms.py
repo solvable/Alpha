@@ -20,6 +20,8 @@ class EstimateForm(forms.ModelForm):
         fields = '__all__'
 
 
+
+
 SectionFormset = inlineformset_factory(Estimate, Section, fields=('__all__'),  formset=SectionInline,fk_name='estimate', extra=3, widgets={'description':forms.Textarea(attrs={'class':'textarea'})})
 # , widgets={'description': TinyMCE(attrs={'cols': 80, 'rows': 20})})
 

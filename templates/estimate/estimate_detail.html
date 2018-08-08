@@ -40,16 +40,17 @@
             </tr>
             <tr>
                 <td colspan="2">{{ object.billCityStateZip }}</td>
-
+                <td></td>
                 <td colspan="2" align="right">{{ object.email }}</td>
             </tr>
             <tr>
                 <td><br></td>
             </tr>
             <tr>
-                <td><br></td>
+                <td colspan="3">JOB LOCATION: {{ object.jobsite.jobStreet }}. {{ object.jobsite.jobCity }}, {{ object.jobsite.jobState }}&nbsp {{ object.jobsite.jobZip }}
+                </td>
             </tr>
-
+            </br>
 
             {% for section in object.section_set.all %}
             <tr>

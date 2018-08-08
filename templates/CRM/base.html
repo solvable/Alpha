@@ -53,14 +53,14 @@
 
         </div>
         <div>
-            {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}?next={{request.path}}">
-                <div class="btn nav-btn green">Logout</div>
-            </a>
+            {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}?next={{request.path}}">
+                    <div class="btn nav-btn green">Login</div>
+                </a>
             {% else %}
-            <a href="{% url 'login' %}?next={{request.path}}">
-                <div class="btn nav-btn green">Login</div>
-            </a>
+                <a href="{% url 'logout' %}?next={{request.path}}">
+                    <div class="btn nav-btn green">Logout</div>
+                </a>
             {% endif %}
 
 
